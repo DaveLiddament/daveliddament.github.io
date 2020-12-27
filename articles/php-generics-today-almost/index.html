@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Dave Liddament's technical blog">
+    <meta name="author" content="Dave Liddament">
+
+    <title>Dave Liddament</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../../css/custom.css" rel="stylesheet">
+    <link href="../../css/prism.css" rel="stylesheet">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="../../">Dave Liddament</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../">Home
+                                                    </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../talks">Talks
+                                                    </a>
+                    </li>
+                                    <li class="nav-item active">
+                        <a class="nav-link" href="../../articles">Articles
+                            <span class="sr-only">(current)</span>                        </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../sarb">SARB
+                                                    </a>
+                    </li>
+                            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    
+    <div class="row">
+
+        <!-- Post Content Column -->
+        <div class="col-lg-12">
+
+            <!-- Title -->
+            <h1 class="mt-4">PHP Generics Today (almost)</h1>
+
+            <p class="date">June 5th 2019</p>
+            <hr>
+
+            <blockquote>
+  <p>Thanks to <a href="https://twitter.com/jrrtgimli">Alexey Berezuev</a> for providing a <a href="https://habr.com/ru/post/456466/">Russian translation</a> of this article.</p>
+</blockquote>
+
+<p>Ask PHP developers which big feature they wished PHP had and many would say generics.</p>
+
+<p>Language level support for generics in PHP would be the best solution. Adding generics to PHP is <a href="https://www.youtube.com/watch?v=teKnckg5x7I&amp;feature=youtu.be&amp;t=1121">hard</a>. 
+Hopefully native support will be part of the language one day, but we'll probably have to wait a few years until it happens.</p>
+
+<p>This article outlines how using existing tools, in some cases with minimal modifications, we can give PHP the power of generics now.</p>
+
+<p>This is also available as a <a href="/talks/php-generics-today-almost">talk</a>.</p>
+
+<p>Content:</p>
+
+<ul>
+<li><a href="#what-are-generics">What are generics</a></li>
+<li><a href="#how-to-implement-generics-without-language-level-support">How to implement generics without language level support</a></li>
+<li><a href="#agreeing-on-a-standard">Agreeing on a standard</a></li>
+<li><a href="#tool-support">Tool support</a></li>
+<li><a href="#third-party-code-support">Third party code support</a></li>
+<li><a href="#next-steps">Next steps</a></li>
+<li><a href="#limitations">Limitations</a></li>
+<li><a href="#why-dont-you-just-add-generics-to-the-language">Why don't you just add generics to the language?</a></li>
+<li><a href="#what-if-i-dont-want-generics">What if I don't want generics?</a></li>
+<li><a href="#comments-corrections-feedback-etc">Comments, corrections, feedback</a></li>
+</ul>
+
+<h2 id="what-are-generics">What are generics</h2>
+
+<p>This section covers a brief introduction to <a href="https://en.wikipedia.org/wiki/Generic_programming">generics</a>.</p>
+
+<p>Further reading:</p>
+
+<ul>
+<li><a href="https://wiki.php.net/rfc/generics">RFC</a> for PHP generics</li>
+<li><a href="https://github.com/phan/phan/wiki/Generic-Types">Phan's</a> generics support</li>
+<li>Psalm's support for generics and <a href="https://psalm.dev/docs/templated_annotations/">templates</a>.</li>
+</ul>
+
+<h3>Simple generics</h3>
+
+<p>As it is not currently possible to specify generics at a language level we have to do the next best thing which is to specify generics in the docblock.</p>
+
+<p>In many code bases we already do this. See this example:</p>
+
+<pre><code class="language-php">/**
+ * @param string[] $names
+ * @return User[]
+ */
+function createUsers(iterable $names): array { ... } 
+</code></pre>
+
+<p>In the code above we do what we can at language level. We've specified that the parameter <code>$names</code> is something that can be iterated over. 
+We've also specified that the function will return an array. PHP will throw a <code>TypeError</code> if the types of parameter and return are not as specified.</p>
+
+<p>The docblock offers more insight. <code>$names</code> must be strings. The function must return an array of <code>User</code> objects. 
+PHP itself doesn't make these additional type checks. 
+IDEs like PhpStorm do understand this notation and warn developers if this additional contract is not met.
+Additionally static analysis tools like Psalm, PHPStan and Phan can also validate that data of the correct type is passed to and from the function.</p>
+
+<h3>Generics for keys and values of iterables</h3>
+
+<p>As far as generics go the above example is simple. More advanced examples include where we might want to specify the type of an array key as well as the type of its value.
+One way of specifying this is:</p>
+
+<pre><code class="language-php">/**
+ * @return array&lt;string, User&gt;
+ */
+function getUsers(): array { ... }
+</code></pre>
+
+<p>This means that the array returned from <code>getUsers</code> has keys of type <code>string</code> and values of type <code>User</code>.</p>
+
+<p>Static analysers like <a href="https://psalm.dev/">Psalm</a>, <a href="https://github.com/phpstan/phpstan">PHPStan</a> and <a href="https://github.com/phan/phan">Phan</a> understand this notation.
+They will do validation on this. Consider the following code:</p>
+
+<pre><code class="language-php">/**
+ * @return array&lt;string, User&gt;
+ */
+function getUsers(): array { ... }
+
+function showAge(int $age): void { ... }
+
+foreach(getUsers() as $name =&gt; $user) {
+  showAge($name);  
+}
+</code></pre>
+
+<p>The static analysers would raise an issue on the call to <code>showAge</code> with an error similar to this: <code>Argument 1 of showAge expects int, string provided</code>.</p>
+
+<p>Unfortunately at the time of writing <a href="https://www.jetbrains.com/phpstorm/">PhpStorm</a> does not do this.</p>
+
+<h3>More complex generics</h3>
+
+<p>We still might want to go further with generics. Consider an object that represents a <a href="https://en.wikipedia.org/wiki/Stack_&#40;abstract_data_type&#41;">stack</a>:</p>
+
+<pre><code class="language-php">class Stack 
+{
+    public function push($item): void { ... }
+
+    public function pop() { ... }
+}
+</code></pre>
+
+<p>A stack can take any type of object, but what if we wanted to limit it to be a stack that holds only objects of type <code>User</code>?</p>
+
+<p>Psalm and Phan support notation like this:</p>
+
+<pre><code class="language-php">/**
+ * @template T
+ */
+class Stack 
+{
+    /**
+     * @param T $item
+     */
+    public function push($item): void;
+
+    /**
+     * @return T
+     */    
+    public function pop();
+}
+</code></pre>
+
+<p>Docblock are used to pass in additional type information: e.g.</p>
+
+<pre><code class="language-php">/** @var Stack&lt;User&gt; $userStack */
+$stack = new Stack();
+</code></pre>
+
+<p>Means that <code>$userStack</code> must only contain <code>User</code>s.</p>
+
+<p>If Psalm analysed this code:</p>
+
+<pre><code class="language-php">$userStack-&gt;push(new User());
+$userStack-&gt;push("hello");
+</code></pre>
+
+<p>It would complain about the 2nd line with the error: <code>Argument 1 of Stack::push expects User, string(hello) provided</code>.</p>
+
+<p>Currently PhpStorm does not support this notation.</p>
+
+<p>There is even more to generics than the above, but we've covered enough for now.</p>
+
+<h2 id="how-to-implement-generics-without-language-level-support">How to implement generics without language level support</h2>
+
+<p>The following steps are required:</p>
+
+<ul>
+<li>Agree as a community on the standards for generics in docblocks (e.g. as a new Generics PSR, or add back to PSR5).</li>
+<li>Add docblock annotations to code.</li>
+<li>Use IDEs that understand this notation to provide real time static analysis to type mismatches.</li>
+<li>Use static analysis tools like Psalm as part of CI to detect errors.</li>
+<li>Agree a method for providing type information about 3rd party libraries.</li>
+</ul>
+
+<h2 id="agreeing-on-a-standard">Agreeing on a standard</h2>
+
+<p>The PHP community has already, unofficially, agreed this form of generics 
+(it's supported by most tools and it's meaning is widely understood):</p>
+
+<pre><code class="language-php">/**
+ * @return User[]
+ */
+function getUsers(): array { ... }
+</code></pre>
+
+<p>However we have problems with something as simple as this:</p>
+
+<pre><code class="language-php">/**
+ * @return array&lt;string, User&gt;
+ */
+function getUsers(): array { ... }
+</code></pre>
+
+<p>Psalm understands this and knows the type of the key and value in the returned array.</p>
+
+<p>At the time of writing PhpStorm does not understand this notation. Using this notation I would lose the power
+of the real time static analysis that PhpStorm offers.</p>
+
+<p>Consider the code below. PhpStorm does not know that <code>$user</code> is of type <code>User</code> and that <code>$name</code> is of type <code>string</code>:</p>
+
+<pre><code class="language-php">foreach(getUsers() as $name =&gt; $user) {
+    ... 
+}
+</code></pre>
+
+<p>If Psalm is my static analysis tool of choice I could write this:</p>
+
+<pre><code class="language-php">/**
+ * @return User[]
+ * @psalm-return array&lt;string, User&gt;
+ */
+function getUsers(): array { ... }
+</code></pre>
+
+<p>Psalm understands everything.</p>
+
+<p>PhpStorm knows that <code>$user</code> is of type <code>User</code>. It still does not know that the array key is of type <code>string</code>.
+Phan and PHPStan don't understand the psalm specific annotation, so the best information they get is the same as 
+PhpStorm; the type of <code>$user</code>.</p>
+
+<p>You could argue that PhpStorm should just adopt the convention: <code>array&lt;keyType, valueType&gt;</code>. I'd argue it's the 
+job of the language and community to dictate the standards and the tools follow. Tool vendors, for all kinds of good
+reasons, might not be happy to set standards.</p>
+
+<p>I suspect the convention above would happily be accepted by the majority of the PHP community who care about generics.
+However things get more complex when talking about templates. At the time of writing neither PHPStan or PhpStorm 
+support templates. Psalm and Phan do support templates. Their goals are the same, but when you delve down to the details 
+their implementations are slightly different.</p>
+
+<p>Every option presented is some kind of compromise.</p>
+
+<p>Put simply there is a need for agreement on the generics notation:</p>
+
+<ul>
+<li>It makes the life of a developers better. They can add generics to their code and get the benefits of it.</li>
+<li>Developers can use whichever tool they like and switch between tools as they see fit.</li>
+<li>Tool vendors can build tools knowing that it will benefit the community and without fear that things will change or that they'll be blamed for making the "wrong choice".</li>
+</ul>
+
+<h2 id="tool-support">Tool support</h2>
+
+<p>Psalm has all the functionality required for checking generics. Phan looks like it does too.</p>
+
+<p>PhpStorm I'm sure will implement generics as soon as there is agreement in the community for the format.</p>
+
+<h2 id="third-party-code-support">Third party code support</h2>
+
+<p>The final piece of the generics jigsaw is adding support for dealing with 3rd party libraries.</p>
+
+<p>Once a standard for defining generics comes along hopefully most libraries would start using them. 
+However there will be delay. Some libraries might be used but not actively maintained. 
+To use static analysis tools for validating generics it is vital that all functions that take or return generics are
+defined.</p>
+
+<p>What happens if your project relies on a 3rd party library that doesn't have generics?</p>
+
+<p>Fortunately this problem has already been solved, the concept is called stubs. 
+Psalm, <a href="https://github.com/phan/phan/wiki/How-To-Use-Stubs">Phan</a> and <a href="https://github.com/JetBrains/phpstorm-stubs/tree/master/standard">PhpStorm</a>
+all use stubs.</p>
+
+<p>Stubs are regular files that contain function and method signatures but no implementation. 
+By adding docblocks to the stubs gives static analysis tools the extra information they need.</p>
+
+<p>E.g. if you had an interface to a stack with no typehints or generics like this.</p>
+
+<pre><code class="language-php">class Stack 
+{
+    public function push($item) 
+    {
+         /* some implementation */ 
+    }
+
+    public function pop() 
+    {
+         /* some implementation */ 
+    }
+}
+</code></pre>
+
+<p>You could create a stub file that has identical method signatures but added docblock an no implementation.</p>
+
+<pre><code class="language-php">/**
+ * @template T
+ */
+class Stack 
+{
+    /**
+     * @param T $item
+     * @return void
+     */
+    public function push($item);
+
+    /**
+     * @return T
+     */    
+    public function pop();
+}
+</code></pre>
+
+<p>When the static analyser sees the stack class it infers type information from the stub rather than the actual code.</p>
+
+<p>An easy way of sharing stubs between developers would be useful (maybe in a composer repo) as this means work can be
+shared.</p>
+
+<h2 id="next-steps">Next steps</h2>
+
+<p>As a community we need to get behind a agreeing and defining a standard.</p>
+
+<p>Maybe this would be best done as a generics PSR?</p>
+
+<p>Or maybe the lead developers of the static analysis tools, PhpStorm, other PHP IDEs and someone from internals 
+(as a sanity check) could make a standard for all the tools to work towards.</p>
+
+<p>Once the standard is in place everyone can help add generics to existing libraries and projects by submitting PRs. 
+Where this isn't possible developers can write and share stubs.</p>
+
+<p>With all the above in place we'll be able to use tools like PhpStorm for checking generics in real time as we code. 
+We can use static analysis tools as part of our CI as a safety net.</p>
+
+<p>So we can have generics in PHP (well almost).</p>
+
+<h2 id="limitations">Limitations</h2>
+
+<p>There are some limitations. PHP is a dynamic language that can do lots of magical things, examples
+<a href="https://www.youtube.com/watch?v=RfXO5Y-QqPo">here</a>.
+If you use too much PHP magic then this means the static analysis tools might not be able to accurately derive all the types
+in the system. If any types are unknown then the tools will not be able to assert in all cases the correct use of 
+generics.</p>
+
+<p>That said the main application for this kind of analysis should be on your business logic. If you're coding cleanly
+you probably shouldn't be using too much magic.</p>
+
+<h2 id="why-dont-you-just-add-generics-to-the-language">Why don't you just add generics to the language?</h2>
+
+<p>That would be ideal. PHP is open source so there is nothing to stop you checking out PHP source and adding generics! (NOTE: This hard!)</p>
+
+<h2 id="what-if-i-dont-want-generics">What if I don't want generics?</h2>
+
+<p>Just ignore all of the above. One of the great things about PHP is that you have the flexibility to choose the 
+appropriate level of engineering depending on what you're doing. 
+Throw away code need not bother with features like type hinting. Long lasting code must use these features.</p>
+
+<h2 id="comments-corrections-feedback-etc">Comments, corrections, feedback, etc</h2>
+
+<p>Drop me a DM on <a href="https://twitter.com/DaveLiddament">twitter</a>.</p>
+
+        </div>
+
+
+    </div>
+    <!-- /.row -->
+
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">
+            Copyright &copy; Dave Liddament 2018-2020
+            <a class="social-circle" href="https://twitter.com/DaveLiddament"><i class="fa fa-twitter"></i></a>
+            <a class="social-circle" href="https://github.com/DaveLiddament"><i class="fa fa-github"></i></a>
+            <a class="social-circle" href="https://www.linkedin.com/in/daveliddament/"><i
+                        class="fa fa-linkedin"></i></a>
+        </p>
+    </div>
+    <!-- /.container -->
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/bootstrap.bundle.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</body>
+
+</html>

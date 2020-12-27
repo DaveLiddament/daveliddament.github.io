@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Dave Liddament's technical blog">
+    <meta name="author" content="Dave Liddament">
+
+    <title>Dave Liddament</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../../css/custom.css" rel="stylesheet">
+    <link href="../../css/prism.css" rel="stylesheet">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="../../">Dave Liddament</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../">Home
+                                                    </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../talks">Talks
+                                                    </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../articles">Articles
+                                                    </a>
+                    </li>
+                                    <li class="nav-item active">
+                        <a class="nav-link" href="../../sarb">SARB
+                            <span class="sr-only">(current)</span>                        </a>
+                    </li>
+                            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    
+    <h1 id="introducing-static-analysis-results-baseliner-sarb">Introducing Static Analysis Results Baseliner (SARB)</h1>
+
+<p>I'm delighted to announce the beta version of <a href="https://github.com/DaveLiddament/sarb">SARB</a>.</p>
+
+<p>If you've tried to introduce advanced static analysis tools (e.g.
+<a href="https://getpsalm.org">Psalm</a> and <a href="https://github.com/phpstan/phpstan">PHPStan</a>)
+to legacy projects the tools have probably reported thousands of problems.
+It's unrealistic to fix all but the most critical ones before continuing development.</p>
+
+<p>SARB is used to create a baseline of these results. As work on the project
+progresses SARB can takes the latest static analysis results, removes
+those issues in the baseline and report the issues raised since the baseline.
+SARB does this, in conjunction with git, by tracking lines of code between commits.</p>
+
+<p>SARB is written in PHP, however it can be used to baseline results for any language and any static analysis tool.</p>
+
+<h2 id="sarb-demo">SARB demo</h2>
+
+<p>Instructions for running SARB are available in the project's <a href="https://github.com/DaveLiddament/sarb/blob/master/README.md">README</a>.
+Below is a demo of using SARB. You'll need PHP >= 7.1, composer and git.</p>
+
+<p>First of all clone the SARB demo project and then run composer:</p>
+
+<pre><code>git clone https://github.com/DaveLiddament/sarb-demo.git
+cd sarb-demo
+composer install
+</code></pre>
+
+<p>This sets up a project with the static analysers Psalm and PHPStan.
+It also installs SARB.
+Finally there is a single PHP file <code>src/Person.php</code>.</p>
+
+<p>Running the static analysers on this project will reports errors...</p>
+
+<p>To run Psalm use:</p>
+
+<pre><code>vendor/bin/psalm
+</code></pre>
+
+<p>You should get an output similar to this:</p>
+
+<pre><code>Scanning files...
+Analyzing files...
+
+ERROR: InvalidNullableReturnType - src/Person.php:17:29 - The declared return type 'string' for Demo\Person::getName is not nullable, but 'string|null' contains null
+    public function getName(): string
+    {
+        return $this-&gt;name;
+    }
+
+
+ERROR: NullableReturnStatement - src/Person.php:19:3 - The declared return type 'string' for Demo\Person::getName is not nullable, but the function returns 'string|null'
+        return $this-&gt;name;
+
+
+------------------------------
+2 errors found
+------------------------------
+
+Checks took 0.13 seconds and used 18.972MB of memory
+Psalm was able to infer types for 100.000% of analyzed code (1 file)
+
+</code></pre>
+
+<p>To run PHPStan use:</p>
+
+<pre><code>vendor/bin/phpstan analyse
+</code></pre>
+
+<p>You should see an output like this:</p>
+
+<pre><code>Note: Using configuration file /vagrant/sarb-demo/phpstan.neon.
+
+ ------ -----------------------------------------------------------------------------
+  Line   Person.php
+ ------ -----------------------------------------------------------------------------
+  19     Method Demo\Person::getName() should return string but returns string|null.
+ ------ -----------------------------------------------------------------------------
+
+
+ [ERROR] Found 1 error
+
+</code></pre>
+
+<p>In both cases they are reporting the same issue. <code>getName</code> in <code>Demo</code> could return a <code>string</code> or a <code>null</code> but the typehint says it will
+only return a <code>string</code>.</p>
+
+<p><strong>NOTE:</strong> This example shows how to use both static analysers currently supported by SARB.
+If you're just starting adding in static analysis then maybe just add one at once.
+The majority of issues are found by both tools, however both tools also have issues that only they find.</p>
+
+<p>On non trivial legacy projects both Psalm and PHPStan would probably find hundreds if not thousands of issues.
+It is not practical to fix all of them. After fixing the most critical issues you would then use SARB to create a baseline.</p>
+
+<h3 id="creating-a-baseline-with-sarb">Creating a baseline with SARB</h3>
+
+<p><strong>NOTE:</strong> It SARB records the git commit that the baseline was made. It is essential that all code is committed before using SARB to create the baseline</p>
+
+<h5 id="psalm-example">Psalm example</h5>
+
+<p>First create run Psalm and dump results in JSON format:</p>
+
+<pre><code>vendor/bin/psalm --report=reports/psalm/psalm-results.json
+</code></pre>
+
+<p>We'll use these set of results as the baseline. Next we create a SARB baseline:</p>
+
+<pre><code>vendor/bin/sarb create-baseline reports/psalm/psalm-results.json reports/sarb/psalm-baseline.json psalm-json
+</code></pre>
+
+<p>The <code>create-baseline</code> command requires 3 arguments:</p>
+
+<ol>
+<li>The static analysis output file to create the baseline from (in this case <code>reports/psalm/psalm-results.json</code>)</li>
+<li>The name of the file to store the SARB baseline in (in this case <code>reports/sarb/psalm-baseline.json</code>)</li>
+<li>The name of the <a href="https://github.com/DaveLiddament/sarb/blob/master/docs/NewResultsParser.md">ResultsParser</a>, in this case we used Psalm's JSON format, hence <code>psalm-json</code>. To get a full list of supported tools and formats use the command: <code>vendor/bin/sarb list-static-analysis-tools</code></li>
+</ol>
+
+<p>The output should be like this:</p>
+
+<pre><code>Baseline created
+Errors in baseline 2
+</code></pre>
+
+<h5 id="phpstan-example">PHPStan example</h5>
+
+<p>Again create the PHPStan output in JSON format:</p>
+
+<pre><code>vendor/bin/phpstan analyse --error-format=json &gt; reports/phpstan/phpstan-output.json
+</code></pre>
+
+<p>We'll use these set of results as the baseline. Next we create a SARB baseline:</p>
+
+<pre><code>vendor/bin/sarb create-baseline reports/phpstan/phpstan-output.json reports/sarb/phpstan-baseline.json phpstan-json-tmp
+</code></pre>
+
+<p>The output should look like this:</p>
+
+<pre><code>[phpstan-json-tmp] guesses the classification of violations.This means results might not be 100% accurate. See https://github.com/DaveLiddament/sarb/blob/master/docs/ViolationTypeClassificationGuessing.md for more details.
+Baseline created
+Errors in baseline 1
+</code></pre>
+
+<p>Don't worry too much about the warning for now.</p>
+
+<h3 id="updating-the-code">Updating the code</h3>
+
+<p>Now we have out baseline, we can update the code.</p>
+
+<p>Let's add the member data <code>$age</code>:</p>
+
+<pre><code><br />class Person
+{
+
+    /**
+     * @var int|null
+     */
+     private $age;
+
+    ... rest of class as before ...
+
+</code></pre>
+
+<p>We'll also add a getter and setter for age between the <code>$name</code> member data and the getters and setters for name:</p>
+
+<pre><code>     private $name;
+
+     public function setAge(?int $age): void
+     {
+         $this-&gt;age = $age;
+     }
+
+     public function getAge(): int
+     {
+         return $this-&gt;age;
+     }
+
+    ... rest of class as before ...
+</code></pre>
+
+<p>The updated code should look like <a href="https://github.com/DaveLiddament/sarb-demo/blob/feature/demo-baseline/src/Person.php">this</a>.</p>
+
+<p>We've introduced code that the static analysers will raise issues on.</p>
+
+<p>If we run either of the static anlaysis tools, they'll report both the original issue(s) and the new one(s).</p>
+
+<p>E.g. Psalm will now report 4 issues:</p>
+
+<pre><code>vendor/bin/psalm
+</code></pre>
+
+<p>And PHPStan 2 issues:</p>
+
+<pre><code>vendor/bin/phpstan analyse
+</code></pre>
+
+<h3 id="removing-baseline-results">Removing baseline results</h3>
+
+<p>We can use SARB to strip out the baseline issues and only report the new issues.</p>
+
+<h5 id="psalm-example">Psalm example</h5>
+
+<p>Run Psalm and dump latest results in JSON format:</p>
+
+<pre><code>vendor/bin/psalm --report=reports/psalm/psalm-results.json
+</code></pre>
+
+<p>Use SARB to remove baseline results:</p>
+
+<pre><code>vendor/bin/sarb remove-baseline-results reports/psalm/psalm-results.json reports/sarb/psalm-baseline.json reports/psalm/baseline-removed.json
+</code></pre>
+
+<p>The <code>remove-baseline-results</code> command requires 3 arguments:</p>
+
+<ol>
+<li>The static analysis output for the current state of the code (in this case <code>reports/psalm/psalm-results.json</code>)</li>
+<li>The name of the file with the SARB baseline in (in this case <code>reports/sarb/psalm-baseline.json</code>)</li>
+<li>The name of an output file. This will be in the same format as the generated Psalm, but only include the results post baseline (in this case <code>reports/psalm/baseline-removed.json</code>)</li>
+</ol>
+
+<p>The output should be like this:</p>
+
+<pre><code>Baseline uses ResultsParser [psalm-json] and HistoryAnalyser [git]
+Errors before baseline 4
+Errors in baseline 2
+Errors introduced since baseline 2
+
+FILE: src/Person.php
++------+-------------------------------------------------------------------------------------------------------------+
+| Line | Description                                                                                                 |
++------+-------------------------------------------------------------------------------------------------------------+
+| 22   | The declared return type 'int' for Demo\Person::getAge is not nullable, but 'int|null' contains null        |
+| 24   | The declared return type 'int' for Demo\Person::getAge is not nullable, but the function returns 'int|null' |
++------+-------------------------------------------------------------------------------------------------------------+
+</code></pre>
+
+<p>It is only showing us the issues introduced since the baseline.</p>
+
+<h5 id="phpstan-example">PHPStan example</h5>
+
+<p>Again create the PHPStan output in JSON format:</p>
+
+<pre><code>vendor/bin/phpstan analyse --error-format=json &gt; reports/phpstan/phpstan-output.json
+</code></pre>
+
+<p>Next use SARB to remove the baseline baseline:</p>
+
+<pre><code>vendor/bin/sarb remove-baseline-results reports/phpstan/phpstan-output.json reports/sarb/phpstan-baseline.json reports/phpstan/baseline-removed.json
+</code></pre>
+
+<p>The output should look like this:</p>
+
+<pre><code>Baseline uses ResultsParser [phpstan-json-tmp] and HistoryAnalyser [git]
+Errors before baseline 2
+Errors in baseline 1
+Errors introduced since baseline 1
+
+FILE: src/Person.php
++------+----------------------------------------------------------------------+
+| Line | Description                                                          |
++------+----------------------------------------------------------------------+
+| 24   | Method Demo\Person::getAge() should return int but returns int|null. |
++------+----------------------------------------------------------------------+
+</code></pre>
+
+<h3 id="moving-files">Moving files</h3>
+
+<p>SARB is clever enough to cope with files being renamed.</p>
+
+<p>E.g. rename <code>Person.php</code> to <code>Employee.php</code></p>
+
+<pre><code>git mv src/Person.php src/Employee.php
+</code></pre>
+
+<p><strong>NOTE</strong> You must use <code>git mv</code> otherwise SARB doesn't know that the file has been renamed.</p>
+
+<p>Also update the class name from <code>Person</code> to <code>Employee</code>. The file should look like <a href="https://github.com/DaveLiddament/sarb-demo/blob/feature/change-file-name/src/Employee.php">this</a>.</p>
+
+<p>Now rerun the analyser and SARB and you should still see only the differences introduced since the baseline. E.g.:</p>
+
+<pre><code>vendor/bin/psalm --report=reports/psalm/psalm-results.json
+vendor/bin/sarb remove-baseline-results reports/psalm/psalm-results.json reports/sarb/psalm-baseline.json reports/psalm/baseline-removed.json
+</code></pre>
+
+<h2 id="next-steps">Next steps</h2>
+
+<p>Find out more from the <a href="https://github.com/DaveLiddament/sarb/blob/master/README.md">README</a>,
+learn <a href="https://github.com/DaveLiddament/sarb/blob/master/docs/HowSarbWorks.md">how SARB works</a> and write a <a href="https://github.com/DaveLiddament/sarb/blob/master/docs/NewResultsParser.md">ResultsParser</a> for the static analysis tool of your choice.</p>
+
+<p><strong>NOTE</strong> Whilst I was working on SARB Psalm introduced it's <a href="https://getpsalm.org/docs/dealing_with_code_issues/#using-a-baseline-file">own baseline functionality</a>.
+It <a href="https://github.com/vimeo/psalm/issues/1042">works slightly differently</a> to SARB. If you're using Psalm you might want to try this first.</p>
+
+<h2 id="warning">Warning</h2>
+
+<p>This is still in beta and might change or have bugs. Please report any bugs you find.</p>
+
+
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">
+            Copyright &copy; Dave Liddament 2018-2020
+            <a class="social-circle" href="https://twitter.com/DaveLiddament"><i class="fa fa-twitter"></i></a>
+            <a class="social-circle" href="https://github.com/DaveLiddament"><i class="fa fa-github"></i></a>
+            <a class="social-circle" href="https://www.linkedin.com/in/daveliddament/"><i
+                        class="fa fa-linkedin"></i></a>
+        </p>
+    </div>
+    <!-- /.container -->
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/bootstrap.bundle.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</body>
+
+</html>

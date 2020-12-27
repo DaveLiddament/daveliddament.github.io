@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Dave Liddament's technical blog">
+    <meta name="author" content="Dave Liddament">
+
+    <title>Dave Liddament</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../../css/custom.css" rel="stylesheet">
+    <link href="../../css/prism.css" rel="stylesheet">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="../../">Dave Liddament</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../">Home
+                                                    </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../talks">Talks
+                                                    </a>
+                    </li>
+                                    <li class="nav-item active">
+                        <a class="nav-link" href="../../articles">Articles
+                            <span class="sr-only">(current)</span>                        </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../sarb">SARB
+                                                    </a>
+                    </li>
+                            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    
+    <div class="row">
+
+        <!-- Post Content Column -->
+        <div class="col-lg-12">
+
+            <!-- Title -->
+            <h1 class="mt-4">A standard for generics in PHP</h1>
+
+            <p class="date">December 14th 2020</p>
+            <hr>
+
+            <p>Using static analysis generics in PHP is already a reality. 
+Many developers are reaping the considerable rewards of using static analysers and generics on their PHP codebase. 
+A major blocker to increased uptake is the lack of a standard for generics. 
+A standard will provide tools (such as IDEs) and libraries with a clear guidelines for implementing and supporting generics.</p>
+
+<p>There is already an unofficial standard for generics, see documentation from 
+<a href="https://psalm.dev/docs/annotating_code/templated_annotations/">Psalm</a> and 
+<a href="https://medium.com/@ondrejmirtes/generics-in-php-using-phpdocs-14e7301953">PHPStan</a>.</p>
+
+<p>The scope of this article is to propose how PHP code should be annotated to include the extra information required for generics. 
+This article proposes the existing informal standard becomes the "official" standard. 
+It also proposes expanded support using <a href="https://www.php.net/manual/en/language.attributes.overview.php">Attributes</a>.</p>
+
+<p>Example using docblock (for PHP7 code):</p>
+
+<pre><code class="language-php">/** @template T of object */
+class Queue
+{
+    /** @var array&lt;int,T&gt; */
+    private array $queue = [];
+
+    /** @param T $item */
+    public function add(
+        $item,
+    ): void {
+        // Implementation
+    }
+
+    /** @return T */
+    public function next() 
+    { 
+        // Implementation
+    }
+
+    /** @return array&lt;int,T&gt; */
+    public function asArray(): array
+    {
+        // Implementation
+    }
+}
+</code></pre>
+
+<p>Example using attributes (for code that is only compatible with PHP8):</p>
+
+<pre><code class="language-php">use Generics\v1\Template;
+use Generics\v1\Type;
+
+#[Template("T", "object")]
+class Queue
+{
+
+    #[Type("array&lt;int,T&gt;")] 
+    private array $queue = [];
+
+    public function add(
+        #[Type("T")] $item,
+    ): void {
+        // Implementation
+    }
+
+    #[Type("T")]   // This is return type
+    public function next() 
+    { 
+        // Implementation
+    }
+
+    #[Type("array&lt;int,T&gt;")]
+    public function asArray(): array 
+    { 
+        // Implementation
+    }
+}
+</code></pre>
+
+<p>This article investigates the possible methods of annotating PHP code with the additional information required by generics.
+It then argues why the above formats should be the chosen one.</p>
+
+<p><strong>Contents:</strong></p>
+
+<ul>
+<li><a href="#assumed-knowledge">Assumed knowledge</a></li>
+<li><a href="#php-docblock">PHP Docblock</a></li>
+<li><a href="#simple-attributes">Simple Attributes</a></li>
+<li><a href="#complex-attributes">Attributes</a></li>
+<li><a href="#conclusions">Conclusions and next steps</a></li>
+<li><a href="#comments-corrections-feedback-etc">Comments, corrections, feedback</a></li>
+</ul>
+
+<h2 id="assumed-knowledge">Assumed knowledge</h2>
+
+<p>It is assumed that the reader is familiar with the concept of generics and attributes. The following articles and videos give further background:</p>
+
+<ul>
+<li><a href="https://www.phparch.com/2018/11/the-case-for-generics-in-php/">The case for generics</a></li>
+<li>PHP Generics Today (Almost) <a href="https://www.daveliddament.co.uk/articles/php-generics-today-almost/">Article</a>, <a href="https://www.youtube.com/watch?v=N2PENQpQVjQ">Talk</a></li>
+<li><a href="https://psalm.dev/articles/uncovering-php-bugs-with-template">Uncovering PHP bugs with @template</a></li>
+<li><a href="https://medium.com/@ondrejmirtes/generics-in-php-using-phpdocs-14e7301953">Generics in PHP using PHPDocs</a></li>
+<li><a href="https://platform.sh/blog/2020/php-8-0-feature-focus-attributes/">PHP Attributes</a></li>
+</ul>
+
+<h2 id="php-docblock">PHP Docblock</h2>
+
+<p>There is the existing informal standard for generics. The key element is the <code>@template</code> docblock. See documentation from <a href="https://psalm.dev/docs/annotating_code/templated_annotations/">Psalm</a> and <a href="https://medium.com/@ondrejmirtes/generics-in-php-using-phpdocs-14e7301953">PHPStan</a>.
+In the context of generics, both Psalm and PHPStan pretty much follow the same standard.</p>
+
+<p>Currently, this is not formally documented as a standard (e.g. as a <a href="https://www.php-fig.org/">PSR</a>).
+PSRs <a href="https://github.com/php-fig/fig-standards/blob/master/proposed/phpdoc.md">5</a> and <a href="https://github.com/php-fig/fig-standards/blob/master/proposed/phpdoc-tags.md">19</a>
+focus on PHPDoc blocks and tags more generally, neither mention <code>@template</code>.</p>
+
+<p>The lack of a standard is the reason cited in PHPStorm's 2020.3 <a href="https://blog.jetbrains.com/phpstorm/2020/12/phpstorm-2020-3-release/#psalm_and_phpstan_support">release announcement</a> for not fully supporting <code>@template</code>:</p>
+
+<blockquote>
+  <p>We believe that support for generics is an advanced feature that lacks a proper specification and has many edge cases. Yet, we have decided to implement basic support for the @template construct based on the Psalm syntax, to see how it goes.</p>
+</blockquote>
+
+<p>The next steps to advancing this as a standard is to formalise it, probably as a PSR.</p>
+
+<h4>Pros</h4>
+
+<ul>
+<li>An informal standard exists. It just needs formalising, maybe as a PSR.</li>
+<li>Supported by all advanced static analysers.</li>
+<li>Partial support by some IDEs.</li>
+</ul>
+
+<h4>Cons</h4>
+
+<ul>
+<li>Uses docblocks (which some object to).</li>
+<li>Can not be versioned.</li>
+</ul>
+
+<h2 id="simple-attributes">Simple Attributes</h2>
+
+<p>PHP 8 has a new feature, <a href="https://platform.sh/blog/2020/php-8-0-feature-focus-attributes/">attributes</a>. 
+Attributes could be used instead of docblocks for providing additional information for generics.</p>
+
+<p>Instead of <code>@template</code> docblock use the attribute <code>#[Template]</code>. 
+For additional type information (that appears after <code>@var</code>, <code>@param</code> or <code>@return</code>) use the attribute <code>#[Type]</code>.</p>
+
+<h5>Param</h5>
+
+<p>Using <code>@param</code> docblock:</p>
+
+<pre><code class="language-php">/**
+ * @param T $item 
+ */
+public function add(
+    $item,
+): void { ... }
+</code></pre>
+
+<p>Using an attribute instead of <code>@param</code>:</p>
+
+<pre><code class="language-php">public function add(
+    #[Type("T")] $item,
+): void { ... }
+</code></pre>
+
+<h5>Return</h5>
+
+<p>Using the <code>@return</code> docblock:</p>
+
+<pre><code class="language-php">/**
+  *  @return T 
+  */
+public function next () { ... }
+</code></pre>
+
+<p>Using an attribute instead of <code>@return</code> (NOTE: it's not possible to add an attribute to a return type. However, as a function or method can only have one return type an attribute is attached to the function/method to give information about the return type) :</p>
+
+<pre><code class="language-php">#[Type("T")] 
+public function next() { ... }
+</code></pre>
+
+<h5>Template</h5>
+
+<p>Using the <code>@template</code> docblock:</p>
+
+<pre><code class="language-php">/** @template T */
+class Queue { ... } 
+</code></pre>
+
+<p>Same information as an attribute:</p>
+
+<pre><code class="language-php">#[Template("T")]
+class Queue { ... } 
+</code></pre>
+
+<p>To delve a bit deeper...</p>
+
+<p>It is possible to restrict templates to be of a certain type. E.g.</p>
+
+<pre><code class="language-php">    /** @template T of Animal */
+    interface AnimalGame { /* some code */ }
+</code></pre>
+
+<p>The <code>#[Template]</code> attribute takes an optional 2nd argument. The restriction of the template is the 2nd argument. 
+The docblock example would become:</p>
+
+<pre><code class="language-php">    #[Template("T", "Animal")]
+    interface AnimalGame {  /* some code */ }
+</code></pre>
+
+<h4>Definitions of Attributes</h4>
+
+<p><strong>Template</strong></p>
+
+<pre><code class="language-php">namespace Generics\v1;
+
+use Attribute;
+
+#[Attribute(Attribute::TARGET_CLASS|Attribute::TARGET_FUNCTION|Attribute::TARGET_METHOD|Attribute::IS_REPEATABLE)]
+class Template
+{
+    public function __construct(
+        public string $name,
+        public ?string $of = null,
+    ) {}
+}
+</code></pre>
+
+<p><strong>Type</strong></p>
+
+<pre><code class="language-php">namespace Generics\v1;
+
+use Attribute;
+
+#[Attribute(Attribute::TARGET_FUNCTION|Attribute::TARGET_METHOD|Attribute::TARGET_PARAMETER|Attribute::TARGET_PROPERTY)]
+class Type
+{
+    public function __construct(
+        public string $name,
+    ) {}
+}
+</code></pre>
+
+<p>Other attributes are also required. These include <code>#[Extends]</code> and <code>#[Implements]</code>.</p>
+
+<p><strong>NOTE:</strong> The namespace <code>Generics\v1</code> is a placeholder. Assuming this ends up as a PSR then it could be <code>Psr\Generics\v1</code>.</p>
+
+<h4>Pros</h4>
+
+<ul>
+<li>Attributes can be versioned (e.g. by having a version number in the namespace). 
+It is highly unlikely that the first generics standard will be 100% feature complete. 
+Allowing versioning means that 90% of uses cases can be covered off in v1 and minor enhancements and corrections can be added later.</li>
+<li>Does not pollute docblocks with metadata needed for generics.</li>
+<li>Attributes are, arguably, the correct place to store additional metadata about code.</li>
+<li>Informal standard for documenting generics is still used, it's just shifted to attributes.</li>
+</ul>
+
+<h4>Cons</h4>
+
+<ul>
+<li>The information for generics is stored in strings and so is not part of the AST. 
+Additional tooling is required to convert the information in the strings into some AST like data. 
+(That said, this is something that happens now anyway.)</li>
+</ul>
+
+<h4>Non cons</h4>
+
+<p>An objection that a developer might have is that because the information is in a string auto completion (i.e. in IDEs) will not be possible.
+This is an incorrect assumption. IDEs could still understand the context of the string to provide auto completion and validation.
+In fact this already happens. PHPStorm provides autocompletion for docblocks. 
+It also provides autocompletion based on the information documented in docblocks. 
+So it would be no problem to extend this to a string within an attribute.</p>
+
+<h2 id="complex-attributes">Complex Attributes</h2>
+
+<p>One might suggest that instead of using strings:</p>
+
+<pre><code class="language-php">#[Template("T")]
+#[Type("array&lt;int,T&gt;")]
+function asArray(
+    #[Type("T")] $value,
+): array {
+    return [$value];
+}
+</code></pre>
+
+<p>Add the type information directly, i.e. no strings. Unfortunately the following is <a href="https://3v4l.org/sQ4Ah">not valid</a> PHP 8.0 code.</p>
+
+<pre><code class="language-php">#[Template(T)]
+#[Type(array&lt;int,T&gt;)]
+function asArray(
+    #[Type(T)] $value,
+): array {
+    return [$value];
+}
+</code></pre>
+
+<p>From <a href="https://www.php.net/manual/en/language.attributes.syntax.php">php.net</a>:</p>
+
+<blockquote>
+  <p>Arguments to attributes can only be literal values or constant expressions.</p>
+</blockquote>
+
+<p>Before suggesting other notation let's consider examples of the type information that needs supporting by the <code>#[Type]</code> attribute:</p>
+
+<ol>
+<li><code>T|int|null</code></li>
+<li><code>array&lt;int,string&gt;</code></li>
+<li><code>array{int: int, name: string}</code></li>
+<li><code>array&lt;0: int, 1: T&gt;</code></li>
+<li><code>class-string&lt;T&gt;</code></li>
+<li><code>Queue&lt;T&gt;</code></li>
+<li><code>ArrayCollection&lt;K,V&gt;</code></li>
+</ol>
+
+<h4>Attempt 1</h4>
+
+<p>Inspired by PHPStorm's <a href="https://blog.jetbrains.com/phpstorm/2020/10/phpstorm-2020-3-eap-4/#arrayshape">ArrayShape</a> attribute, it might be possible to encode information as an array.</p>
+
+<p>So let's start with the first example <code>T|int|null</code>, a union:</p>
+
+<pre><code class="language-php">#[Type(['T', 'int', null])]
+</code></pre>
+
+<p>The second example <code>array&lt;int,string&gt;</code> defines the key and value of an array:</p>
+
+<pre><code class="language-php">#[Type(['int' =&gt; 'T'])]
+</code></pre>
+
+<p>Let's consider the 3rd example, an array shape .<code>array{int: int, name: string}</code> Following PHPStorm's example: 
+(NOTE: the string <code>int</code> is a valid array key):</p>
+
+<pre><code class="language-php">#[Type(['int' =&gt; 'int', 'name' =&gt; 'string'])]
+</code></pre>
+
+<p>⚠️ There are problems with this notation. The second example could be misinterpreted as a single element array shape (with a key of <code>int</code>).
+Consider the first example <code>T|int|null</code>, which is the same as:</p>
+
+<pre><code class="language-php">#[Type([0 =&gt; 'T', 1 =&gt; 'int', 2 =&gt; null])]
+</code></pre>
+
+<p>This too might be misinterpreted as an array shape.</p>
+
+<p>There are already many problems with this method and there are still several more example cases to consider. 
+Something more advanced is needed...</p>
+
+<h4>Attempt 2</h4>
+
+<p>Remember the constraint that arguments to attributes can only be literal values or constant expressions.
+From attempt 1 we can see that there needs to be a way distinguishing between unions, array shapes and normal arrays.</p>
+
+<p>Unions could be expressed like this: <code>['union' =&gt; [&lt;type 1&gt;, &lt;type 2&gt;, etc]</code>.</p>
+
+<p>Array shapes could be expressed like this: <code>['shape' =&gt; &lt;array shape&gt;]</code>.</p>
+
+<p>Back to our examples. For a union, example 1 <code>T|int|null</code>, would become:</p>
+
+<pre><code class="language-php">#[Type(['union' =&gt; ['T', 'int', null]])]
+</code></pre>
+
+<p>For now the second example <code>array&lt;int,string&gt;</code> remains as before:</p>
+
+<pre><code class="language-php">#[Type(['int' =&gt; 'T'])]
+</code></pre>
+
+<p>The third <code>array{int: int, name: string}</code> becomes:</p>
+
+<pre><code class="language-php">#[Type(['shape' =&gt; ['int' =&gt; 'int', 'name' =&gt; 'string']])]
+</code></pre>
+
+<p>Example 4 <code>array&lt;0: int, 1: T&gt;</code>:</p>
+
+<pre><code class="language-php">#[Type('shape' =&gt; [0 =&gt;'int', 1 =&gt; 'string']])]
+</code></pre>
+
+<p>This is progress. There is no ambiguity. Unfortunately the examples are more verbose.</p>
+
+<p>Let's continue with example 5 <code>class-string&lt;T&gt;</code>:</p>
+
+<pre><code class="language-php">#[Type(['class-string' =&gt; 'T'])]
+</code></pre>
+
+<p>As for example 6 <code>Queue&lt;T&gt;</code>. This could work:</p>
+
+<pre><code class="language-php">#[Type([Queue::class =&gt; 'T'])]
+</code></pre>
+
+<p>How about example 7 <code>ArrayCollection&lt;K,V&gt;</code>:</p>
+
+<pre><code class="language-php">#[Type([ArrayCollection::class =&gt; ['K', 'V'])]
+</code></pre>
+
+<p>Contrast this with example 2. These are similar in intent; they define the type for key and value, however they look very different:</p>
+
+<pre><code class="language-php">#[Type(['K' =&gt; 'V])]
+#[Type([ArrayCollection::class =&gt; ['K', 'V'])]
+</code></pre>
+
+<p>Perhaps it could be argued that <code>['K' =&gt; 'V']</code> is a shortcut for <code>['array' =&gt; ['K', 'V']]</code>?</p>
+
+<p>Let's compare a few examples of using strings</p>
+
+<p>String version:</p>
+
+<pre><code class="language-php">#[Type("ArrayCollection&lt;K,V&gt;")]
+</code></pre>
+
+<p>Becomes:</p>
+
+<pre><code class="language-php">#[Type([ArrayCollection::class =&gt; ['K', 'V'])]
+</code></pre>
+
+<p>Consider a complex, and somewhat contrived, example:</p>
+
+<pre><code class="language-php">#[Type("array{0: int, employees: array&lt;string,Person::class&gt;, type: class-string&lt;T&gt;, data: array&lt;int,T&gt;}|null")]
+</code></pre>
+
+<p>Becomes:</p>
+
+<pre><code class="language-php">#[Type(['union' =&gt; ['shape' =&gt; [0 =&gt; 'int', 'employees' =&gt; ['string' =&gt;  Person::class], 'type' =&gt; ['class-string' =&gt; 'T'], 'data' =&gt; ['int' =&gt;  'T'], ], null]])]
+</code></pre>
+
+<p>Even with this system there are still ambiguities. <code>shape</code> and <code>union</code> have become reserved words.</p>
+
+<pre><code class="language-php">#[Type(['shape' =&gt; ['shape' =&gt; ['string' =&gt; 'string'], 'area' =&gt; 'int']])]
+</code></pre>
+
+<p>Does this mean:</p>
+
+<pre><code class="language-php">array{shape: array&lt;int,string&gt;, area: int}
+</code></pre>
+
+<p>Or</p>
+
+<pre><code class="language-php">array{0: array{string: string}, array: int}
+</code></pre>
+
+<p>Of course, you can pick a different name. Using <code>array-shape</code> instead of <code>shape</code> will probably result in less chance of a name collision, but the fundamental problem still exists.
+This is probably one of many issues. It's safe to say this is not a viable solution.</p>
+
+<h4>Attempt 3</h4>
+
+<p>Instead of just the attribute <code>#[Type]</code>, have others too, e.g. <code>#[Union]</code>, <code>#[ArrayShape]</code> and no doubt others.</p>
+
+<p>This is a non-starter. It would be impossible to describe an array or array shapes. <code>array&lt;int, array{name:string, age:int}&gt;</code></p>
+
+<h4>Attempt 4</h4>
+
+<p>A more drastic measure is to create an RFC to allow more scope for what can be used as arguments for attributes. 
+There are many disadvantages to this. Firstly the earliest this could happen is for PHP 8.1, at the time of writing a year away. 
+Secondly if the main use case for this is to support generics, then I think it would be better adding the notation to the language, 
+even if only used by static analysis and not the run time. E.g.</p>
+
+<pre><code class="language-php">class Queue&lt;T&gt; 
+{
+    public function add(T $item): void { /* implementation */ }
+
+    public function next(): T { /* implementation */ }
+}
+</code></pre>
+
+<p>It's a controversial suggestion. I made it at <a href="https://www.youtube.com/watch?v=N2PENQpQVjQ&amp;feature=youtu.be&amp;t=2324">PHP-UK conference</a> in Feb 2020, 
+and a couple of people thought it wasn't wise. I think I agree with them!</p>
+
+<p>Let's disregard this option now.</p>
+
+<h3>Complex attributes conclusions</h3>
+
+<p>Given the constraints placed of what is a legal argument for an Attribute, any attempt at documenting information required by generics is likely to be complicated and unintuitive.</p>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<p>The only 2 sensible methods for documenting are:</p>
+
+<ul>
+<li>docblocks</li>
+<li>attributes that contain the same information as in the docblock</li>
+</ul>
+
+<p>The notation used for expressing generics, array shapes and unions are intuitive to those who have experience of other programming languages that use generics. 
+It would be sensible to have a standard that follows other languages rather than inventing something entirely new for PHP.</p>
+
+<p>The benefits of the attributes over docblocks include:</p>
+
+<ul>
+<li>Versioning is possible.</li>
+<li>Does not pollute docblocks with metadata needed for generics.</li>
+</ul>
+
+<p>Given that docblocks are the de facto standard, both should be supported going forward.</p>
+
+<h2 id="comments-corrections-feedback-etc">Comments, corrections, feedback</h2>
+
+<p>Drop me a DM on <a href="https://twitter.com/DaveLiddament">twitter</a>.</p>
+
+        </div>
+
+
+    </div>
+    <!-- /.row -->
+
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">
+            Copyright &copy; Dave Liddament 2018-2020
+            <a class="social-circle" href="https://twitter.com/DaveLiddament"><i class="fa fa-twitter"></i></a>
+            <a class="social-circle" href="https://github.com/DaveLiddament"><i class="fa fa-github"></i></a>
+            <a class="social-circle" href="https://www.linkedin.com/in/daveliddament/"><i
+                        class="fa fa-linkedin"></i></a>
+        </p>
+    </div>
+    <!-- /.container -->
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/bootstrap.bundle.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</body>
+
+</html>
