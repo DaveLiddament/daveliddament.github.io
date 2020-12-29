@@ -115,8 +115,8 @@ class Queue
 
 <p>Example using attributes (for code that is only compatible with PHP8):</p>
 
-<pre><code class="language-php">use Generics\v1\Template;
-use Generics\v1\Type;
+<pre><code class="language-php">use StaticAnalysis\Generics\v1\Template;
+use StaticAnalysis\Generics\v1\Type;
 
 #[Template("T", "object")]
 class Queue
@@ -264,22 +264,22 @@ class Queue { ... }
 
 <p>It is possible to restrict templates to be of a certain type. E.g.</p>
 
-<pre><code class="language-php">    /** @template T of Animal */
-    interface AnimalGame { /* some code */ }
+<pre><code class="language-php">/** @template T of Animal */
+interface AnimalGame { /* some code */ }
 </code></pre>
 
 <p>The <code>#[Template]</code> attribute takes an optional 2nd argument. The restriction of the template is the 2nd argument. 
 The docblock example would become:</p>
 
-<pre><code class="language-php">    #[Template("T", "Animal")]
-    interface AnimalGame {  /* some code */ }
+<pre><code class="language-php">#[Template("T", "Animal")]
+interface AnimalGame {  /* some code */ }
 </code></pre>
 
 <h4>Definitions of Attributes</h4>
 
 <p><strong>Template</strong></p>
 
-<pre><code class="language-php">namespace Generics\v1;
+<pre><code class="language-php">namespace StaticAnalysis\Generics\v1;
 
 use Attribute;
 
@@ -295,7 +295,7 @@ class Template
 
 <p><strong>Type</strong></p>
 
-<pre><code class="language-php">namespace Generics\v1;
+<pre><code class="language-php">namespace StaticAnalysis\Generics\v1;
 
 use Attribute;
 
@@ -310,7 +310,7 @@ class Type
 
 <p>Other attributes are also required. These include <code>#[Extends]</code> and <code>#[Implements]</code>.</p>
 
-<p><strong>NOTE:</strong> The namespace <code>Generics\v1</code> is a placeholder. Assuming this ends up as a PSR then it could be <code>Psr\Generics\v1</code>.</p>
+<p><strong>NOTE:</strong> The namespace <code>StaticAnalysis\Generics\v1</code> is a placeholder. Assuming this ends up as a PSR then it could be <code>Psr\Generics\v1</code>.</p>
 
 <h4>Pros</h4>
 
