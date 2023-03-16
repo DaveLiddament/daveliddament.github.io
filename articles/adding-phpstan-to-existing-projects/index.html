@@ -71,25 +71,19 @@
             <hr>
 
             <p>Do you want start using <a href="https://phpstan.org">PHPStan</a> on your projects, but are unsure if your team will be on board?
-Inspired by <a href="https://twitter.com/ediar">@ediar</a>'s <a href="https://twitter.com/ediar/status/1618897483513626624">tweet</a></p>
-
-<blockquote>
-  <p>Any advice to get my coworkers into static analysis? They think it requires too many type comments for just defensive programming, and is not worth it.</p>
-</blockquote>
+Inspired by <a href="https://twitter.com/ediar">@ediar</a>'s <a href="https://twitter.com/ediar/status/1618897483513626624">tweet</a>: "Any advice to get my coworkers into static analysis? They think it requires too many type comments for just defensive programming, and is not worth it."</p>
 
 <p>I thought I'd share my experience of introducing PHPStan to existing projects.</p>
 
 <p>The steps I recommend are:</p>
 
-<ul>
-<li><a href="#sell-the-dream-but-manage-expectations">Sell the dream but manage expectations</a></li>
-<li><a href="#whats-the-projects-current-type-coverage">Assess the current type coverage</a></li>
-<li><a href="#initial-scan">Initial scan</a></li>
-<li><a href="#soft-introduction">Soft launch</a></li>
-<li><a href="#its-ci-time">Add to CI - full launch</a></li>
-</ul>
+<p>1.<a href="#step-1--sell-the-dream-but-manage-expectations">Sell the dream but manage expectations</a>
+2.<a href="#step-2--whats-the-projects-current-type-coverage">Assess the current type coverage</a>
+3.<a href="#step-3--initial-scan">Initial scan</a> 
+4.<a href="#step-4--soft-introduction">Soft launch</a>
+5.<a href="#step-5--its-ci-time">Add to CI - full launch</a></p>
 
-<h2>Sell the dream but manage expectations</h2>
+<h2>Step 1: Sell the dream but manage expectations</h2>
 
 <p>As with any new tool, some people are going super keen and others will push back hard. 
 For those who need a bit of convincing, it is important that they understand the eventual benefits and for you to acknowledge there will be a few bumps along the way.</p>
@@ -137,7 +131,7 @@ You can also use PHPStan extensions to give you features that other languages ha
 <p>Probably the biggest benefit of all is that you can write your own PHPStan <a href="https://phpstan.org/developing-extensions/rules">custom rules</a> to enforce your own project's conventions automatically.
 This is very powerful, especially for larger projects with many developers.</p>
 
-<h2>What's the projects current type coverage?</h2>
+<h2>Step 2: What's the projects current type coverage?</h2>
 
 <p>Hopefully with the above, you've convinced your colleagues that PHPStan is at least worth considering.
 Now, it's time to add it to your project. 
@@ -180,8 +174,7 @@ Is the type coverage minimal, at least 50% or almost all?</p>
 
 <p>The approach to take depends on the state of the project and the level of type coverage.</p>
 
-<table>
-<thead>
+<table class="table">\n<thead>
 <tr>
   <th>New/Existing</th>
   <th>Coverage</th>
@@ -225,6 +218,8 @@ Is the type coverage minimal, at least 50% or almost all?</p>
 <p>I've got experience with many projects in the first 3 scenarios in the table above.
 I don't have any significant experience with the last one (existing project, low type coverage). If you have, I'd love to hear your experience and advice.</p>
 
+<h3>Install PHPStan</h3>
+
 <p>Install PHPStan in your project, following the <a href="https://phpstan.org/user-guide/getting-started">getting started guide</a>.
 Don't forget PHPStan should be analysing your source and test code.</p>
 
@@ -237,7 +232,7 @@ Don't forget PHPStan should be analysing your source and test code.</p>
         - tests
 </code></pre>
 
-<h2>Initial scan</h2>
+<h2>Step 3: Initial scan</h2>
 
 <p>The purpose of this step is to get PHPStan setup in a state that easy for other developers to start using.
 The more you do here, the easier it will be for other developers to get onboard. 
@@ -358,11 +353,11 @@ Add the PHPStan baseline to <code>.gitignore</code> so it doesn't get checked in
 
 <p>Commit the updated <code>.gitignore</code> file and any fixes you've made.</p>
 
-<h2>Soft introduction</h2>
+<h2>Step 4: Soft introduction</h2>
 
 <p>If you are on a greenfield project, skip this stage and move to the hard launch.</p>
 
-<p>Now that PHPStan is set up and working, it is time to introduce it to the team. For now PHPStan issues will not block the build.</p>
+<p>Now that PHPStan is set up and working, it is time to introduce it to the rest of the team. For now PHPStan issues will not block the build.</p>
 
 <h3>A new baseline a day, keeps the stress away. And the bugs at bay!</h3>
 
@@ -396,7 +391,7 @@ Hopefully this stage will demonstrate the value of PHPStan.</p>
 - Are they under pressure to deliver something with a tight deadline? If so, maybe hold off the soft introduction for the deadline has passed.
 - Do they understand the benefits? If not then rather than asserting your opinion, find out what problems they are trying to solve, and, where appropriate, link back to how PHPStan can help (but not in a "I told you so" way).</p>
 
-<h2>It's CI time</h2>
+<h2>Step 5: It's CI time</h2>
 
 <p>Once you've got most of the team on board, it is time to add PHPStan to your workflow.</p>
 
