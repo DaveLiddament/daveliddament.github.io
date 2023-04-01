@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Dave Liddament's technical blog">
+    <meta name="author" content="Dave Liddament">
+
+    <title>Dave Liddament</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../../css/custom.css" rel="stylesheet">
+    <link href="../../css/prism.css" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/4dad72476f.js" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="../../">Dave Liddament</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../">Home
+                                                    </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../talks">Talks
+                                                    </a>
+                    </li>
+                                    <li class="nav-item active">
+                        <a class="nav-link" href="../../articles">Articles
+                            <span class="sr-only">(current)</span>                        </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../sarb">SARB
+                                                    </a>
+                    </li>
+                            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    
+    <div class="row">
+
+        <!-- Post Content Column -->
+        <div class="col-lg-12">
+
+            <!-- Title -->
+            <h1 class="mt-4">Using AI to convert PHP engine from C to rust</h1>
+
+            <p class="date">April 1st 2023</p>
+            <hr>
+
+            <h1>Using AI to convert PHP language from C to Rust</h1>
+
+<p>Ask PHP developers what they most want next for the language, you'll get many answers.
+Rust as the PHP runtime is becoming an increasingly popular dream, currently it is written in C.
+If PHP was written today, it'd probably use Rust, not C. 
+This article talks about how I am converting the runtime from C to rust with the help of AI.</p>
+
+<p>Before we get into the details, here is a quick reminder what happens under the hood when you run PHP code. 
+There are several steps involved in converting from PHP code to code that is executed. 
+The code is first split into tokens. The tokens are converted to an Abstract Syntax Tree (AST). 
+The AST is then converted into op-codes. Finally, these op-codes executed by the PHP virtual machine.</p>
+
+<p>Rewriting the C runtime in another language is quite an undertaking. 
+Fortunately PHP provides has a rich suite of tests, in the form of <a href="https://www.phpinternalsbook.com/tests/phpt_file_structure.html">phpt files</a>.</p>
+
+<p>PHP also huge numbers of applications and libraries with high coverage test suites. 
+As part of this project we have used the 982 of the most popular (by download count on packagist) PHP projects that have a high coverage test PHPUnit test suite.</p>
+
+<p>The goal of this project is for every test from both above sources to pass with the rust engine.</p>
+
+<p>Prior to this project, the last time I looked at any C code was 18 years ago. 
+I'd hoped that I'd simply be able to read the C code and write the corresponding code in rust.
+Jumping in to PHP's C code was quite a shock. It was certainly beyond my comprehension.</p>
+
+<h2>It's AI time</h2>
+
+<p>I'd heard of people using ChatbotGPT to convert one language to another.
+My next step was to pass the C code in chunks to Chatbot API and ask it for the Rust equivalent. 
+This didn't work at all. Chatbot can convert small snippets of code, but it is no good for whole codebases. 
+There was no easy way to split up the C code into small snippets.</p>
+
+<p>However, using ChatbotGPT to turn <a href="https://github.com/nikic/PHP-Parser">PHP Parser</a> code from PHP into rust, class at a time, was more fruitful. 
+The first few classes took quite a bit of manual work. However feeding back the results to Chatbot, meant it did seem to "learn".
+It was pretty impressive, to be honest.</p>
+
+<p>The next stage was converting the AST to op-codes. 
+There are a <a href="https://php.watch/articles/php-dump-opcodes">few ways</a> to dump out op codes. 
+The first task was to generate a test suite of mappings between PHP code, AST representation and expected op codes. 
+This dataset was generated from PHP test code and the 982 applications identified above.
+The AST and expected opcodes were converted to a standard JSON format.</p>
+
+<p>The following steps were automated. It is basically standard TDD red/green/refactor flow.</p>
+
+<ul>
+<li>Inputs and expected outputs were fed in turn to Chatbot to ask it to generate Rust code to make the conversion.</li>
+<li>After each iteration the input and expected output was added to the rust test suite, as was the generated code.</li>
+<li>The rust test suite was run after each iteration. Any failures passed back to chatbot to ask to fix</li>
+<li>The whole rust codebase was passed to chatbot to ask it to refactor.</li>
+<li>Tests were run and failures passed back to chatbot to fix.</li>
+</ul>
+
+<p>If any of the above steps failed then I was alerted via a sentry alert. I'd have to make manual fixes before continuing the process.</p>
+
+<p>Currently, about 75% of the tests are completed. The remaining 25% are proving to be pretty challenging. 
+This work is still ongoing.</p>
+
+<p>Running parallel is writing a VM to run the generated opcodes. There are about <a href="https://github.com/php/php-src/blob/master/Zend/zend_vm_opcodes.h">200 opcodes</a>.
+Most are quite simple to implement. Infact it seemed here was a case that writing code directly, rather than trying to convert existing code was easier. 
+Github co-pilot and Chat GPT still helped, speed up the process. There are still a few complex bits, mainly around arrays that need finishing off.</p>
+
+<p>Incredibly this whole process works! We're currently well beyond the hello world application. 27% of all tests pass!</p>
+
+<h2>Conclusions</h2>
+
+<p>This project is still not complete, but it looks like it is possible. Most of the code is written exclusively or heavily helped by AI.
+The code generated, even with Chatbot refactoring, is not the most readable.
+But does this matter? As long as the test suite is comprehensive and all tests pass is this OK?
+The future could well be developers writing expectations and AI doing the rest.</p>
+
+<p>Once I've finished I'll release the code on github.</p>
+
+<p>Watch this space.</p>
+
+        </div>
+
+
+    </div>
+    <!-- /.row -->
+
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">
+            Copyright &copy; Dave Liddament 2018-2023
+            <a class="social-circle" href="https://twitter.com/DaveLiddament"><i class="fa-brands fa-twitter"></i></a>
+            <a class="social-circle" href="https://github.com/DaveLiddament"><i class="fa-brands fa-github"></i></a>
+            <a class="social-circle" href="https://www.linkedin.com/in/daveliddament/"><i
+                        class="fa-brands fa-linkedin"></i></a>
+            <a class="social-circle" rel="me" href="https://phpc.social/@DaveLiddament"><i class="fa-brands fa-mastodon"></i></a>
+        </p>
+    </div>
+    <!-- /.container -->
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/bootstrap.bundle.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</body>
+
+</html>
