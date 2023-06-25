@@ -65,12 +65,16 @@
         <div class="col-lg-12">
 
             <!-- Title -->
-            <h1 class="mt-4">Using AI to convert PHP engine from C to rust</h1>
+            <h1 class="mt-4">Using AI to convert PHP engine from C to Rust</h1>
+
 
             <p class="date">April 1st 2023</p>
             <hr>
 
-            <h1>Using AI to convert PHP language from C to Rust</h1>
+            
+            <blockquote>
+  <p>UPDATE: This was published on April 1st, I'm afraid it is an April Fool.</p>
+</blockquote>
 
 <p>Ask PHP developers what they most want next for the language, you'll get many answers.
 Rust as the PHP runtime is becoming an increasingly popular dream, currently it is written in C.
@@ -96,13 +100,13 @@ Jumping in to PHP's C code was quite a shock. It was certainly beyond my compreh
 
 <h2>It's AI time</h2>
 
-<p>I'd heard of people using ChatbotGPT to convert one language to another.
-My next step was to pass the C code in chunks to Chatbot API and ask it for the Rust equivalent. 
-This didn't work at all. Chatbot can convert small snippets of code, but it is no good for whole codebases. 
+<p>I'd heard of people using ChatGPT to convert one language to another.
+My next step was to pass the C code in chunks to ChatGPT API and ask it for the Rust equivalent. 
+This didn't work at all. ChatGPT can convert small snippets of code, but it is no good for whole codebases. 
 There was no easy way to split up the C code into small snippets.</p>
 
-<p>However, using ChatbotGPT to turn <a href="https://github.com/nikic/PHP-Parser">PHP Parser</a> code from PHP into rust, class at a time, was more fruitful. 
-The first few classes took quite a bit of manual work. However feeding back the results to Chatbot, meant it did seem to "learn".
+<p>However, using ChatGPT to turn <a href="https://github.com/nikic/PHP-Parser">PHP Parser</a> code from PHP into rust, class at a time, was more fruitful. 
+The first few classes took quite a bit of manual work. However feeding back the results to ChatGPT, meant it did seem to "learn".
 It was pretty impressive, to be honest.</p>
 
 <p>The next stage was converting the AST to op-codes. 
@@ -114,11 +118,11 @@ The AST and expected opcodes were converted to a standard JSON format.</p>
 <p>The following steps were automated. It is basically standard TDD red/green/refactor flow.</p>
 
 <ul>
-<li>Inputs and expected outputs were fed in turn to Chatbot to ask it to generate Rust code to make the conversion.</li>
+<li>Inputs and expected outputs were fed in turn to ChatGPT to ask it to generate Rust code to make the conversion.</li>
 <li>After each iteration the input and expected output was added to the rust test suite, as was the generated code.</li>
-<li>The rust test suite was run after each iteration. Any failures passed back to chatbot to ask to fix</li>
-<li>The whole rust codebase was passed to chatbot to ask it to refactor.</li>
-<li>Tests were run and failures passed back to chatbot to fix.</li>
+<li>The rust test suite was run after each iteration. Any failures passed back to ChatGPT to ask to fix</li>
+<li>The whole rust codebase was passed to ChatGPT to ask it to refactor.</li>
+<li>Tests were run and failures passed back to ChatGPT to fix.</li>
 </ul>
 
 <p>If any of the above steps failed then I was alerted via a sentry alert. I'd have to make manual fixes before continuing the process.</p>
@@ -135,7 +139,7 @@ Github co-pilot and Chat GPT still helped, speed up the process. There are still
 <h2>Conclusions</h2>
 
 <p>This project is still not complete, but it looks like it is possible. Most of the code is written exclusively or heavily helped by AI.
-The code generated, even with Chatbot refactoring, is not the most readable.
+The code generated, even with ChatGPT refactoring, is not the most readable.
 But does this matter? As long as the test suite is comprehensive and all tests pass is this OK?
 The future could well be developers writing expectations and AI doing the rest.</p>
 
