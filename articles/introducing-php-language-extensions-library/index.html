@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Dave Liddament's technical blog">
+    <meta name="author" content="Dave Liddament">
+
+    <title>Dave Liddament</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../../css/custom.css" rel="stylesheet">
+    <link href="../../css/prism.css" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/4dad72476f.js" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="../../">Dave Liddament</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../">Home
+                                                    </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../talks">Talks
+                                                    </a>
+                    </li>
+                                    <li class="nav-item active">
+                        <a class="nav-link" href="../../articles">Articles
+                            <span class="sr-only">(current)</span>                        </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../sarb">SARB
+                                                    </a>
+                    </li>
+                            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    
+    <div class="row">
+
+        <!-- Post Content Column -->
+        <div class="col-lg-12">
+
+            <!-- Title -->
+            <h1 class="mt-4">Introducing the PHP Language Extensions Library</h1>
+
+
+            <p class="date">September 19th 2025</p>
+            <hr>
+
+            
+                <!-- Preview Image -->
+                <img class="img-fluid rounded" src="../../img/php-language-extension-library.png" alt="PHP Language Extensions Library">
+
+                                <hr>
+
+            
+            <p>Have you ever had an idea about how to improve PHP? Or maybe you yearn for a feature that another language has, that hasn’t made it into PHP yet?</p>
+
+<p>If you’re really keen on an idea, then you can suggest it gets implemented via PHP’s <a href="https://wiki.php.net/rfc/howto">RFC process</a>.</p>
+
+<p>The RFC is, rightly, a long process with plenty of checks and balances in place. 
+This level of rigour is important; once a feature has been added to the language it's going to be there for years, if not decades so it is must be right.</p>
+
+<h2>There is another way...</h2>
+
+<p>The good news is that, for certain features, there is a quicker way to add them to the language.</p>
+
+<h2>An example</h2>
+
+<p>Imagine you have some code that does something that is, relatively, quite slow. 
+In one of my projects an example is sending an SMS. There is a <code>TextMessageSender</code> class. Behind the scenes this class makes an HTTP call to send an SMS, as it's an HTTP call, it might need to be retried.</p>
+
+<p>Typically work like this is best done by a queue system.</p>
+
+<p>Instead of application code calling <code>TextMessageSender</code> directly, it would put a message on a job queue (a quick process), and then get on with whatever else it needed to do.
+A queue processor, let's call it <code>TextMessageQueueProcessor</code> would call <code>TextMesssageSender</code>.</p>
+
+<p>It would be great to enforce that methods in <code>TextMesssageSender</code> could only be called by <code>TextMessageQueueProcessor</code> and not by any other code. 
+Unfortunately PHP's visibility modifiers (<code>public</code>, <code>protected</code> and <code>private</code> are not fine-grained enough for this).</p>
+
+<h2>Let's just be friends</h2>
+
+<p>Some languages, such at C++, have a concept of "friends". A method or states that they are “friends” with another class. The method can only be called from the class it is friends with.</p>
+
+<p>In our example we'd say that <code>TextMesssageSender</code>'s friend is <code>TextMessageQueueProcessor</code>. 
+This would mean that only <code>TextMessageQueueProcessor</code> could call methods in <code>TextMesssageSender</code>.</p>
+
+<h2>How do we do this in PHP without going through the RFC process</h2>
+
+<p>Advanced static analysis tools like PHPStan and Psalm analyse your codebase. These tools have a set of rules they run over the codebase they are analysing. They report any violations of the rules.</p>
+
+<p>Typically, you’d run static analysis tools on your codebase at the very least as part of your CI. Ideally, you’d run them as part of your workflow, before committing and pushing code.</p>
+
+<p>As well as all the predefined rules provided by the static analysis tools, it is also possible to create custom rules. One such custom rule could enforce “friend” visibility.</p>
+
+<p>Assuming we have a suitable custom rule to emulate friend functionality, we still need a way of telling the custom rule who is friends with whom. This is a great use-case for PHP attributes.</p>
+
+<p>To add the friend functionality, two things are required:</p>
+
+<ul>
+<li>A <code>#[Friend]</code> attribute that can be applied to a method.</li>
+<li>A custom rule that enforces the friend functionality.</li>
+</ul>
+
+<p>Back to our example, the code would look like this:</p>
+
+<pre><code class="php">#[Friend(TextMessageQueueProcessor::class)]
+class TextMessageSender
+{
+    // Methods
+}
+</code></pre>
+
+<p>The friend relationship is enforced not by PHP itself, but by a static analysis tool running custom rules.</p>
+
+<p>If you want to use this (and other new functionality) on your code, then look up <a href="https://github.com/DaveLiddament/php-language-extensions">PHP language extension library</a> and the <a href="https://github.com/DaveLiddament/phpstan-php-language-extensions">PHPStan extension</a>.</p>
+
+<h2>The formula for new features</h2>
+
+<p><code>Attributes + static analysis = new language features</code></p>
+
+<p>We can emulate new language features using static analysis custom rules. Where additional information is required, this is provided via PHP Attributes.</p>
+
+<p>Instead of relying on new features being added to the PHP language itself via the RFC process, we run static analysers with the custom rules on the codebase to enforce new language features.</p>
+
+<h2>Benefits</h2>
+
+<p>One major benefit of this approach is the speed new language features can be created. Once up to speed with writing custom rules, features like #Friend can be made in an afternoon.</p>
+
+<p>There is more flexibility to tweak the behaviour of the feature, once it actually is in a codebase. Contrast this with the RFC process, where it is important to get the feature right the first time. There is an argument that all features that could be implemented via static analysis, should be, at least initially.
+This allows it to get battle-tested in the real world and all the issues ironed out before it is finally added to the language via an RFC.</p>
+
+<h2>Drawbacks</h2>
+
+<p>There are a couple of drawbacks:</p>
+
+<p>Firstly you have to be running static analysis on your codebase.
+I’d argue that you should be doing this anyway, as it is so valuable.
+But if you’re creating libraries, there is no way to force your users to run static analysis.</p>
+
+<p>Secondly, this technique is not suitable for all features, e.g. it is not possible to change the syntax of the language.</p>
+
+<h2>What language features do you want?</h2>
+
+<p>Static analysers, like Psalm and PHPStan, are up there with PHPUnit and Composer, as some of the greatest tools in the PHP ecosystem.</p>
+
+<p>Hopefully, you’ve seen how static analysis tools running custom rules, can be used to create new PHP language features. What new language features would you like?</p>
+
+        </div>
+
+
+    </div>
+    <!-- /.row -->
+
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">
+            Copyright &copy; Dave Liddament 2018-2025
+            <a class="social-circle" href="https://twitter.com/DaveLiddament"><i class="fa-brands fa-twitter"></i></a>
+            <a class="social-circle" href="https://github.com/DaveLiddament"><i class="fa-brands fa-github"></i></a>
+            <a class="social-circle" href="https://www.linkedin.com/in/daveliddament/"><i
+                        class="fa-brands fa-linkedin"></i></a>
+            <a class="social-circle" rel="me" href="https://phpc.social/@DaveLiddament"><i class="fa-brands fa-mastodon"></i></a>
+        </p>
+    </div>
+    <!-- /.container -->
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/bootstrap.bundle.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</body>
+
+</html>
