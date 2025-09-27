@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Dave Liddament's technical blog">
+    <meta name="author" content="Dave Liddament">
+
+    <title>Dave Liddament</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../../css/custom.css" rel="stylesheet">
+    <link href="../../css/prism.css" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/4dad72476f.js" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="../../">Dave Liddament</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../">Home
+                                                    </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../talks">Talks
+                                                    </a>
+                    </li>
+                                    <li class="nav-item active">
+                        <a class="nav-link" href="../../articles">Articles
+                            <span class="sr-only">(current)</span>                        </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../sarb">SARB
+                                                    </a>
+                    </li>
+                            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    
+    <div class="row">
+
+        <!-- Post Content Column -->
+        <div class="col-lg-12">
+
+            <!-- Title -->
+            <h1 class="mt-4">Introducing the Friend attribute (example 1)</h1>
+
+
+            <p class="date">September 27th 2025</p>
+            <hr>
+
+            
+                <!-- Preview Image -->
+                <img class="img-fluid rounded" src="../../img/friend-1.png" alt="Code showing the Friend attribute using for creational patterns">
+
+                                <hr>
+
+            
+            <h1>Enforcing Creational Design Patterns with the Friend Attribute</h1>
+
+<p>Have you ever used <a href="https://en.wikipedia.org/wiki/Creational_pattern">creational design patterns</a> to create objects in PHP? (E.g. a <a href="https://en.wikipedia.org/wiki/Factory_method_pattern">Factory</a> or a <a href="https://en.wikipedia.org/wiki/Builder_pattern">Builder</a>.)
+If so, you'll probably want to ensure that the object is not created by using the <code>new</code> keyword. Instead, you'll want to enforce the object is <em>only</em> created by the relevant creational code.</p>
+
+<p>But how can this be enforced?</p>
+
+<p>PHP’s standard visibility modifiers (<code>public</code>, <code>protected</code>, <code>private</code>) aren’t fine-grained enough to enforce this.</p>
+
+<p>The good news is that, with the <a href="https://github.com/DaveLiddament/php-language-extensions">PHP language extensions library</a>, there’s now a way to be stricter about who can call a constructor or method. Enter the <code>#[Friend]</code> attribute.</p>
+
+<h2>An example</h2>
+
+<p>Let’s start with a simple <code>Person</code> class:</p>
+
+<pre><code class="php">class Person
+{
+    public function __construct(
+        private string $name,
+    ) {}
+
+    public function getName(): string
+    {
+        return $this-&gt;name;
+    }
+}
+</code></pre>
+
+<p>And a PersonFactory:</p>
+
+<pre><code class="php">class PersonFactory
+{
+    public function createPerson(string $name): Person
+    {
+        // Imagine validation or other setup here
+        return new Person($name);
+    }
+}
+</code></pre>
+
+<p>The intent is that all <code>Person</code> objects are created through the <code>PersonFactory</code>. But nothing stops someone doing this:</p>
+
+<pre><code class="php">$direct = new Person('Bob'); // Bypasses the factory
+</code></pre>
+
+<h2>Let’s just be friends</h2>
+
+<p>Other languages, like C++, have a concept of friends. A class or method can declare that only certain other classes are allowed to call it.</p>
+
+<p>That’s exactly what we need here. By making the <code>Person</code> constructor a “friend” of <code>PersonFactory</code>, we can enforce the correct creation path.</p>
+
+<pre><code class="php"><br />class Person
+{
+    #[Friend(PersonFactory::class)]
+    public function __construct(
+        private string $name,
+    ) {}
+
+    public function getName(): string
+    {
+        return $this-&gt;name;
+    }
+}
+</code></pre>
+
+<p>Now, if anyone tries to call <code>new Person('Bob')</code> outside of <code>PersonFactory</code>, static analysis (e.g. via PHPStan) will complain with this error:</p>
+
+<pre><code>Cannot call Person::__construct() from Demo.
+It can only be called from its friend: PersonFactory.
+</code></pre>
+
+<h3>Benefits</h3>
+
+<p>This approach has some clear upsides:</p>
+
+<ul>
+<li>Architectural rules enforced — Factories and builders can’t be bypassed.</li>
+<li>Better communication — The attribute makes intent explicit in the code.</li>
+<li>Static analysis support — PHPStan can spot violations before they get merged.</li>
+</ul>
+
+<h3>Drawbacks</h3>
+
+<p>There are some caveats too:</p>
+
+<ul>
+<li>Enforcement happens at analysis time, not runtime.</li>
+<li>You’ll need static analysis tools like PHPStan in your workflow (though you should be running these anyway).</li>
+<li>Overuse can make code more rigid — it’s best saved for places where the architectural rules matter.</li>
+</ul>
+
+<h2>Conclusion</h2>
+
+<p>The <code>#[Friend]</code> attribute gives us a way to enforce creational design patterns directly in our codebase.</p>
+
+<p>Instead of relying purely on documentation or developer discipline, we can move the rule into code, where it belongs. Factories and builders exist for a reason and with <code>#[Friend]</code>, we can make sure they’re always used.</p>
+
+<h2>Further reading</h2>
+
+<ul>
+<li><a href="https://github.com/DaveLiddament/php-language-extensions">PHP language extensions library</a></li>
+<li>A declined <a href="https://wiki.php.net/rfc/friend-classes">Friend RFC</a></li>
+</ul>
+
+        </div>
+
+
+    </div>
+    <!-- /.row -->
+
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">
+            Copyright &copy; Dave Liddament 2018-2025
+            <a class="social-circle" href="https://twitter.com/DaveLiddament"><i class="fa-brands fa-twitter"></i></a>
+            <a class="social-circle" href="https://github.com/DaveLiddament"><i class="fa-brands fa-github"></i></a>
+            <a class="social-circle" href="https://www.linkedin.com/in/daveliddament/"><i
+                        class="fa-brands fa-linkedin"></i></a>
+            <a class="social-circle" rel="me" href="https://phpc.social/@DaveLiddament"><i class="fa-brands fa-mastodon"></i></a>
+        </p>
+    </div>
+    <!-- /.container -->
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/bootstrap.bundle.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</body>
+
+</html>
