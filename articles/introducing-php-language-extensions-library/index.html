@@ -8,6 +8,21 @@
     <meta name="description" content="Dave Liddament's technical blog">
     <meta name="author" content="Dave Liddament">
 
+            <meta property="og:title" content="Introducing the PHP Language Extensions Library">
+        <meta property="og:description" content="It&#039;s possible to use static analysis to emulate new language features in PHP. This article examines how, and introduces the PHP Language Extension Library.">
+        <meta property="og:image" content="https://www.daveliddament.co.uk/img/php-language-extension-library.png">
+        <meta property="og:image:alt" content="PHP Language Extensions Library">
+        <meta property="og:url" content="https://www.daveliddament.co.uk/articles/introducing-php-language-extensions-library/">
+        <meta property="og:site_name" content="Dave Liddament's website">
+        <meta property="og:locale" content="en_GB">
+        <meta property="og:type" content="article">
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:site" content="@daveliddament">
+        <meta property="twitter:creator" content="@daveliddament">
+        <meta property="twitter:title" content="Introducing the PHP Language Extensions Library">
+        <meta property="twitter:description" content="It&#039;s possible to use static analysis to emulate new language features in PHP. This article examines how, and introduces the PHP Language Extension Library.">
+        <meta property="twitter:image" content="https://www.daveliddament.co.uk/img/php-language-extension-library.png">
+    
 
     <title>Dave Liddament</title>
 
@@ -74,7 +89,7 @@
 
             
                 <!-- Preview Image -->
-                <img class="img-fluid rounded" src="../../img/php-language-extension-library.png" alt="PHP Language Extensions Library">
+                <img class="img-fluid rounded article-image" src="../../img/php-language-extension-library.png" alt="PHP Language Extensions Library">
 
                                 <hr>
 
@@ -129,7 +144,7 @@ This would mean that only <code>TextMessageQueueProcessor</code> could call meth
 
 <p>Back to our example, the code would look like this:</p>
 
-<pre><code class="php">#[Friend(TextMessageQueueProcessor::class)]
+<pre><code class="language-php">#[Friend(TextMessageQueueProcessor::class)]
 class TextMessageSender
 {
     // Methods

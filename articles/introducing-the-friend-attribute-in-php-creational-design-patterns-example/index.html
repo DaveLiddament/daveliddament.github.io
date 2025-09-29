@@ -8,6 +8,21 @@
     <meta name="description" content="Dave Liddament's technical blog">
     <meta name="author" content="Dave Liddament">
 
+            <meta property="og:title" content="Introducing the Friend attribute (example 1)">
+        <meta property="og:description" content="Learn how the Friend attribute can be used to enforce the usage of creational design patterns.">
+        <meta property="og:image" content="https://www.daveliddament.co.uk/img/friend-1.png">
+        <meta property="og:image:alt" content="Code showing the Friend attribute usage with creational patterns">
+        <meta property="og:url" content="https://www.daveliddament.co.uk/articles/introducing-the-friend-attribute-in-php-creational-design-patterns-example/">
+        <meta property="og:site_name" content="Dave Liddament's website">
+        <meta property="og:locale" content="en_GB">
+        <meta property="og:type" content="article">
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:site" content="@daveliddament">
+        <meta property="twitter:creator" content="@daveliddament">
+        <meta property="twitter:title" content="Introducing the Friend attribute (example 1)">
+        <meta property="twitter:description" content="Learn how the Friend attribute can be used to enforce the usage of creational design patterns.">
+        <meta property="twitter:image" content="https://www.daveliddament.co.uk/img/friend-1.png">
+    
 
     <title>Dave Liddament</title>
 
@@ -74,7 +89,7 @@
 
             
                 <!-- Preview Image -->
-                <img class="img-fluid rounded" src="../../img/friend-1.png" alt="Code showing the Friend attribute using for creational patterns">
+                <img class="img-fluid rounded article-image" src="../../img/friend-1.png" alt="Code showing the Friend attribute usage with creational patterns">
 
                                 <hr>
 
@@ -94,7 +109,7 @@ If so, you'll probably want to ensure that the object is not created by using th
 
 <p>Let’s start with a simple <code>Person</code> class:</p>
 
-<pre><code class="php">class Person
+<pre><code class="language-php">class Person
 {
     public function __construct(
         private string $name,
@@ -109,7 +124,7 @@ If so, you'll probably want to ensure that the object is not created by using th
 
 <p>And a PersonFactory:</p>
 
-<pre><code class="php">class PersonFactory
+<pre><code class="language-php">class PersonFactory
 {
     public function createPerson(string $name): Person
     {
@@ -121,7 +136,7 @@ If so, you'll probably want to ensure that the object is not created by using th
 
 <p>The intent is that all <code>Person</code> objects are created through the <code>PersonFactory</code>. But nothing stops someone doing this:</p>
 
-<pre><code class="php">$direct = new Person('Bob'); // Bypasses the factory
+<pre><code class="language-php">$direct = new Person('Bob'); // Bypasses the factory
 </code></pre>
 
 <h2>Let’s just be friends</h2>
@@ -130,7 +145,7 @@ If so, you'll probably want to ensure that the object is not created by using th
 
 <p>That’s exactly what we need here. By making the <code>Person</code> constructor a “friend” of <code>PersonFactory</code>, we can enforce the correct creation path.</p>
 
-<pre><code class="php"><br />class Person
+<pre><code class="language-php"><br />class Person
 {
     #[Friend(PersonFactory::class)]
     public function __construct(

@@ -34,3 +34,8 @@ blockquote {
 h2 {
     margin-top: 1em;
 }
+
+.article-image {
+    margin: auto;
+    display: block;
+}
