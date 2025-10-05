@@ -100,7 +100,7 @@
 
 <p>Adding <code>#[MustUseResult]</code> (from the <a href="https://github.com/DaveLiddament/php-language-extensions">PHP language extensions library</a>) to a function or method means that the result must be used by the calling code.</p>
 
-<p>Consider the <code>Money</code> class like this:</p>
+<p>Consider a <code>Money</code> class like this:</p>
 
 <pre><code class="language-php">final class Money {
 
@@ -130,10 +130,6 @@ echo $money-&gt;cents; // Value is 10
 <pre><code>Result returned by method must be used
 </code></pre>
 
-<p>The correct way of using the <code>Money</code> class is:</p>
-
-<p>static analysis tool would report an error on the line with the call to <code>add</code> along</p>
-
 <p>The correct way of using the <code>add</code> method is:</p>
 
 <pre><code class="language-php">$money = new Money(10);
@@ -143,8 +139,6 @@ echo $updated-&gt;cents; // Value is 30
 
 <p>The<code>#[MustUseResult]</code> attribute helps developers use the code correctly.</p>
 
-<p>The good news is that, with the <a href="https://github.com/DaveLiddament/php-language-extensions">PHP language extensions library</a>, there’s now a way to be stricter about who can call a constructor or method. Enter the <code>#[Friend]</code> attribute.</p>
-
 <h2 id="consider-nodiscard-instead">Consider #[NoDiscard] instead</h2>
 
 <p>Since creating <code>#[MustUseResult]</code> PHP has introduced, from version 8.5, the <code>#[NoDiscard]</code> attribute. (<a href="https://wiki.php.net/rfc/marking_return_value_as_important">RFC</a>).</p>
@@ -152,6 +146,8 @@ echo $updated-&gt;cents; // Value is 30
 <p><code>#[NoDiscard]</code> and <code>#[MustUseResult]</code> do pretty much the same thing. A benefit of <code>#[NoDiscard]</code> is errors also are reported running the code and not just by static analysis.</p>
 
 <p>Even if you are running PHP under 8.5, PHPStan still understands <code>#[NoDiscard]</code> and will <a href="https://phpstan.org/r/103d7503-fd09-4822-b9c5-f15a1a80a5ce">report errors</a>.</p>
+
+<p>Using either <code>#[NoDiscard]</code> or <code>#[MustUseResult]</code> is a powerful way to document (to both developers and tools) the intention of how a method should be used, thus preventing bugs.</p>
 
 <h2>Related articles</h2>
 
