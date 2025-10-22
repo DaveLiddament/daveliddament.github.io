@@ -101,12 +101,13 @@ This is crucial for maintaining modularity and encapsulation while still enablin
 
 <p>For example, you might have a <code>PriceCalculator</code> class that the rest of the codebase should use. 
 Internally <code>PriceCalculator</code> might make use of  <code>DiscountCalculator</code> and <code>BundlePricingCalculator</code>. 
-It would make sense for all three classes to live in the same namespace as their behaviour is closely related. 
-Adding the <code>#[NamespaceVisibility]</code> modifier to <code>DiscountCalculator</code> and <code>BundlePricingCalculator</code> means that methods in these classes can only be called from other classes in teh same namespace.</p>
+It would make sense for all three classes to live in the same namespace as their behaviour is closely related.</p>
+
+<p>Adding the <code>#[NamespaceVisibility]</code> modifier to <code>DiscountCalculator</code> and <code>BundlePricingCalculator</code> means that methods in these classes can only be called from other classes in the same namespace.</p>
 
 <p>See the following example.</p>
 
-<pre><code class="php">namespace App\PriceCalculation {
+<pre><code class="language-php">namespace App\PriceCalculation {
 
     final readonly class PriceCalculator {
 
