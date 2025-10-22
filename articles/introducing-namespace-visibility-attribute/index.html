@@ -8,20 +8,20 @@
     <meta name="description" content="Dave Liddament's technical blog">
     <meta name="author" content="Dave Liddament">
 
-            <meta property="og:title" content="Introducing the MustUseResult attribute">
-        <meta property="og:description" content="Learn how the MustUseResult attribute can prevent coding mistakes.">
-        <meta property="og:image" content="https://www.daveliddament.co.uk/img/must-use-result.png">
-        <meta property="og:image:alt" content="Code showing the MustUseResult attribute usage">
-        <meta property="og:url" content="https://www.daveliddament.co.uk/articles/introducing-must-use-result-attribute/">
+            <meta property="og:title" content="Introducing the NamespaceVisibility attribute">
+        <meta property="og:description" content="Learn how the NamespaceVisibility attribute emulates the missing package visibility modifier.">
+        <meta property="og:image" content="https://www.daveliddament.co.uk/img/namespace-visibility.png">
+        <meta property="og:image:alt" content="Code showing the NamespaceVisibility attribute usage">
+        <meta property="og:url" content="https://www.daveliddament.co.uk/articles/introducing-namespace-visibility-attribute/">
         <meta property="og:site_name" content="Dave Liddament's website">
         <meta property="og:locale" content="en_GB">
         <meta property="og:type" content="article">
         <meta property="twitter:card" content="summary_large_image">
         <meta property="twitter:site" content="@daveliddament">
         <meta property="twitter:creator" content="@daveliddament">
-        <meta property="twitter:title" content="Introducing the MustUseResult attribute">
-        <meta property="twitter:description" content="Learn how the MustUseResult attribute can prevent coding mistakes.">
-        <meta property="twitter:image" content="https://www.daveliddament.co.uk/img/must-use-result.png">
+        <meta property="twitter:title" content="Introducing the NamespaceVisibility attribute">
+        <meta property="twitter:description" content="Learn how the NamespaceVisibility attribute emulates the missing package visibility modifier.">
+        <meta property="twitter:image" content="https://www.daveliddament.co.uk/img/namespace-visibility.png">
     
 
     <title>Dave Liddament</title>
@@ -81,71 +81,90 @@
         <div class="col-lg-12">
 
             <!-- Title -->
-            <h1 class="mt-4">Introducing the MustUseResult attribute</h1>
+            <h1 class="mt-4">Introducing the NamespaceVisibility attribute</h1>
 
 
-            <p class="date">October 5th 2025</p>
+            <p class="date">October 21st 2025</p>
             <hr>
 
             
                 <!-- Preview Image -->
-                <img class="img-fluid rounded article-image" src="../../img/must-use-result.png" alt="Code showing the MustUseResult attribute usage">
+                <img class="img-fluid rounded article-image" src="../../img/namespace-visibility.png" alt="Code showing the NamespaceVisibility attribute usage">
 
                                 <hr>
 
             
-            <p>The <code>#[MustUseResult]</code> attribute prevents subtle bugs, however due to a <a href="https://wiki.php.net/rfc/marking_return_value_as_important">recent RFC</a> I'd recommend <a href="#consider-nodiscard-instead">another approach</a> going forward.</p>
+            <p>The <code>#[NamespaceVisibility]</code> attribute emulates PHP's missing namespace/package visibility modifier that many other languages have.</p>
 
-<p>Adding <code>#[MustUseResult]</code> (from the <a href="https://github.com/DaveLiddament/php-language-extensions">PHP language extensions library</a>) to a function or method means that the result must be used by the calling code.</p>
+<p>Package or Namespace visibility allows related classes to collaborate internally without exposing their details to the outside world.
+This is crucial for maintaining modularity and encapsulation while still enabling tight cooperation between classes that are part of the same subsystem.</p>
 
-<p>Consider a <code>Money</code> class like this:</p>
+<p>For example, you might have a <code>PriceCalculator</code> class that the rest of the codebase should use. 
+Internally <code>PriceCalculator</code> might make use of  <code>DiscountCalculator</code> and <code>BundlePricingCalculator</code>. 
+It would make sense for all three classes to live in the same namespace as their behaviour is closely related. 
+Adding the <code>#[NamespaceVisibility]</code> modifier to <code>DiscountCalculator</code> and <code>BundlePricingCalculator</code> means that methods in these classes can only be called from other classes in teh same namespace.</p>
 
-<pre><code class="language-php">final class Money {
+<p>See the following example.</p>
 
-  public function __construct(public readonly int $cents)
-  {}
+<pre><code class="php">namespace App\PriceCalculation {
 
-  #[MustUseResult]
-  public function add(int $cents): self
-  {
-     return new self($cents + $this-&gt;cents);
-  }
+    final readonly class PriceCalculator {
+
+        public function __construct()
+            private DiscountCalculator $discountCalculator,
+            private BundlePricingCalculator $bundlePricingCalculator,
+        ) {}
+
+        public function calculatePrice(Basket $basket): Price {
+            $price = new Price($basket-&gt;asFullPrice);
+
+            // ✅DiscountCalculator has NamespaceVisibility and is in the same namespace.
+            $price = $this-&gt;discountCalculator-&gt;applyDiscount($price, $basket); 
+
+            return $price;   
+        } 
+    }
+
+    #[NamespaceVisibility]
+    final readonly class DiscountCalculator {
+        public function applyDiscount(Price $price, Basket $basket): Price {
+           // ... implementation ...
+        }
+    }
+
+} 
+
+namespace App\AnotherNamespace {
+
+    final readonly class AClass {
+        public function __construct()
+            private PriceCalculator $priceCalculator,
+            private DiscountCalculator $discountCalculator,
+        ) {}
+    }
+
+    public function calculate(Basket $basket): Price {
+
+        // ✅ PriceCalculator can be called from anywhere in the codebase
+        $price = $this-&gt;priceCalculator-&gt;calculatePrice($basket);
+
+        // ❌DiscountVisibility can only be called from the same namespace
+        return $this-&gt;discountCalculator-&gt;applyDiscount($price, $basket);
+    }
 }
 </code></pre>
 
-<p>Note that the <code>add</code> method returns a new instance of <code>Money</code>, rather than updating the existing object.</p>
+<h2>NamespaceVisibility can be added to classes or methods</h2>
 
-<p>On the face of it, the code below looks correct. However, the <code>$money::cents</code> property is not updated by calling the <code>add</code> method. 
-Instead <code>add</code> returns a new instance of the <code>Money</code> object, this new object has the <code>cents</code> property set to 30.</p>
+<p>The <code>#[NamespaceVisibility]</code> attribute can be added to class or a method.</p>
 
-<pre><code class="language-php">$money = new Money(10);
-$money-&gt;add(20); // This has no effect
-echo $money-&gt;cents; // Value is 10 
-</code></pre>
+<p>If added to a class, then all methods withing the class are treated as having Namespace Visibility.</p>
 
-<p>Due to the <code>#[MustUseResult]</code> attribute, the code above would have an error on the <code>$money-&gt;add(20);</code> line:</p>
+<p>If added to a method, then only that method is treated as having Namespace Visibility.</p>
 
-<pre><code>Result returned by method must be used
-</code></pre>
+<h2>Summary</h2>
 
-<p>The correct way of using the <code>add</code> method is:</p>
-
-<pre><code class="language-php">$money = new Money(10);
-$updated = $money-&gt;add(20);
-echo $updated-&gt;cents; // Value is 30 
-</code></pre>
-
-<p>The<code>#[MustUseResult]</code> attribute helps developers use the code correctly.</p>
-
-<h2 id="consider-nodiscard-instead">Consider #[NoDiscard] instead</h2>
-
-<p>Since creating <code>#[MustUseResult]</code> PHP has introduced, from version 8.5, the <code>#[NoDiscard]</code> attribute. (<a href="https://wiki.php.net/rfc/marking_return_value_as_important">RFC</a>).</p>
-
-<p><code>#[NoDiscard]</code> and <code>#[MustUseResult]</code> do pretty much the same thing. A benefit of <code>#[NoDiscard]</code> is errors also are reported running the code and not just by static analysis.</p>
-
-<p>Even if you are running PHP under 8.5, PHPStan still understands <code>#[NoDiscard]</code> and will <a href="https://phpstan.org/r/103d7503-fd09-4822-b9c5-f15a1a80a5ce">report errors</a>.</p>
-
-<p>Using either <code>#[NoDiscard]</code> or <code>#[MustUseResult]</code> is a powerful way to document (to both developers and tools) the intention of how a method should be used, thus preventing bugs.</p>
+<p>The <code>#[NamespaceVisibility]</code> attribute helps developers to, where appropriate, decompose their code into multiple collaborating classes whilst limiting the public API.</p>
 
 <h2>Related articles</h2>
 
