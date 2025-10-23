@@ -149,7 +149,7 @@ namespace App\AnotherNamespace {
         // ✅ PriceCalculator can be called from anywhere in the codebase
         $price = $this-&gt;priceCalculator-&gt;calculatePrice($basket);
 
-        // ❌DiscountVisibility can only be called from the same namespace
+        // ❌ DiscountVisibility can only be called from the same namespace
         return $this-&gt;discountCalculator-&gt;applyDiscount($price, $basket);
     }
 }
@@ -162,6 +162,122 @@ namespace App\AnotherNamespace {
 <p>If added to a class, then all methods withing the class are treated as having Namespace Visibility.</p>
 
 <p>If added to a method, then only that method is treated as having Namespace Visibility.</p>
+
+<h2>Sub-namespaces are allowed by default</h2>
+
+<p>Assume we have a <code>Person</code> class in the <code>App\Entity</code>. 
+The <code>Person::setName</code> has the <code>#[NamespaceVisibility]</code> attribute.</p>
+
+<p>E.g.</p>
+
+<pre><code class="language-php">namespace App\Entity;
+
+final class Person {
+
+    #[NamespaceVisibility]
+    public function updateName(string $name): void
+    {
+        // ... implementation ...
+    }
+}
+</code></pre>
+
+<p>By default, the <code>Person::setName</code> can be called from any class in <code>App\Entity</code> and the class in the sub-namespaces of <code>App\Entity</code>.</p>
+
+<p>E.g. this would be OK:</p>
+
+<pre><code class="language-php">namespace App\Entity\Helpers;
+
+final class PersonUpdater {
+
+    public function updatePersonName(Person $person, string $name): void
+    {
+        // ✅ Calling Person::update from a sub-namespace of App\Entity
+        $person-&gt;updateName($name);
+    } 
+}
+</code></pre>
+
+<p>If you only want to allow method calls from the same namespace and not sub-namespaces use the <code>excludeSubNamespaces</code> parameter.</p>
+
+<p>E.g. In the example below you'll only be able to call <code>Person::updateName</code> from the <code>App\Entity</code> namespace and NOT any sub-namespaces of <code>App\Entity</code>.</p>
+
+<pre><code class="language-php">namespace App\Entity;
+
+final class Person {
+
+    #[NamespaceVisibility(excludeSubNamespaces: true)]
+    public function updateName(string $name): void
+    {
+        // ... implementation ...
+    }
+}
+</code></pre>
+
+<p>This would no longer be allowed:</p>
+
+<pre><code class="language-php">namespace App\Entity\Helpers;
+
+final class PersonUpdater {
+
+    public function updatePersonName(Person $person, string $name): void
+    {
+        // ❌ Calling Person::update from a sub-namespace of App\Entity is not allowed.
+        $person-&gt;updateName($name);
+    } 
+}
+</code></pre>
+
+<h2>Specifying the namespace</h2>
+
+<p>By default, using <code>#[NamespaceVisibility]</code> restricts calls from the same namespace or sub-namespaces.
+It is possible to define a different namespace using the <code>namespace</code> parameter.</p>
+
+<p>E.g. In this example the <code>Person::__construct</code> method can only be called from the <code>App\Builders</code> namespace.</p>
+
+<pre><code class="language-php">namespace App\Entity;
+
+final class Person {
+
+    #[NamespaceVisibility(namespace: 'App\Builders')]
+    public function __construct(string $name): void
+    {
+        // ... implementation ...
+    }
+}
+</code></pre>
+
+<p>Given the above example, this would be OK:</p>
+
+<pre><code class="language-php">namespace App\Builders;
+
+final class PersonBuilder {
+
+    public string $name = 'Jane';
+
+    public function build(): Person
+    {
+        // ✅ Calling Person::__construct from namespace of App\Builders
+        return new Person($this-&gt;name);
+    }
+}
+</code></pre>
+
+<p>But this would not...</p>
+
+<pre><code class="language-php">namespace App\Services;
+
+final class PersonService {
+
+    public function createPerson(string $name): Person
+    {
+        // ❌ Calling Person::__construct from namespace App\Services is not allowed.
+        return new Person($name);
+    }
+}
+</code></pre>
+
+<p>It is possible to use both <code>namespace</code> and <code>excludeSubNamespaces</code> together.</p>
 
 <h2>Summary</h2>
 
