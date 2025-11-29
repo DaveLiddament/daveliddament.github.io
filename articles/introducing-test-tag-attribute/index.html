@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Dave Liddament's technical blog">
+    <meta name="author" content="Dave Liddament">
+
+            <meta property="og:title" content="Introducing the TestTag attribute">
+        <meta property="og:description" content="Learn how the TestTag attribute helps with testing.">
+        <meta property="og:image" content="https://www.daveliddament.co.uk/img/test-tag.png">
+        <meta property="og:image:alt" content="Code showing the TestTag attribute usage">
+        <meta property="og:url" content="https://www.daveliddament.co.uk/articles/introducing-test-tag-attribute/">
+        <meta property="og:site_name" content="Dave Liddament's website">
+        <meta property="og:locale" content="en_GB">
+        <meta property="og:type" content="article">
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:site" content="@daveliddament">
+        <meta property="twitter:creator" content="@daveliddament">
+        <meta property="twitter:title" content="Introducing the TestTag attribute">
+        <meta property="twitter:description" content="Learn how the TestTag attribute helps with testing.">
+        <meta property="twitter:image" content="https://www.daveliddament.co.uk/img/test-tag.png">
+    
+
+    <title>Dave Liddament</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../../css/custom.css" rel="stylesheet">
+    <link href="../../css/prism.css" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/4dad72476f.js" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="../../">Dave Liddament</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../">Home
+                                                    </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../talks">Talks
+                                                    </a>
+                    </li>
+                                    <li class="nav-item active">
+                        <a class="nav-link" href="../../articles">Articles
+                            <span class="sr-only">(current)</span>                        </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../sarb">SARB
+                                                    </a>
+                    </li>
+                            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    
+    <div class="row">
+
+        <!-- Post Content Column -->
+        <div class="col-lg-12">
+
+            <!-- Title -->
+            <h1 class="mt-4">Introducing the TestTag attribute</h1>
+
+
+            <p class="date">November 28th 2025</p>
+            <hr>
+
+            
+                <!-- Preview Image -->
+                <img class="img-fluid rounded article-image" src="../../img/test-tag.png" alt="Code showing the TestTag attribute usage">
+
+                                <hr>
+
+            
+            <p>Years ago I studied electronic engineering at the University of Bristol. Most electronic systems are composed of one or more chips (also known as Integrated Circuits - ICs).
+The ICs had connectors (pins or tags) to take inputs and give outputs. 
+Some of these ICs were very complex and testing them was difficult. They were both metaphorically and literally black boxes.
+To aid testing some ICs would have pins or tags that were only used for testing. These could act either as inputs; to put the chip into a certain state. 
+Or outputs, to get an, otherwise, internal value.</p>
+
+<p>It was these test pins or tags that were the inspiration for the <code>#[TestTag]</code> attribute.</p>
+
+<p>The <code>#[TestTag]</code> is added to methods to signify these methods should only be used for testing purposes.</p>
+
+<p>In one legacy project I work on our models use IDs that are set by the database. 
+We have unit tests for some of these models. The unit tests require the ID field to be set. No real database is available for the unit tests. 
+To get round this problem we added a <code>setId</code> method to the models. These methods should only ever be called by test code and never application code. 
+The <code>TestTag</code> enforces this requirement.</p>
+
+<p>E.g. the <code>Person::setId</code> method can only be called from test code.</p>
+
+<pre><code class="language-php">class Person {
+
+    // Set by database when creating the object in the database
+    private int $id;
+
+    #[TestTag]
+    public function setId(int $id): void {
+        $this-&gt;id = $id;
+    }
+}
+
+$person = new Person();
+
+// ❌ Calling methods with TestTag attribute is not allowed outside of tests.
+$person-&gt;setId(10); 
+</code></pre>
+
+<p>This would be allowed:</p>
+
+<pre><code class="language-php">final class PersonTest extends TestCase {
+
+    public function testHappyPath(): void
+    {
+        $person = new Person():
+
+        // ✅ Calling from a test case, this is allowed. 
+        $person-&gt;setId(10); 
+
+        // ... remaining test ...
+    }
+}
+</code></pre>
+
+<h2>Determining which code is test code</h2>
+
+<p>If you are using the <a href="https://github.com/DaveLiddament/phpstan-php-language-extensions">PHPStan PHP Language Extension plugin</a> you can define what is test code in the following ways:</p>
+
+<h3>Assume all classes ending with <code>Test</code> are test code</h3>
+
+<p>Adding the following to your <code>phpstan.neon</code> file will mean that all classes that end with <code>Test</code> will be deemed test code.</p>
+
+<pre><code class="yaml">parameters:
+  phpLanguageExtensions:
+    mode: className
+</code></pre>
+
+<h3>Assume all code in a certain namespace is test code</h3>
+
+<p>Adding the following to your <code>phpstan.neon</code> file allows you to specify the base namespace that all test code lives in. 
+In the example below any code in a namespace starting <code>App\Test</code> is deemed test code.</p>
+
+<pre><code class="yaml">parameters:
+  phpLanguageExtensions:
+    mode: namespace
+    testNamespace: 'App\Test'
+</code></pre>
+
+<p>See the PHPStan extension's <a href="https://github.com/DaveLiddament/phpstan-php-language-extensions/README.md">README</a> for full details.</p>
+
+<h2>TestTag vs other approaches</h2>
+
+<p>It is possible in PHP to access private member data, and there are libraries that support this.<br />
+In the example above we could not provide the <code>setId</code>. Instead, we'd use a library, or write PHP code, to bypass PHP's visibility checks and set <code>Person::id</code> directly.</p>
+
+<p>Rather than clever hacks that access private member data, I'd rather access is done via methods with the <code>TestTag</code> attribute for the following reasons:</p>
+
+<ul>
+<li>It makes everything explicit. Developers can see that, in this example, the <code>setId</code> method is used for testing only.</li>
+<li>If at some stage in the future no tests require the <code>setId</code> method, our IDE, or static analysis tools, will show that the method is no longer used and safe to delete.</li>
+<li>It offers encapsulation, if the property name is updated, none of the tests need change, as they'll still access the property via the <code>setId</code> method.</li>
+</ul>
+
+<h2>Summary</h2>
+
+<p>The <code>TestTag</code> can simplify or enable testing by exposing internal state within an object.</p>
+
+<p>The use of <code>TestTag</code> <em>probably</em> indicates a code smell. Every time you use it you should ask yourself, is there a better way of doing this. 
+That said, for gradually improving legacy code, <code>TestTag</code> could prove very useful.</p>
+
+<p>NOTE: In this <code>setId</code> example, I'd argue a better solution is to use a database friendly UUID for the model's ID, with the application and not the database responsible for generation the ID.</p>
+
+<h2>Related articles</h2>
+
+<ul>
+<li><a href="/articles/introducing-php-language-extensions-library/">Introducing the PHP language extensions library</a></li>
+<li><a href="/articles/introducing-the-friend-attribute-in-php-creational-design-patterns-example/">Enforcing creational design patterns with the Friend Attribute</a></li>
+<li><a href="/articles/introducing-must-use-result-attribute">MustUseResult attribute</a></li>
+<li><a href="/articles/introducing-namespace-visibility-attribute">NamespaceVisibility attribute</a></li>
+<li><a href="/articles/introducing-test-tag-attribute">TestTag attribute</a></li>
+</ul>
+
+        </div>
+
+
+    </div>
+    <!-- /.row -->
+
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">
+            Copyright &copy; Dave Liddament 2018-2025
+            <a class="social-circle" href="https://twitter.com/DaveLiddament"><i class="fa-brands fa-twitter"></i></a>
+            <a class="social-circle" href="https://github.com/DaveLiddament"><i class="fa-brands fa-github"></i></a>
+            <a class="social-circle" href="https://www.linkedin.com/in/daveliddament/"><i
+                        class="fa-brands fa-linkedin"></i></a>
+            <a class="social-circle" rel="me" href="https://phpc.social/@DaveLiddament"><i class="fa-brands fa-mastodon"></i></a>
+        </p>
+    </div>
+    <!-- /.container -->
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/bootstrap.bundle.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</body>
+
+</html>
