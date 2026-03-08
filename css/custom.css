@@ -39,3 +39,24 @@ h2 {
     margin: auto;
     display: block;
 }
+
+.tag-pill {
+    display: inline-block;
+    padding: 4px 12px;
+    margin: 3px;
+    background-color: #6c757d;
+    color: white;
+    border-radius: 50px;
+    font-size: 0.85em;
+    text-decoration: none;
+}
+
+.tag-pill:hover {
+    background-color: #5a6268;
+    color: white;
+    text-decoration: none;
+}
+
+.tag-pill.active {
+    background-color: #007bff;
+}
