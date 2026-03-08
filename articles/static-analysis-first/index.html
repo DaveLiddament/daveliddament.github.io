@@ -8,20 +8,20 @@
     <meta name="description" content="Dave Liddament's technical blog">
     <meta name="author" content="Dave Liddament">
 
-            <meta property="og:title" content="Introducing the MustUseResult attribute">
-        <meta property="og:description" content="Learn how the MustUseResult attribute can prevent coding mistakes.">
-        <meta property="og:image" content="https://www.daveliddament.co.uk/img/must-use-result.png">
-        <meta property="og:image:alt" content="Code showing the MustUseResult attribute usage">
-        <meta property="og:url" content="https://www.daveliddament.co.uk/articles/introducing-must-use-result-attribute/">
+            <meta property="og:title" content="A static analysis first approach to RFCs">
+        <meta property="og:description" content="Where appropriate should PHP updates start off in static analysis world before becoming part of the PHP language?">
+        <meta property="og:image" content="https://www.daveliddament.co.uk/img/static-analysis-first.png">
+        <meta property="og:image:alt" content="Code showing how the Friend attribute could be migrated to the PHP language.">
+        <meta property="og:url" content="https://www.daveliddament.co.uk/articles/static-analysis-first/">
         <meta property="og:site_name" content="Dave Liddament's website">
         <meta property="og:locale" content="en_GB">
         <meta property="og:type" content="article">
         <meta property="twitter:card" content="summary_large_image">
         <meta property="twitter:site" content="@daveliddament">
         <meta property="twitter:creator" content="@daveliddament">
-        <meta property="twitter:title" content="Introducing the MustUseResult attribute">
-        <meta property="twitter:description" content="Learn how the MustUseResult attribute can prevent coding mistakes.">
-        <meta property="twitter:image" content="https://www.daveliddament.co.uk/img/must-use-result.png">
+        <meta property="twitter:title" content="A static analysis first approach to RFCs">
+        <meta property="twitter:description" content="Where appropriate should PHP updates start off in static analysis world before becoming part of the PHP language?">
+        <meta property="twitter:image" content="https://www.daveliddament.co.uk/img/static-analysis-first.png">
     
 
     <title>Dave Liddament</title>
@@ -81,71 +81,81 @@
         <div class="col-lg-12">
 
             <!-- Title -->
-            <h1 class="mt-4">Introducing the MustUseResult attribute</h1>
+            <h1 class="mt-4">A static analysis first approach to RFCs</h1>
 
 
-            <p class="date">October 5th 2025</p>
+            <p class="date">November 10th 2025</p>
             <hr>
 
             
                 <!-- Preview Image -->
-                <img class="img-fluid rounded article-image" src="../../img/must-use-result.png" alt="Code showing the MustUseResult attribute usage">
+                <img class="img-fluid rounded article-image" src="../../img/static-analysis-first.png" alt="Code showing how the Friend attribute could be migrated to the PHP language.">
 
                                 <hr>
 
             
-            <p>The <code>#[MustUseResult]</code> attribute prevents subtle bugs, however due to a <a href="https://wiki.php.net/rfc/marking_return_value_as_important">recent RFC</a> I'd recommend <a href="#consider-nodiscard-instead">another approach</a> going forward.</p>
+            <p>One of the great things about PHP is the language is evolving. 
+Every November we're blessed with an update to PHP packed full of exciting new features.</p>
 
-<p>Adding <code>#[MustUseResult]</code> (from the <a href="https://github.com/DaveLiddament/php-language-extensions">PHP language extensions library</a>) to a function or method means that the result must be used by the calling code.</p>
+<p>The language evolves via the RFC process. 
+Some features (e.g. attributes) took several attempts and many years before they become part of the language.</p>
 
-<p>Consider a <code>Money</code> class like this:</p>
+<p>The RFC process is long and thorough for good reason. 
+Once a feature has been added to the language, it'll be around for years. 
+Get it wrong and developers have to live with the consequences.</p>
 
-<pre><code class="language-php">final class Money {
+<p>As illustrated in other articles in this series some language features, 
+e.g. <a href="/articles/introducing-the-friend-attribute-in-php-creational-design-patterns-example/">friend</a> 
+and <a href="/articles/introducing-namespace-visibility-attribute">namespace visibility</a> 
+can be emulated with static analysis.</p>
 
-  public function __construct(public readonly int $cents)
-  {}
+<p>There are many benefits of using static analysis to try out new language features:</p>
 
-  #[MustUseResult]
-  public function add(int $cents): self
-  {
-     return new self($cents + $this-&gt;cents);
-  }
+<ul>
+<li>It's quick; once you know your way around writing custom PHPStan rules, you can create language features like these in a few hours.</li>
+<li>It's possible to get feedback from real codebases and make tweaks as required.</li>
+<li>Ideas can be extensively tested before adding to the language.</li>
+<li>The benefits of the ideas can be demonstrated.</li>
+<li>By the time it is finally added, they'll be higher confidence the best implementation has been created.</li>
+</ul>
+
+<p>Proposing an RFC that has been extensively tested via emulation in static analysis would hopefully have a greater change of being implemented.</p>
+
+<h2>Should RFC ideas be mandated to start off in static analysis world?</h2>
+
+<p>For the reasons above, I think non-trivial language features that can be emulated with static analysis, should be emulated in static analysis, before becoming part of the language.
+Those who want the feature can get it via static analysis.
+When it is finally released, everyone will benefit for the best possible implementation.</p>
+
+<h2>From static analysis to the PHP language</h2>
+
+<p>There are ready examples of features that started off in static analysis world have moved to PHP. E.g. the <code>never</code> type.</p>
+
+<p>A couple of ideas from the PHP Language Extension Library have also made it to PHP.</p>
+
+<p>The <code>#[Override]</code> attribute, which in now in PHP.</p>
+
+<p>The <code>#[MustUseResult]</code> is similar to PHP 8.5's <code>#[NoDiscard]</code> attribute.</p>
+
+<p>NOTE: I am not, for one minute, claiming any credit for these attributes making their way to PHP. 
+Both my library and the relevant RFC authors were using good ideas from other languages.</p>
+
+<p>It is conceivable that one day concepts like <code>#[Friend]</code> might make it to PHP.</p>
+
+<p>Friend today:</p>
+
+<pre><code class="language-php">#[Friend(EmailMessageQueueProcessor::class)]
+class EmailSender {
+    // Implementation
 }
 </code></pre>
 
-<p>Note that the <code>add</code> method returns a new instance of <code>Money</code>, rather than updating the existing object.</p>
+<p>Friend in PHP 9?</p>
 
-<p>On the face of it, the code below looks correct. However, the <code>$money::cents</code> property is not updated by calling the <code>add</code> method. 
-Instead <code>add</code> returns a new instance of the <code>Money</code> object, this new object has the <code>cents</code> property set to 30.</p>
-
-<pre><code class="language-php">$money = new Money(10);
-$money-&gt;add(20); // This has no effect
-echo $money-&gt;cents; // Value is 10 
+<pre><code class="language-php">class EmailSender friend EmailMessageQueueProcessor {
+    // Implementation
+}
 </code></pre>
-
-<p>Due to the <code>#[MustUseResult]</code> attribute, the code above would have an error on the <code>$money-&gt;add(20);</code> line:</p>
-
-<pre><code>Result returned by method must be used
-</code></pre>
-
-<p>The correct way of using the <code>add</code> method is:</p>
-
-<pre><code class="language-php">$money = new Money(10);
-$updated = $money-&gt;add(20);
-echo $updated-&gt;cents; // Value is 30 
-</code></pre>
-
-<p>The<code>#[MustUseResult]</code> attribute helps developers use the code correctly.</p>
-
-<h2 id="consider-nodiscard-instead">Consider #[NoDiscard] instead</h2>
-
-<p>Since creating <code>#[MustUseResult]</code> PHP has introduced, from version 8.5, the <code>#[NoDiscard]</code> attribute. (<a href="https://wiki.php.net/rfc/marking_return_value_as_important">RFC</a>).</p>
-
-<p><code>#[NoDiscard]</code> and <code>#[MustUseResult]</code> do pretty much the same thing. A benefit of <code>#[NoDiscard]</code> is errors also are reported running the code and not just by static analysis.</p>
-
-<p>Even if you are running PHP under 8.5, PHPStan still understands <code>#[NoDiscard]</code> and will <a href="https://phpstan.org/r/103d7503-fd09-4822-b9c5-f15a1a80a5ce">report errors</a>.</p>
-
-<p>Using either <code>#[NoDiscard]</code> or <code>#[MustUseResult]</code> is a powerful way to document (to both developers and tools) the intention of how a method should be used, thus preventing bugs.</p>
 
 <h2>Related articles</h2>
 
@@ -157,6 +167,7 @@ echo $updated-&gt;cents; // Value is 30
 <li><a href="/articles/introducing-test-tag-attribute">TestTag attribute</a></li>
 <li><a href="/articles/introducing-restrict-trait-to-attribute">RestrictTraitTo attribute</a></li>
 <li><a href="/articles/introducing-injectable-version-attribute">InjectableVersion attribute</a></li>
+<li><a href="/articles/static-analysis-first">Static analysis first approach to RFCs</a></li>
 </ul>
 
         </div>

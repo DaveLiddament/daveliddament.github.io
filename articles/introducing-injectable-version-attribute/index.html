@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Dave Liddament's technical blog">
+    <meta name="author" content="Dave Liddament">
+
+            <meta property="og:title" content="Introducing the InjectableVersion attribute">
+        <meta property="og:description" content="Learn how the InjectableVersion attribute ensures that correct interface of class is used in Dependency Injection.">
+        <meta property="og:image" content="https://www.daveliddament.co.uk/img/injectable-version.png">
+        <meta property="og:image:alt" content="Code showing the InjectableVersion attribute usage">
+        <meta property="og:url" content="https://www.daveliddament.co.uk/articles/introducing-injectable-version-attribute/">
+        <meta property="og:site_name" content="Dave Liddament's website">
+        <meta property="og:locale" content="en_GB">
+        <meta property="og:type" content="article">
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:site" content="@daveliddament">
+        <meta property="twitter:creator" content="@daveliddament">
+        <meta property="twitter:title" content="Introducing the InjectableVersion attribute">
+        <meta property="twitter:description" content="Learn how the InjectableVersion attribute ensures that correct interface of class is used in Dependency Injection.">
+        <meta property="twitter:image" content="https://www.daveliddament.co.uk/img/injectable-version.png">
+    
+
+    <title>Dave Liddament</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../../css/custom.css" rel="stylesheet">
+    <link href="../../css/prism.css" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/4dad72476f.js" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="../../">Dave Liddament</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../">Home
+                                                    </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../talks">Talks
+                                                    </a>
+                    </li>
+                                    <li class="nav-item active">
+                        <a class="nav-link" href="../../articles">Articles
+                            <span class="sr-only">(current)</span>                        </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../sarb">SARB
+                                                    </a>
+                    </li>
+                            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    
+    <div class="row">
+
+        <!-- Post Content Column -->
+        <div class="col-lg-12">
+
+            <!-- Title -->
+            <h1 class="mt-4">Introducing the InjectableVersion attribute</h1>
+
+
+            <p class="date">November 3rd 2025</p>
+            <hr>
+
+            
+                <!-- Preview Image -->
+                <img class="img-fluid rounded article-image" src="../../img/injectable-version.png" alt="Code showing the InjectableVersion attribute usage">
+
+                                <hr>
+
+            
+            <p>Dependency Injection is an important design pattern that is widely used in the PHP community.
+It helps developers write loosely coupled that is easier to test.</p>
+
+<p>Suppose we have a <code>UserRegistration</code> service that depends on a <code>UserRepository</code>. 
+The <code>UserRepository</code> is passed to the <code>UserRegistration</code> service via its constructor.</p>
+
+<p>Often dependencies are expressed in terms of an interface or abstract class, rather than the concrete implementation.
+In this example we might have a <code>UserRepository</code> interface and a couple of implementations.
+The real implementation <code>DoctrineUserRepoistory</code> and a <code>InMemoryUserRespository</code> for testing.</p>
+
+<p>We need to ensure that the <code>UserRegistration</code>'s <code>__construct</code> method has the correct type. 
+In this case <code>UserRepository</code> and not one of the implementations.</p>
+
+<p>To do this we'd mark the <code>UserRespository</code> with the <code>#[InjectableVersion]</code> attribute. 
+Our code looks like this:</p>
+
+<pre><code class="language-php">#[InjectableVersion]
+interface UserRepository {
+  // ... method definitions ...
+}
+
+final class DoctrineUserRepository implements UserRepository {
+  // ... real implementation ...
+}
+
+final class InMemoryUserRepository implements UserRepository {
+  // ... test implementation ...
+}
+</code></pre>
+
+<p>Using <code>UserRespository</code> as the type declaration in <code>UserRegistration</code> is correct:</p>
+
+<pre><code class="language-php">final readonly class UserRegistration {
+
+    public function __construct(
+
+      // ✅ Injectable version used
+      private UserRepository $userRepository, 
+
+    } ()  
+}
+</code></pre>
+
+<p>Using one of the implementations is incorrect:</p>
+
+<pre><code class="language-php">final readonly class UserRegistration {
+
+    public function __construct(
+
+      // ❌ The injectable version has not been used 
+      private DoctrineUserRepository $userRepository, 
+
+    } ()  
+}
+</code></pre>
+
+<h2>What happens if no classes/interfaces are marked with InjectableVersion</h2>
+
+<p>In the case where no classes or interfaces in the class hierarchy are marked with InjectableVersion, no errors will be reported.</p>
+
+<p>Given the following:</p>
+
+<pre><code class="language-php">class Foo {}
+
+class Bar extends Foo {}
+</code></pre>
+
+<p>No issues would be reported here:</p>
+
+<pre><code class="language-php">final readonly class MyService {
+
+  public function __construct(
+    Foo $foo,
+    Bar $bar, 
+  ) {}
+</code></pre>
+
+<h2>Non constructor injected dependencies</h2>
+
+<p>A good rule of thumb is that dependencies should always be injected via the constructor.</p>
+
+<p>That said frameworks like Symfony allow dependencies to be injected into controller methods.</p>
+
+<pre><code class="language-php">final class PersonController {
+
+    #[Route("/people")]
+    public function list(
+        UserRepository $userRepository,
+    ): Response {
+        // ... implementation ... 
+    }        
+}
+</code></pre>
+
+<p>If we want to ensure that the InjectableVersion is used on methods add the <code>#[CheckInjectableVersion]</code> to the method.</p>
+
+<p>This is correct:</p>
+
+<pre><code class="language-php">final class PersonController {
+
+    #[CheckInjectableVersion]
+    #[Route("/people")]
+    public function list(
+        UserRepository $userRepository, // ✅ Injectable version used
+    ): Response {
+        // ... implementation ... 
+    }        
+}
+</code></pre>
+
+<p>And this will be marked as an error:</p>
+
+<pre><code class="language-php">final class PersonController {
+
+    #[CheckInjectableVersion]
+    #[Route("/people")]
+    public function list(
+        DoctrineUserRepository $userRepository, // ❌ The injectable version has not been used 
+    ): Response {
+        // ... implementation ... 
+    }        
+}
+</code></pre>
+
+<h2>Related articles</h2>
+
+<ul>
+<li><a href="/articles/introducing-php-language-extensions-library/">Introducing the PHP language extensions library</a></li>
+<li><a href="/articles/introducing-the-friend-attribute-in-php-creational-design-patterns-example/">Enforcing creational design patterns with the Friend Attribute</a></li>
+<li><a href="/articles/introducing-must-use-result-attribute">MustUseResult attribute</a></li>
+<li><a href="/articles/introducing-namespace-visibility-attribute">NamespaceVisibility attribute</a></li>
+<li><a href="/articles/introducing-test-tag-attribute">TestTag attribute</a></li>
+<li><a href="/articles/introducing-restrict-trait-to-attribute">RestrictTraitTo attribute</a></li>
+<li><a href="/articles/introducing-injectable-version-attribute">InjectableVersion attribute</a></li>
+</ul>
+
+        </div>
+
+
+    </div>
+    <!-- /.row -->
+
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">
+            Copyright &copy; Dave Liddament 2018-2026
+            <a class="social-circle" href="https://twitter.com/DaveLiddament"><i class="fa-brands fa-twitter"></i></a>
+            <a class="social-circle" href="https://github.com/DaveLiddament"><i class="fa-brands fa-github"></i></a>
+            <a class="social-circle" href="https://www.linkedin.com/in/daveliddament/"><i
+                        class="fa-brands fa-linkedin"></i></a>
+            <a class="social-circle" rel="me" href="https://phpc.social/@DaveLiddament"><i class="fa-brands fa-mastodon"></i></a>
+        </p>
+    </div>
+    <!-- /.container -->
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/bootstrap.bundle.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</body>
+
+</html>
