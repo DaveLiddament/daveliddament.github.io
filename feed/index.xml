@@ -9,231 +9,231 @@
             <title>A static analysis first approach to RFCs</title>
             <link>https://www.daveliddament.co.uk/articles/static-analysis-first/</link>
             <description>Where appropriate should PHP updates start off in static analysis world before becoming part of the PHP language?</description>
-            <pubDate>Sun, 08 Mar 2026 18:44:02 +0000</pubDate>
+            <pubDate>Sun, 08 Mar 2026 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/articles/static-analysis-first/</guid>
         </item>
         <item>
             <title>Introducing the InjectableVersion attribute</title>
             <link>https://www.daveliddament.co.uk/articles/introducing-injectable-version-attribute/</link>
             <description>Learn how the InjectableVersion attribute ensures that correct interface of class is used in Dependency Injection.</description>
-            <pubDate>Tue, 03 Mar 2026 18:44:02 +0000</pubDate>
+            <pubDate>Tue, 03 Mar 2026 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/articles/introducing-injectable-version-attribute/</guid>
         </item>
         <item>
             <title>Introducing the RestrictTraitTo attribute</title>
             <link>https://www.daveliddament.co.uk/articles/introducing-restrict-trait-to-attribute/</link>
             <description>Learn how the RestrictTraitTo attribute ensures that traits are used correctly.</description>
-            <pubDate>Thu, 26 Feb 2026 18:44:02 +0000</pubDate>
+            <pubDate>Thu, 26 Feb 2026 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/articles/introducing-restrict-trait-to-attribute/</guid>
         </item>
         <item>
             <title>Demystifying Dependency Injection in Symfony</title>
             <link>https://www.daveliddament.co.uk/talks/demystifying-dependency-injection-in-symfony/</link>
             <description>The Dependency Injection Component is a key part of all Symfony applications. It helps developers write decoupled and maintainable code.</description>
-            <pubDate>Fri, 05 Dec 2025 18:44:02 +0000</pubDate>
+            <pubDate>Fri, 05 Dec 2025 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/talks/demystifying-dependency-injection-in-symfony/</guid>
         </item>
         <item>
             <title>Introducing the TestTag attribute</title>
             <link>https://www.daveliddament.co.uk/articles/introducing-test-tag-attribute/</link>
             <description>Learn how the TestTag attribute helps with testing.</description>
-            <pubDate>Fri, 28 Nov 2025 18:44:02 +0000</pubDate>
+            <pubDate>Fri, 28 Nov 2025 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/articles/introducing-test-tag-attribute/</guid>
         </item>
         <item>
             <title>Introducing the NamespaceVisibility attribute</title>
             <link>https://www.daveliddament.co.uk/articles/introducing-namespace-visibility-attribute/</link>
             <description>Learn how the NamespaceVisibility attribute emulates the missing package visibility modifier.</description>
-            <pubDate>Tue, 21 Oct 2025 18:44:02 +0000</pubDate>
+            <pubDate>Tue, 21 Oct 2025 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/articles/introducing-namespace-visibility-attribute/</guid>
         </item>
         <item>
             <title>Introducing the MustUseResult attribute</title>
             <link>https://www.daveliddament.co.uk/articles/introducing-must-use-result-attribute/</link>
             <description>Learn how the MustUseResult attribute can prevent coding mistakes.</description>
-            <pubDate>Sun, 05 Oct 2025 18:44:02 +0000</pubDate>
+            <pubDate>Sun, 05 Oct 2025 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/articles/introducing-must-use-result-attribute/</guid>
         </item>
         <item>
             <title>Introducing the Friend attribute (example 1)</title>
             <link>https://www.daveliddament.co.uk/articles/introducing-the-friend-attribute-in-php-creational-design-patterns-example/</link>
             <description>Learn how the Friend attribute can be used to enforce the usage of creational design patterns.</description>
-            <pubDate>Sat, 27 Sep 2025 18:44:02 +0000</pubDate>
+            <pubDate>Sat, 27 Sep 2025 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/articles/introducing-the-friend-attribute-in-php-creational-design-patterns-example/</guid>
         </item>
         <item>
             <title>Introducing the PHP Language Extensions Library</title>
             <link>https://www.daveliddament.co.uk/articles/introducing-php-language-extensions-library/</link>
             <description>It&#039;s possible to use static analysis to emulate new language features in PHP. This article examines how, and introduces the PHP Language Extension Library.</description>
-            <pubDate>Sun, 14 Sep 2025 18:44:02 +0000</pubDate>
+            <pubDate>Sun, 14 Sep 2025 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/articles/introducing-php-language-extensions-library/</guid>
         </item>
         <item>
             <title>Custom PHPStan Rules: Automate Standards and Save Time</title>
             <link>https://www.daveliddament.co.uk/talks/custom-phpstan-rules/</link>
             <description>PHPStan increases code quality and reduces bugs. Learn how custom rules amplify these benefits.</description>
-            <pubDate>Wed, 30 Apr 2025 18:44:02 +0000</pubDate>
+            <pubDate>Wed, 30 Apr 2025 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/talks/custom-phpstan-rules/</guid>
         </item>
         <item>
             <title>Mastering automated refactoring with custom Rector rules (Tutorial)</title>
             <link>https://www.daveliddament.co.uk/talks/mastering-automated-refactoring-with-custom-rector-rules/</link>
             <description>Workshop to create your custom Rector rules</description>
-            <pubDate>Sun, 03 Nov 2024 18:44:02 +0000</pubDate>
+            <pubDate>Sun, 03 Nov 2024 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/talks/mastering-automated-refactoring-with-custom-rector-rules/</guid>
         </item>
         <item>
             <title>Elevating Legacy</title>
             <link>https://www.daveliddament.co.uk/talks/elevating-legacy/</link>
             <description>This talks through how to do upgrade legacy codebases.</description>
-            <pubDate>Wed, 14 Feb 2024 18:44:02 +0000</pubDate>
+            <pubDate>Wed, 14 Feb 2024 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/talks/elevating-legacy/</guid>
         </item>
         <item>
             <title>Adding PHPStan to existing projects: Sell the dream, manage the expectations</title>
             <link>https://www.daveliddament.co.uk/articles/adding-phpstan-to-existing-projects/</link>
             <description>This is the first part of a 4 part series of articles about adding PHPStan to existing projects. First we&#039;ll deal with team members who might object.</description>
-            <pubDate>Fri, 23 Jun 2023 18:44:02 +0000</pubDate>
+            <pubDate>Fri, 23 Jun 2023 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/articles/adding-phpstan-to-existing-projects/</guid>
         </item>
         <item>
             <title>Getting the most from static analysis</title>
             <link>https://www.daveliddament.co.uk/talks/getting-the-most-from-static-analysis/</link>
             <description>Learn how to write code to get the most from static analysis tools, so you reduce the bug count on projects you&#039;re working on.</description>
-            <pubDate>Tue, 23 May 2023 18:44:02 +0000</pubDate>
+            <pubDate>Tue, 23 May 2023 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/talks/getting-the-most-from-static-analysis/</guid>
         </item>
         <item>
             <title>Using AI to convert PHP engine from C to Rust</title>
             <link>https://www.daveliddament.co.uk/articles/converting-php-engine-to-rust/</link>
             <description>The code that executes PHP is currently written in C. Converting this to Rust offers many advantages. This article talks about work in progress to convert the C code to Rust, using Chat GPT.</description>
-            <pubDate>Sat, 01 Apr 2023 18:44:02 +0000</pubDate>
+            <pubDate>Sat, 01 Apr 2023 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/articles/converting-php-engine-to-rust/</guid>
         </item>
         <item>
             <title>Writing custom PHPStan rules (Tutorial)</title>
             <link>https://www.daveliddament.co.uk/talks/writing-custom-phpstan-rules/</link>
             <description>Workshop to create your custom PHPStan rules</description>
-            <pubDate>Thu, 03 Nov 2022 18:44:02 +0000</pubDate>
+            <pubDate>Thu, 03 Nov 2022 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/talks/writing-custom-phpstan-rules/</guid>
         </item>
         <item>
             <title>Extending the PHP Language</title>
             <link>https://www.daveliddament.co.uk/talks/extending-the-php-language/</link>
             <description>Learn how to implement new language features using static analysis.</description>
-            <pubDate>Thu, 20 Oct 2022 18:44:02 +0000</pubDate>
+            <pubDate>Thu, 20 Oct 2022 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/talks/extending-the-php-language/</guid>
         </item>
         <item>
             <title>Introducing static analysis tools to legacy projects</title>
             <link>https://www.daveliddament.co.uk/talks/introducing-static-analysis-to-legacy-projects/</link>
             <description>Tips on how to use static analysis tools with legacy projects</description>
-            <pubDate>Mon, 03 May 2021 18:44:02 +0000</pubDate>
+            <pubDate>Mon, 03 May 2021 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/talks/introducing-static-analysis-to-legacy-projects/</guid>
         </item>
         <item>
             <title>SARB version 1 released</title>
             <link>https://www.daveliddament.co.uk/articles/sarb-v1-released/</link>
             <description>Static Analysis Results Baseliner (SARB)  is used to create a baseline of these results. As work on the project progresses SARB can takes the latest static analysis results, removes those issues in the baseline and report the issues raised since the baseline. Learn all about version 1.</description>
-            <pubDate>Thu, 18 Mar 2021 18:44:02 +0000</pubDate>
+            <pubDate>Thu, 18 Mar 2021 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/articles/sarb-v1-released/</guid>
         </item>
         <item>
             <title>A standard for generics in PHP</title>
             <link>https://www.daveliddament.co.uk/articles/php-generics-standard/</link>
             <description>Generics in PHP is already a reality with static analysis. The leading static analysers have largely converged on an unofficial standard. This article proposes the first steps towards a standard.</description>
-            <pubDate>Mon, 14 Dec 2020 18:44:02 +0000</pubDate>
+            <pubDate>Mon, 14 Dec 2020 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/articles/php-generics-standard/</guid>
         </item>
         <item>
             <title>PHP Generics Today (almost)</title>
             <link>https://www.daveliddament.co.uk/articles/php-generics-today-almost/</link>
             <description>Many PHP developers would love generics. We might have to wait a while until they come along. This article shows how existing tools can give us the power of generics now (almost).</description>
-            <pubDate>Wed, 05 Jun 2019 18:44:02 +0000</pubDate>
+            <pubDate>Wed, 05 Jun 2019 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/articles/php-generics-today-almost/</guid>
         </item>
         <item>
             <title>PHP Generics Today (almost)</title>
             <link>https://www.daveliddament.co.uk/talks/php-generics-today-almost/</link>
             <description>Many PHP developers would love generics. We might have to wait a while until they come along. This article shows how existing tools can give us the power of generics now (almost).</description>
-            <pubDate>Wed, 05 Jun 2019 18:44:02 +0000</pubDate>
+            <pubDate>Wed, 05 Jun 2019 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/talks/php-generics-today-almost/</guid>
         </item>
         <item>
             <title>Practical Static Analysis</title>
             <link>https://www.daveliddament.co.uk/talks/practical-static-analysis/</link>
             <description>Static Analysis can drastically reduce the bug count in your codebase. This talk gives practical advice on integrating static analysis into your development workflow.</description>
-            <pubDate>Sat, 01 Sep 2018 18:44:02 +0000</pubDate>
+            <pubDate>Sat, 01 Sep 2018 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/talks/practical-static-analysis/</guid>
         </item>
         <item>
             <title>Code review and CI in your lunch break</title>
             <link>https://www.daveliddament.co.uk/talks/code-review-and-ci-in-your-lunch-break/</link>
             <description>Code review and CI are vital parts of the modern software development process. It also dead easy to set these up for your project. Find out why and how in this talk</description>
-            <pubDate>Sun, 01 Jul 2018 18:44:02 +0000</pubDate>
+            <pubDate>Sun, 01 Jul 2018 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/talks/code-review-and-ci-in-your-lunch-break/</guid>
         </item>
         <item>
             <title>AssertTrue(isDecoupled(&quot;my tests&quot;))</title>
             <link>https://www.daveliddament.co.uk/talks/assert-true-is-decoupled-my-tests/</link>
             <description>It&#039;s good practice to write decoupled code. That good practice should include minimising the coupling between your test code and the code under test. This talk examines why this is important and how to achieve it.</description>
-            <pubDate>Tue, 01 May 2018 18:44:02 +0000</pubDate>
+            <pubDate>Tue, 01 May 2018 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/talks/assert-true-is-decoupled-my-tests/</guid>
         </item>
         <item>
             <title>Effective Code Review</title>
             <link>https://www.daveliddament.co.uk/talks/effective-code-review/</link>
             <description>There are so many benefits from code review; lower development costs, increased code quality, quick up-skilling and on-boarding of team members. This talk shows you how to get the best out of code review.</description>
-            <pubDate>Sun, 01 Apr 2018 18:44:02 +0000</pubDate>
+            <pubDate>Sun, 01 Apr 2018 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/talks/effective-code-review/</guid>
         </item>
         <item>
             <title>The Git Eureka moment</title>
             <link>https://www.daveliddament.co.uk/talks/the-git-eureka-moment/</link>
             <description>Let me share my git eureka moment with you. The moment when suddenly everything git related made sense. We&#039;ll delve just below the surface to understand what commits and branch really are. With these concepts cemented we&#039;ll look at some of git&#039;s more advanced features.</description>
-            <pubDate>Wed, 15 Nov 2017 18:44:02 +0000</pubDate>
+            <pubDate>Wed, 15 Nov 2017 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/talks/the-git-eureka-moment/</guid>
         </item>
         <item>
             <title>Beat the bugs, before they beat you</title>
             <link>https://www.daveliddament.co.uk/talks/beat-the-bugs-before-they-beat-you/</link>
             <description>This talk will show you how to write cleaner code with fewer bugs. And best of all you can apply them the next time you write code.</description>
-            <pubDate>Thu, 29 Jun 2017 18:44:02 +0000</pubDate>
+            <pubDate>Thu, 29 Jun 2017 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/talks/beat-the-bugs-before-they-beat-you/</guid>
         </item>
         <item>
             <title>Don&#039;t be so primitive</title>
             <link>https://www.daveliddament.co.uk/talks/dont-be-so-primitive/</link>
             <description>A quick look at Value Objects, what they are, the benefits they offer and why sometimes they should be used instead of PHP&#039;s primitive types.</description>
-            <pubDate>Wed, 10 May 2017 18:44:02 +0000</pubDate>
+            <pubDate>Wed, 10 May 2017 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/talks/dont-be-so-primitive/</guid>
         </item>
         <item>
             <title>The Test Suite Holy Trinity</title>
             <link>https://www.daveliddament.co.uk/talks/test-suite-holy-trinity/</link>
             <description>This talk look at the properties of unit, integration and system tests in terms of what they test, how fast they run and how quick they are to write. Will look at how to get the most out of testing at each of these levels, how best to architect code for testing and where best to make comprises.</description>
-            <pubDate>Sat, 01 Apr 2017 18:44:02 +0000</pubDate>
+            <pubDate>Sat, 01 Apr 2017 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/talks/test-suite-holy-trinity/</guid>
         </item>
         <item>
             <title>Decoupling with events</title>
             <link>https://www.daveliddament.co.uk/talks/decoupling-with-events/</link>
             <description>Decoupled code is easier to understand, test and extend. This talk looks at how you can use events for decoupling.</description>
-            <pubDate>Wed, 12 Oct 2016 18:44:02 +0000</pubDate>
+            <pubDate>Wed, 12 Oct 2016 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/talks/decoupling-with-events/</guid>
         </item>
         <item>
             <title>Code review with Gerrit</title>
             <link>https://www.daveliddament.co.uk/talks/code-review-with-gerrit/</link>
             <description>Quick introduction to integrating code review using Gerrit into your workflow.</description>
-            <pubDate>Wed, 14 Oct 2015 18:44:02 +0000</pubDate>
+            <pubDate>Wed, 14 Oct 2015 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/talks/code-review-with-gerrit/</guid>
         </item>
         <item>
             <title>Design for testability</title>
             <link>https://www.daveliddament.co.uk/talks/design-for-testability/</link>
             <description>Testing code is difficult right? Not if you design your code with testability in mind. Learn how with this talk.</description>
-            <pubDate>Wed, 13 Aug 2014 18:44:02 +0000</pubDate>
+            <pubDate>Wed, 13 Aug 2014 18:47:49 +0000</pubDate>
             <guid>https://www.daveliddament.co.uk/talks/design-for-testability/</guid>
         </item>
     </channel>
