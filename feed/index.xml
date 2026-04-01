@@ -7,6 +7,14 @@
         <description>Articles and talks by Dave Liddament</description>
         <language>en-gb</language>
         <item>
+            <title>Systems Engineer to Cisterns Engineer</title>
+            <link>https://www.daveliddament.co.uk/articles/systems-to-cisterns/</link>
+            <description>The bootcamp for software engineers who want to switch to plumbing.</description>
+            <pubDate>Wed, 01 Apr 2026 00:00:00 GMT</pubDate>
+            <guid>https://www.daveliddament.co.uk/articles/systems-to-cisterns/</guid>
+            <category>Article</category>
+        </item>
+        <item>
             <title>A static analysis first approach to RFCs</title>
             <link>https://www.daveliddament.co.uk/articles/static-analysis-first/</link>
             <description>Where appropriate should PHP updates start off in static analysis world before becoming part of the PHP language?</description>
