@@ -7,12 +7,36 @@
         <description>Articles and talks by Dave Liddament</description>
         <language>en-gb</language>
         <item>
+            <title>Type Safe PHP: Leveraging Static Analysis for Robust Code</title>
+            <link>https://www.daveliddament.co.uk/talks/type-safe-php/</link>
+            <description>Type hints reduce bugs and enable safe refactoring, but PHP&#039;s type system has limits. Learn how static analysis bridges the gaps.</description>
+            <pubDate>Wed, 15 Apr 2026 00:00:00 GMT</pubDate>
+            <guid>https://www.daveliddament.co.uk/talks/type-safe-php/</guid>
+            <category>Talk</category>
+        </item>
+        <item>
             <title>Systems Engineer to Cisterns Engineer</title>
             <link>https://www.daveliddament.co.uk/articles/systems-to-cisterns/</link>
             <description>The bootcamp for software engineers who want to switch to plumbing.</description>
             <pubDate>Wed, 01 Apr 2026 00:00:00 GMT</pubDate>
             <guid>https://www.daveliddament.co.uk/articles/systems-to-cisterns/</guid>
             <category>Article</category>
+        </item>
+        <item>
+            <title>AI Writes Code. PHPStan Keeps It Honest.</title>
+            <link>https://www.daveliddament.co.uk/talks/ai-writes-code-phpstan-keeps-it-honest/</link>
+            <description>As AI generates more of our code, custom PHPStan rules keep quality and coding standards in check.</description>
+            <pubDate>Fri, 13 Mar 2026 00:00:00 GMT</pubDate>
+            <guid>https://www.daveliddament.co.uk/talks/ai-writes-code-phpstan-keeps-it-honest/</guid>
+            <category>Talk</category>
+        </item>
+        <item>
+            <title>Rector Beyond Upgrades: Transforming Your Workflow</title>
+            <link>https://www.daveliddament.co.uk/talks/rector-beyond-upgrades/</link>
+            <description>Rector is best known for code upgrades, but it can do much more. Learn how to automate repetitive tasks and enforce standards with custom rules.</description>
+            <pubDate>Fri, 13 Mar 2026 00:00:00 GMT</pubDate>
+            <guid>https://www.daveliddament.co.uk/talks/rector-beyond-upgrades/</guid>
+            <category>Talk</category>
         </item>
         <item>
             <title>A static analysis first approach to RFCs</title>
@@ -53,6 +77,14 @@
             <pubDate>Fri, 28 Nov 2025 00:00:00 GMT</pubDate>
             <guid>https://www.daveliddament.co.uk/articles/introducing-test-tag-attribute/</guid>
             <category>Article</category>
+        </item>
+        <item>
+            <title>Creating Custom PHPStan and Rector Rules (Workshop)</title>
+            <link>https://www.daveliddament.co.uk/talks/creating-custom-phpstan-and-rector-rules/</link>
+            <description>Full-day workshop covering how to write custom rules for both PHPStan and Rector.</description>
+            <pubDate>Wed, 26 Nov 2025 00:00:00 GMT</pubDate>
+            <guid>https://www.daveliddament.co.uk/talks/creating-custom-phpstan-and-rector-rules/</guid>
+            <category>Talk</category>
         </item>
         <item>
             <title>Introducing the NamespaceVisibility attribute</title>
