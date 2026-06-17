@@ -7,6 +7,14 @@
         <description>Articles and talks by Dave Liddament</description>
         <language>en-gb</language>
         <item>
+            <title>AI Assisted Coding</title>
+            <link>https://www.daveliddament.co.uk/talks/ai-assisted-coding/</link>
+            <description>A lightning talk on AI assisted coding (May 2026)</description>
+            <pubDate>Wed, 13 May 2026 00:00:00 GMT</pubDate>
+            <guid>https://www.daveliddament.co.uk/talks/ai-assisted-coding/</guid>
+            <category>Talk</category>
+        </item>
+        <item>
             <title>Type Safe PHP: Leveraging Static Analysis for Robust Code</title>
             <link>https://www.daveliddament.co.uk/talks/type-safe-php/</link>
             <description>Type hints reduce bugs and enable safe refactoring, but PHP&#039;s type system has limits. Learn how static analysis bridges the gaps.</description>
