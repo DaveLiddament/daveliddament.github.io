@@ -7,6 +7,14 @@
         <description>Articles and talks by Dave Liddament</description>
         <language>en-gb</language>
         <item>
+            <title>Introducing SARB (Static Analysis Results Baseliner)</title>
+            <link>https://www.daveliddament.co.uk/articles/introducing-sarb/</link>
+            <description>SARB (Static Analysis Results Baseliner) is an open source tool that lets you adopt static analysis on an existing PHP codebase by baselining pre-existing issues, so your build only fails on new ones.</description>
+            <pubDate>Mon, 06 Jul 2026 00:00:00 GMT</pubDate>
+            <guid>https://www.daveliddament.co.uk/articles/introducing-sarb/</guid>
+            <category>Article</category>
+        </item>
+        <item>
             <title>AI Assisted Coding</title>
             <link>https://www.daveliddament.co.uk/talks/ai-assisted-coding/</link>
             <description>A lightning talk on AI assisted coding (May 2026)</description>

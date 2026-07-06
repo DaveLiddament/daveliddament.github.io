@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="SARB (Static Analysis Results Baseliner) is an open source tool that lets you adopt static analysis on an existing PHP codebase by baselining pre-existing issues, so your build only fails on new ones.">
+    <meta name="author" content="Dave Liddament">
+
+            <meta property="og:title" content="Introducing SARB (Static Analysis Results Baseliner)">
+        <meta property="og:description" content="SARB (Static Analysis Results Baseliner) is an open source tool that lets you adopt static analysis on an existing PHP codebase by baselining pre-existing issues, so your build only fails on new ones.">
+        <meta property="og:image" content="https://www.daveliddament.co.uk/img/speaking_banner.png">
+        <meta property="og:image:alt" content="Dave Liddament speaking at a conference">
+        <meta property="og:url" content="https://www.daveliddament.co.uk/articles/introducing-sarb/">
+        <meta property="og:site_name" content="Dave Liddament's website">
+        <meta property="og:locale" content="en_GB">
+        <meta property="og:type" content="article">
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:site" content="@daveliddament">
+        <meta property="twitter:creator" content="@daveliddament">
+        <meta property="twitter:title" content="Introducing SARB (Static Analysis Results Baseliner)">
+        <meta property="twitter:description" content="SARB (Static Analysis Results Baseliner) is an open source tool that lets you adopt static analysis on an existing PHP codebase by baselining pre-existing issues, so your build only fails on new ones.">
+        <meta property="twitter:image" content="https://www.daveliddament.co.uk/img/speaking_banner.png">
+    
+
+    <title>Introducing SARB (Static Analysis Results Baseliner) — Dave Liddament</title>
+
+    <script type="application/ld+json">{"@context":"https:\/\/schema.org","@type":"BlogPosting","headline":"Introducing SARB (Static Analysis Results Baseliner)","description":"SARB (Static Analysis Results Baseliner) is an open source tool that lets you adopt static analysis on an existing PHP codebase by baselining pre-existing issues, so your build only fails on new ones.","datePublished":"2026-07-06","url":"https:\/\/www.daveliddament.co.uk\/articles\/introducing-sarb\/","author":{"@type":"Person","name":"Dave Liddament","url":"https:\/\/www.daveliddament.co.uk"}}</script>
+    <!-- Bootstrap core CSS -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../../css/custom.css" rel="stylesheet">
+    <link href="../../css/prism.css" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/4dad72476f.js" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="../../">Dave Liddament</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../">Home
+                                                    </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../talks">Talks
+                                                    </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../speaking">Speaking
+                                                    </a>
+                    </li>
+                                    <li class="nav-item active">
+                        <a class="nav-link" href="../../articles">Articles
+                            <span class="sr-only">(current)</span>                        </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../open-source">Open Source
+                                                    </a>
+                    </li>
+                            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    
+    <div class="row">
+
+        <!-- Post Content Column -->
+        <div class="col-lg-12">
+
+            <!-- Title -->
+            <h1 class="mt-4">Introducing SARB (Static Analysis Results Baseliner)</h1>
+
+
+            <p class="date">July 6th 2026
+                                                            <a href="../../search/sarb" class="tag-pill">sarb</a>
+                                            <a href="../../search/open source" class="tag-pill">open source</a>
+                                            <a href="../../search/static analysis" class="tag-pill">static analysis</a>
+                                                </p>
+
+            <hr>
+
+            
+            <h2>What is SARB?</h2>
+
+<p>SARB (Static Analysis Results Baseliner) is an open source tool that lets you introduce static analysis tools, such as <a href="https://phpstan.org/">PHPStan</a> and <a href="https://psalm.dev/">Psalm</a>, to an existing codebase without fixing every pre-existing issue first.
+SARB records the issues that already exist in a baseline. On subsequent runs it strips the baselined issues out of the results, so only issues introduced <em>since</em> the baseline are reported.
+Your build fails on new issues, while the legacy ones can be fixed gradually over time.</p>
+
+<h2>Why baseline?</h2>
+
+<p>Run an advanced static analysis tool against a large or legacy project for the first time and it will probably report hundreds, if not thousands, of issues.
+It's rarely realistic to fix them all before continuing feature development, so teams are left with an unpleasant choice: a huge up-front clean-up, or no static analysis at all.</p>
+
+<p>Baselining removes that choice. Fix the most critical issues, baseline the rest, and from that point on hold all new code to the higher standard.</p>
+
+<h2>Installation</h2>
+
+<p>Install SARB with composer:</p>
+
+<pre><code class="shell">composer require --dev dave-liddament/sarb
+</code></pre>
+
+<p>SARB requires PHP >= 8.0 to run. The project being analysed does not need to run PHP 8.0, or even be a PHP project at all.</p>
+
+<p>Because SARB uses git to track code between commits, the project being analysed must be in a git repository.</p>
+
+<h2>Creating a baseline</h2>
+
+<p>Make sure all your code is committed first; SARB records the git commit the baseline was created at.</p>
+
+<p>Assuming you're using Psalm, pipe its JSON output into SARB's <code>create</code> command:</p>
+
+<pre><code class="shell">vendor/bin/psalm --output-format=json | vendor/bin/sarb create --input-format="psalm-json" psalm.baseline
+</code></pre>
+
+<p>This writes the baseline to <code>psalm.baseline</code>. Check this file in to your repository.</p>
+
+<h2>Checking for new issues</h2>
+
+<p>As you work on the code, run the static analyser again and use SARB's <code>remove</code> command to strip out the baselined issues:</p>
+
+<pre><code class="shell">vendor/bin/psalm --output-format=json | vendor/bin/sarb remove psalm.baseline
+</code></pre>
+
+<p>Only the issues introduced since the baseline are reported. Add this to your CI pipeline so the build fails on new issues only.</p>
+
+<p>The same pattern works for PHPStan:</p>
+
+<pre><code class="shell">vendor/bin/phpstan analyse --error-format=json | vendor/bin/sarb create --input-format="phpstan-json" phpstan.baseline
+vendor/bin/phpstan analyse --error-format=json | vendor/bin/sarb remove phpstan.baseline
+</code></pre>
+
+<h2>Supported tools</h2>
+
+<p>Out of the box SARB supports:</p>
+
+<ul>
+<li><a href="https://phpstan.org/">PHPStan</a></li>
+<li><a href="https://psalm.dev/">Psalm</a></li>
+<li><a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP CodeSniffer</a></li>
+<li><a href="https://github.com/phpmd/phpmd">PHPMD</a></li>
+<li><a href="https://github.com/phan/phan">Phan</a></li>
+<li><a href="https://www.exakat.io/">Exakat</a></li>
+<li><a href="https://github.com/povils/phpmnd">PHP Magic Number Detector</a></li>
+</ul>
+
+<p>Run <code>vendor/bin/sarb list-static-analysis-tools</code> for the full list of supported input formats.
+If your tool isn't listed there are several ways to <a href="https://github.com/DaveLiddament/sarb/blob/master/docs/CustomInputFormats.md">add support</a>, and because SARB works on the tool's output it can baseline results for any language, not just PHP.</p>
+
+<h2>How is this different from PHPStan's and Psalm's built-in baselines?</h2>
+
+<p>Both PHPStan and Psalm now ship their own baseline functionality, and for many projects that's a fine choice.
+SARB works <a href="https://github.com/DaveLiddament/sarb/blob/master/docs/SarbVsOtherBaseliningTechniques.md">slightly differently</a>: it uses git history to track lines of code between commits.
+That means SARB still recognises a baselined issue after the file containing it has been renamed or moved (using <code>git mv</code>), where other approaches would report it as a new issue.
+It also gives you one consistent baselining workflow across every tool in your CI pipeline, rather than one mechanism per tool.</p>
+
+<p>Find out more on the <a href="/open-source/sarb/">SARB project page</a> or in the <a href="https://github.com/DaveLiddament/sarb">README</a>.</p>
+
+            
+        </div>
+
+
+    </div>
+    <!-- /.row -->
+
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">
+            Copyright &copy; Dave Liddament 2018-2026
+            <a class="social-circle" href="https://twitter.com/DaveLiddament"><i class="fa-brands fa-twitter"></i></a>
+            <a class="social-circle" href="https://github.com/DaveLiddament"><i class="fa-brands fa-github"></i></a>
+            <a class="social-circle" href="https://www.linkedin.com/in/daveliddament/"><i
+                        class="fa-brands fa-linkedin"></i></a>
+            <a class="social-circle" rel="me" href="https://phpc.social/@DaveLiddament"><i class="fa-brands fa-mastodon"></i></a>
+            <a class="social-circle" href="../../feed"><i class="fa-solid fa-rss"></i></a>
+        </p>
+    </div>
+    <!-- /.container -->
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/bootstrap.bundle.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</body>
+
+</html>

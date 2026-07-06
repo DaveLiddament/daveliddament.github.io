@@ -5,28 +5,28 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Decoupled code is easier to understand, test and extend. This talk looks at how you can use events for decoupling.">
+    <meta name="description" content="Static Analysis Results Baseliner (SARB) lets you adopt static analysis on an existing PHP codebase by baselining existing issues so the build only fails on new ones.">
     <meta name="author" content="Dave Liddament">
 
-            <meta property="og:title" content="Decoupling with events">
-        <meta property="og:description" content="Decoupled code is easier to understand, test and extend. This talk looks at how you can use events for decoupling.">
+            <meta property="og:title" content="SARB">
+        <meta property="og:description" content="Static Analysis Results Baseliner (SARB) lets you adopt static analysis on an existing PHP codebase by baselining existing issues so the build only fails on new ones.">
         <meta property="og:image" content="https://www.daveliddament.co.uk/img/speaking_banner.png">
         <meta property="og:image:alt" content="Dave Liddament speaking at a conference">
-        <meta property="og:url" content="https://www.daveliddament.co.uk/talks/decoupling-with-events/">
+        <meta property="og:url" content="https://www.daveliddament.co.uk/open-source/sarb/">
         <meta property="og:site_name" content="Dave Liddament's website">
         <meta property="og:locale" content="en_GB">
         <meta property="og:type" content="website">
         <meta property="twitter:card" content="summary_large_image">
         <meta property="twitter:site" content="@daveliddament">
         <meta property="twitter:creator" content="@daveliddament">
-        <meta property="twitter:title" content="Decoupling with events">
-        <meta property="twitter:description" content="Decoupled code is easier to understand, test and extend. This talk looks at how you can use events for decoupling.">
+        <meta property="twitter:title" content="SARB">
+        <meta property="twitter:description" content="Static Analysis Results Baseliner (SARB) lets you adopt static analysis on an existing PHP codebase by baselining existing issues so the build only fails on new ones.">
         <meta property="twitter:image" content="https://www.daveliddament.co.uk/img/speaking_banner.png">
     
 
-    <title>Decoupling with events — Dave Liddament</title>
+    <title>SARB — Dave Liddament</title>
 
-    <script type="application/ld+json">[{"@context":"https:\/\/schema.org","@type":"Event","name":"Decoupling with events","startDate":"2016-10-12","location":{"@type":"Place","name":"PHP SW"},"performer":{"@type":"Person","name":"Dave Liddament"},"url":"https:\/\/www.meetup.com\/php-sw\/events\/234476250\/"}]</script>
+    <script type="application/ld+json">{"@context":"https:\/\/schema.org","@type":"SoftwareApplication","name":"SARB","applicationCategory":"DeveloperApplication","operatingSystem":"PHP","description":"Static Analysis Results Baseliner (SARB) lets you adopt static analysis on an existing PHP codebase by baselining existing issues so the build only fails on new ones.","url":"https:\/\/www.daveliddament.co.uk\/open-source\/sarb\/","codeRepository":"https:\/\/github.com\/DaveLiddament\/sarb","author":{"@type":"Person","name":"Dave Liddament","url":"https:\/\/www.daveliddament.co.uk"}}</script>
     <!-- Bootstrap core CSS -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
 
@@ -55,9 +55,9 @@
                         <a class="nav-link" href="../../">Home
                                                     </a>
                     </li>
-                                    <li class="nav-item active">
+                                    <li class="nav-item ">
                         <a class="nav-link" href="../../talks">Talks
-                            <span class="sr-only">(current)</span>                        </a>
+                                                    </a>
                     </li>
                                     <li class="nav-item ">
                         <a class="nav-link" href="../../speaking">Speaking
@@ -67,9 +67,9 @@
                         <a class="nav-link" href="../../articles">Articles
                                                     </a>
                     </li>
-                                    <li class="nav-item ">
+                                    <li class="nav-item active">
                         <a class="nav-link" href="../../open-source">Open Source
-                                                    </a>
+                            <span class="sr-only">(current)</span>                        </a>
                     </li>
                             </ul>
         </div>
@@ -83,54 +83,30 @@
     <div class="row">
 
         <!-- Post Content Column -->
-        <div class="col-lg-8">
+        <div class="col-lg-12">
 
             <!-- Title -->
-            <h1 class="mt-4">Decoupling with events</h1>
-
-                            <div>
-                                            <a href="../../search/decoupling" class="tag-pill">decoupling</a>
-                                            <a href="../../search/code quality" class="tag-pill">code quality</a>
-                                    </div>
-            
-            <hr>
-
-            
-
-            <ul>
-                                                                </ul>
-
-            <h3>Abstract</h3>
-            <p>This talk gives an introduction to events. We&#039;ll look at some examples of how they are used and the benefits (and downsides) of using them and how they can lead to decoupled code.</p>
-
-<p>Finally we&#039;ll look at how events are used in Symfony 3.</p>
+            <h1 class="mt-4">SARB</h1>
 
             <hr>
 
-            <p>See more <a href="../../talks">talks</a>.</p>
+            <p>SARB (Static Analysis Results Baseliner) makes it practical to introduce tools like PHPStan and Psalm to a large or legacy PHP codebase. Instead of fixing thousands of pre-existing issues up front, SARB baselines them so your build only fails on <em>new</em> issues — and, unlike other baselining approaches, it still tracks a baselined issue when its file is renamed or moved.</p>
 
-        </div>
+            <p><a class="btn btn-primary" href="https://github.com/DaveLiddament/sarb">View on GitHub</a></p>
 
-        <!-- Sidebar Widgets Column -->
-        <div class="col-md-4">
-
-
-            <!-- Profile -->
-            <div class="card my-4">
-                <h5 class="card-header">Events</h5>
-                <div class="card-body">
-                                                                        <h6>
-                                PHP SW Oct 2016
-                                                            </h6>
-                            <p>
-                                                                    [<a href="../../talks/decoupling-with-events.pdf">slides</a>]
-                                                                                                    [<a href="https://youtu.be/B_1SlDcnTeQ">video</a>]
-                                                                                                                                    [<a href="https://www.meetup.com/php-sw/events/234476250/">website</a>]
-                                
-                            </p>
-                                                            </div>
-            </div>
-
+                            <hr>
+                <h3>Related articles</h3>
+                <ul>
+                                            <li><a href="../../articles/introducing-sarb">Introducing SARB (Static Analysis Results Baseliner)</a></li>
+                                            <li><a href="../../articles/sarb-v1-released">SARB version 1 released</a></li>
+                                    </ul>
+            
+                            <hr>
+                <h3>Related talks</h3>
+                <ul>
+                                            <li><a href="../../talks/introducing-static-analysis-to-legacy-projects">Introducing static analysis tools to legacy projects</a></li>
+                                    </ul>
+            
         </div>
 
     </div>

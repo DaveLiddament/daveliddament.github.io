@@ -5,6 +5,9 @@
     <url><loc>https://www.daveliddament.co.uk/talks/diary/</loc></url>
     <url><loc>https://www.daveliddament.co.uk/speaking/</loc></url>
     <url><loc>https://www.daveliddament.co.uk/articles/</loc></url>
+    <url><loc>https://www.daveliddament.co.uk/open-source/</loc></url>
+    <url><loc>https://www.daveliddament.co.uk/open-source/php-language-extensions/</loc></url>
+    <url><loc>https://www.daveliddament.co.uk/open-source/sarb/</loc></url>
     <url><loc>https://www.daveliddament.co.uk/talks/extending-the-php-language/</loc><lastmod>2022-10-20</lastmod></url>
     <url><loc>https://www.daveliddament.co.uk/talks/ai-writes-code-phpstan-keeps-it-honest/</loc><lastmod>2026-03-13</lastmod></url>
     <url><loc>https://www.daveliddament.co.uk/talks/custom-phpstan-rules/</loc><lastmod>2025-04-30</lastmod></url>
@@ -30,6 +33,7 @@
     <url><loc>https://www.daveliddament.co.uk/talks/creating-custom-phpstan-and-rector-rules/</loc><lastmod>2025-11-26</lastmod></url>
     <url><loc>https://www.daveliddament.co.uk/talks/code-review-and-ci-in-your-lunch-break/</loc><lastmod>2018-07-01</lastmod></url>
     <url><loc>https://www.daveliddament.co.uk/talks/writing-custom-phpstan-rules/</loc><lastmod>2022-11-03</lastmod></url>
+    <url><loc>https://www.daveliddament.co.uk/articles/introducing-sarb/</loc><lastmod>2026-07-06</lastmod></url>
     <url><loc>https://www.daveliddament.co.uk/articles/systems-to-cisterns/</loc><lastmod>2026-04-01</lastmod></url>
     <url><loc>https://www.daveliddament.co.uk/articles/static-analysis-first/</loc><lastmod>2026-03-08</lastmod></url>
     <url><loc>https://www.daveliddament.co.uk/articles/introducing-injectable-version-attribute/</loc><lastmod>2026-03-03</lastmod></url>
@@ -44,6 +48,4 @@
     <url><loc>https://www.daveliddament.co.uk/articles/php-generics-standard/</loc><lastmod>2020-12-14</lastmod></url>
     <url><loc>https://www.daveliddament.co.uk/articles/php-generics-today-almost/</loc><lastmod>2019-06-05</lastmod></url>
     <url><loc>https://www.daveliddament.co.uk/articles/converting-php-engine-to-rust/</loc><lastmod>2023-04-01</lastmod></url>
-    <url><loc>https://www.daveliddament.co.uk/sarb/</loc></url>
-    <url><loc>https://www.daveliddament.co.uk/sarb/introduction/</loc></url>
 </urlset>
