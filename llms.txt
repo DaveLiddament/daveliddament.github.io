@@ -8,6 +8,7 @@
 - [Talks](https://www.daveliddament.co.uk/talks/): Conference talks and workshops on PHP, static analysis, testing and code quality.
 - [Speaking diary](https://www.daveliddament.co.uk/talks/diary/): Every conference and user group Dave has spoken at.
 - [Articles](https://www.daveliddament.co.uk/articles/): Articles on PHP, static analysis, testing and maintainability.
+- [Videos](https://www.daveliddament.co.uk/videos/): Interviews with PHP community figures, git tips and tricks, and recorded conference and meetup talks.
 - [Open Source Projects](https://www.daveliddament.co.uk/open-source/): Overview of Dave's open source projects.
 - [SARB](https://www.daveliddament.co.uk/open-source/sarb/): Static Analysis Results Baseliner — adopt static analysis on an existing PHP codebase without fixing every pre-existing issue first.
 - [PHP Language Extensions](https://www.daveliddament.co.uk/open-source/php-language-extensions/): A library that adds compile-time-style guarantees to PHP, enforced by static analysis.
