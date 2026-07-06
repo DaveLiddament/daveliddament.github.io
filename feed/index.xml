@@ -7,11 +7,27 @@
         <description>Articles and talks by Dave Liddament</description>
         <language>en-gb</language>
         <item>
+            <title>Introducing Test Splitter</title>
+            <link>https://www.daveliddament.co.uk/articles/introducing-test-splitter/</link>
+            <description>Test Splitter is a small open source tool that splits a PHPUnit test suite into deterministic batches, so the batches can be run in parallel CI jobs to cut build times.</description>
+            <pubDate>Mon, 06 Jul 2026 00:00:00 GMT</pubDate>
+            <guid>https://www.daveliddament.co.uk/articles/introducing-test-splitter/</guid>
+            <category>Article</category>
+        </item>
+        <item>
             <title>Introducing SARB (Static Analysis Results Baseliner)</title>
             <link>https://www.daveliddament.co.uk/articles/introducing-sarb/</link>
             <description>SARB (Static Analysis Results Baseliner) is an open source tool that lets you adopt static analysis on an existing PHP codebase by baselining pre-existing issues, so your build only fails on new ones.</description>
             <pubDate>Mon, 06 Jul 2026 00:00:00 GMT</pubDate>
             <guid>https://www.daveliddament.co.uk/articles/introducing-sarb/</guid>
+            <category>Article</category>
+        </item>
+        <item>
+            <title>Introducing the PHPStan Rule Test Helper</title>
+            <link>https://www.daveliddament.co.uk/articles/introducing-phpstan-rule-test-helper/</link>
+            <description>The PHPStan Rule Test Helper is an open source library that makes tests for custom PHPStan rules easier to write and maintain, by removing line numbers and duplicated error messages from tests.</description>
+            <pubDate>Sun, 05 Jul 2026 00:00:00 GMT</pubDate>
+            <guid>https://www.daveliddament.co.uk/articles/introducing-phpstan-rule-test-helper/</guid>
             <category>Article</category>
         </item>
         <item>

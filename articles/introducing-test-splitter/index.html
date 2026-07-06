@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Test Splitter is a small open source tool that splits a PHPUnit test suite into deterministic batches, so the batches can be run in parallel CI jobs to cut build times.">
+    <meta name="author" content="Dave Liddament">
+
+            <meta property="og:title" content="Introducing Test Splitter">
+        <meta property="og:description" content="Test Splitter is a small open source tool that splits a PHPUnit test suite into deterministic batches, so the batches can be run in parallel CI jobs to cut build times.">
+        <meta property="og:image" content="https://www.daveliddament.co.uk/img/speaking_banner.png">
+        <meta property="og:image:alt" content="Dave Liddament speaking at a conference">
+        <meta property="og:url" content="https://www.daveliddament.co.uk/articles/introducing-test-splitter/">
+        <meta property="og:site_name" content="Dave Liddament's website">
+        <meta property="og:locale" content="en_GB">
+        <meta property="og:type" content="article">
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:site" content="@daveliddament">
+        <meta property="twitter:creator" content="@daveliddament">
+        <meta property="twitter:title" content="Introducing Test Splitter">
+        <meta property="twitter:description" content="Test Splitter is a small open source tool that splits a PHPUnit test suite into deterministic batches, so the batches can be run in parallel CI jobs to cut build times.">
+        <meta property="twitter:image" content="https://www.daveliddament.co.uk/img/speaking_banner.png">
+    
+
+    <title>Introducing Test Splitter — Dave Liddament</title>
+
+    <script type="application/ld+json">{"@context":"https:\/\/schema.org","@type":"BlogPosting","headline":"Introducing Test Splitter","description":"Test Splitter is a small open source tool that splits a PHPUnit test suite into deterministic batches, so the batches can be run in parallel CI jobs to cut build times.","datePublished":"2026-07-06","url":"https:\/\/www.daveliddament.co.uk\/articles\/introducing-test-splitter\/","author":{"@type":"Person","name":"Dave Liddament","url":"https:\/\/www.daveliddament.co.uk"}}</script>
+    <!-- Bootstrap core CSS -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../../css/custom.css" rel="stylesheet">
+    <link href="../../css/prism.css" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/4dad72476f.js" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="../../">Dave Liddament</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../">Home
+                                                    </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../talks">Talks
+                                                    </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../speaking">Speaking
+                                                    </a>
+                    </li>
+                                    <li class="nav-item active">
+                        <a class="nav-link" href="../../articles">Articles
+                            <span class="sr-only">(current)</span>                        </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../open-source">Open Source
+                                                    </a>
+                    </li>
+                            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    
+    <div class="row">
+
+        <!-- Post Content Column -->
+        <div class="col-lg-12">
+
+            <!-- Title -->
+            <h1 class="mt-4">Introducing Test Splitter</h1>
+
+
+            <p class="date">July 6th 2026
+                                                            <a href="../../search/open source" class="tag-pill">open source</a>
+                                            <a href="../../search/test splitter" class="tag-pill">test splitter</a>
+                                                </p>
+
+            <hr>
+
+            
+            <h2>What is Test Splitter?</h2>
+
+<p><a href="https://github.com/DaveLiddament/test-splitter">Test Splitter</a> is a small open source tool that splits a PHPUnit test suite into batches, in a deterministic way.
+Each batch can then be run in a separate CI job.
+If your test suite takes 20 minutes to run, splitting it over 4 parallel jobs gets feedback to the team in roughly 5 minutes.</p>
+
+<p>I built it in 2021 to solve a problem on a couple of client projects: test suites that had grown to the point where the feedback loop was painfully slow, on CI platforms that made it easy to run jobs in parallel but offered no way to divide the tests between them.</p>
+
+<h2>How it works</h2>
+
+<p>Install it with composer:</p>
+
+<pre><code class="bash">composer require --dev dave-liddament/test-splitter
+</code></pre>
+
+<p>The package provides a single executable, <code>vendor/bin/tsplit</code>, which takes two arguments: the batch number and the total number of batches.
+It reads a list of tests from <code>stdin</code> and writes the tests belonging to the requested batch to <code>stdout</code>.</p>
+
+<p>Combine it with PHPUnit's <code>--list-tests</code> and <code>--filter</code> options to run just one batch of tests.
+For example, to split the suite into 4 batches and run the first one:</p>
+
+<pre><code class="bash">vendor/bin/phpunit --filter `vendor/bin/phpunit --list-tests | vendor/bin/tsplit 1 4`
+</code></pre>
+
+<p>Because the split is deterministic, every job that asks for batch 1 of 4 gets the same tests, and the batches never overlap or miss a test.</p>
+
+<h2>Using it in CI</h2>
+
+<p>The tool really pays off in CI pipelines. With GitHub Actions, use a matrix to run each batch as its own job:</p>
+
+<pre><code class="yaml">jobs:
+  tests:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        test-batch: [1, 2, 3, 4]
+
+    steps:
+      # Steps to checkout code, setup environment, etc.
+
+      - name: "Tests batch ${{ matrix.test-batch }}"
+        run: vendor/bin/phpunit --filter `vendor/bin/phpunit --list-tests | vendor/bin/tsplit ${{ matrix.test-batch }} 4`
+</code></pre>
+
+<p>GitLab CI/CD makes it even simpler. Its <a href="https://docs.gitlab.com/ci/variables/predefined_variables/">predefined variables</a> <code>CI_NODE_INDEX</code> and <code>CI_NODE_TOTAL</code> supply the batch numbers automatically:</p>
+
+<pre><code class="yaml">test:
+  stage: test
+  parallel: 4
+  script:
+    - vendor/bin/phpunit --filter `vendor/bin/phpunit --list-tests | vendor/bin/tsplit ${CI_NODE_INDEX} ${CI_NODE_TOTAL}`
+</code></pre>
+
+<h2>Alternatives</h2>
+
+<p>Test Splitter is deliberately a very simple tool. When it was created in 2021 nothing else did the job; that's no longer true.
+If you want something more feature rich, look at <a href="https://github.com/paratestphp/paratest">Paratest</a> (with its shard functionality) or <a href="https://github.com/shipmonk-rnd/phpunit-parallel-job-balancer">Shipmonk's PHPUnit parallel job balancer</a>.
+That said, if all you need is to split a PHPUnit suite over a few parallel CI jobs, Test Splitter does exactly that — and nothing else.</p>
+
+<p>Test Splitter is available <a href="https://github.com/DaveLiddament/test-splitter">on GitHub</a> and <a href="https://packagist.org/packages/dave-liddament/test-splitter">Packagist</a>.</p>
+
+            
+        </div>
+
+
+    </div>
+    <!-- /.row -->
+
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">
+            Copyright &copy; Dave Liddament 2018-2026
+            <a class="social-circle" href="https://twitter.com/DaveLiddament"><i class="fa-brands fa-twitter"></i></a>
+            <a class="social-circle" href="https://github.com/DaveLiddament"><i class="fa-brands fa-github"></i></a>
+            <a class="social-circle" href="https://www.linkedin.com/in/daveliddament/"><i
+                        class="fa-brands fa-linkedin"></i></a>
+            <a class="social-circle" rel="me" href="https://phpc.social/@DaveLiddament"><i class="fa-brands fa-mastodon"></i></a>
+            <a class="social-circle" href="../../feed"><i class="fa-solid fa-rss"></i></a>
+        </p>
+    </div>
+    <!-- /.container -->
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/bootstrap.bundle.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</body>
+
+</html>
