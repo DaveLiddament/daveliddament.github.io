@@ -1,0 +1,24 @@
+# Dave Liddament
+
+> Dave Liddament is a software engineer, international conference speaker, and open source author. He is the owner and director of [Lamp Bristol](https://www.lampbristol.com), a software consultancy that builds and maintains long-lived software for start-ups and businesses. Dave specialises in PHP, static analysis, automated testing, and code quality — helping teams keep large codebases safe to change over many years.
+
+## Key pages
+
+- [Home](https://www.daveliddament.co.uk/): Overview of who Dave Liddament is and what he works on.
+- [Talks](https://www.daveliddament.co.uk/talks/): Conference talks and workshops on PHP, static analysis, testing and code quality.
+- [Speaking diary](https://www.daveliddament.co.uk/talks/diary/): Every conference and user group Dave has spoken at.
+- [Articles](https://www.daveliddament.co.uk/articles/): Articles on PHP, static analysis, testing and maintainability.
+- [SARB](https://www.daveliddament.co.uk/sarb/): Static Analysis Results Baseliner — adopt static analysis on an existing PHP codebase without fixing every pre-existing issue first.
+
+## Open source projects
+
+- [SARB (Static Analysis Results Baseliner)](https://github.com/DaveLiddament/sarb): Lets you introduce static analysis tools such as PHPStan and Psalm to a legacy PHP project by baselining existing issues so the build only fails on new ones.
+- [PHP Language Extensions](https://github.com/DaveLiddament/php-language-extensions): A library that adds compile-time-style guarantees (for example package-level visibility) to PHP, enforced by static analysis.
+
+## Contact and profiles
+
+- Website: https://www.daveliddament.co.uk
+- Lamp Bristol: https://www.lampbristol.com
+- GitHub: https://github.com/DaveLiddament
+- Mastodon: https://phpc.social/@DaveLiddament
+- LinkedIn: https://www.linkedin.com/in/daveliddament/
