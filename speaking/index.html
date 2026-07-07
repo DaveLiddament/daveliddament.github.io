@@ -111,8 +111,17 @@
             <hr>
 
             <!-- Bio -->
-            <h2>Bio</h2>
-            <p>Please feel free to copy and paste this for your event listing:</p>
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <h2>Bio</h2>
+                    <p>
+                        Please feel free to copy and paste this for your event listing.
+                        You can also <a href="../photos/bw.png" download>download a high-res image</a>
+                        for your event materials.
+                    </p>
+                </div>
+                <img class="rounded-circle ml-3 flex-shrink-0" src="../photos/bw.png" width="90" height="90" alt="Headshot of Dave Liddament">
+            </div>
             <div class="card my-3">
                 <div class="card-body">
                     <p><a href="https://www.daveliddament.co.uk">Dave</a> is a director and developer at <a href="https://www.lampbristol.com">Lamp Bristol</a>, a software consultancy.
@@ -131,6 +140,35 @@ Dave specialises in static analysis, automated testing and code review — helpi
 <p>When not busy coding Dave enjoys scuba diving and running.</p>
                 </div>
             </div>
+            <p>
+                <button type="button" class="btn btn-outline-secondary btn-sm" id="copy-bio-markdown">Copy as Markdown</button>
+                <a class="btn btn-outline-secondary btn-sm" href="../speaking/dave-liddament-bio.md" download>Download as Markdown</a>
+            </p>
+            <textarea id="bio-markdown" class="d-none" readonly>
+[Dave](https://www.daveliddament.co.uk) is a director and developer at [Lamp Bristol](https://www.lampbristol.com), a software consultancy.
+He&#039;s been writing software commercially for over two decades in many languages including C, Python, Java and PHP.
+Dave specialises in static analysis, automated testing and code review — helping teams keep large, long-lived codebases safe to change.
+
+Dave is keen to pass on his knowledge. He speaks at conferences and user groups and also is the organiser of [PHP-SW](https://phpsw.uk/).
+
+He is also the author of a couple of libraries:
+
+- [SARB (static analysis results baseliner)](https://www.daveliddament.co.uk/open-source/sarb)
+- [PHP Language Extensions Library](https://www.daveliddament.co.uk/open-source/php-language-extensions)
+
+When not busy coding Dave enjoys scuba diving and running.
+</textarea>
+            <script>
+                document.getElementById('copy-bio-markdown').addEventListener('click', function () {
+                    var button = this;
+                    navigator.clipboard.writeText(document.getElementById('bio-markdown').value).then(function () {
+                        button.textContent = 'Copied!';
+                        setTimeout(function () {
+                            button.textContent = 'Copy as Markdown';
+                        }, 2000);
+                    });
+                });
+            </script>
 
             <hr>
 
@@ -238,18 +276,6 @@ Dave specialises in static analysis, automated testing and code review — helpi
         </div>
     </div>
             
-            <hr>
-
-            <!-- Headshot -->
-            <h2>Headshot</h2>
-            <div class="d-flex align-items-center mb-4">
-                <img class="rounded-circle mr-3" src="../photos/bw.png" width="100" height="100" alt="Headshot of Dave Liddament">
-                <p class="m-0">
-                    <a href="../photos/bw.png" download>Download a high-resolution headshot</a>
-                    for your event materials.
-                </p>
-            </div>
-
         </div>
 
     </div>
