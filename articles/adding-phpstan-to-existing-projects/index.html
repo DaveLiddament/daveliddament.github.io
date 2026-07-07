@@ -196,14 +196,14 @@ We'll see why the next article.</p>
 
 <p>Type information can either be provided as a type declaration. E.g.</p>
 
-<pre><code class="php">function getPersonByEmail(string $email): Person {
+<pre><code class="language-php">function getPersonByEmail(string $email): Person {
   // Implementation
 }
 </code></pre>
 
 <p>Or by type hints (docblocks):</p>
 
-<pre><code class="php">/**
+<pre><code class="language-php">/**
  * @param string $email
  * @return Person 
  */
@@ -214,7 +214,7 @@ function getPersonByEmail(string $email): Person {
 
 <p>Sometimes you might need both, e.g. when specifying the types in arrays:</p>
 
-<pre><code class="php">/** @return array&lt;int,Person&gt; */
+<pre><code class="language-php">/** @return array&lt;int,Person&gt; */
 function getPeople(): array {
   // Implementation that returns an array:
   // The array keys are integers

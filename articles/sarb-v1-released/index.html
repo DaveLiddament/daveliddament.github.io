@@ -112,20 +112,20 @@ As work on the project progresses SARB takes the latest static analysis results,
 
 <p>Install with composer:</p>
 
-<pre><code class="shell">composer require --dev dave-liddament/sarb
+<pre><code class="language-shell">composer require --dev dave-liddament/sarb
 </code></pre>
 
 <p>Assuming we're using <a href="https://github.com/squizlabs/PHP_CodeSniffer">PHP CodeSniffer</a>.
 First create a baseline of the current issues:</p>
 
-<pre><code>phpcs --report-json src | vendor/bin/sarb create --input-format=phpcodesniffer-json phpcs.sarb
+<pre><code class="language-shell">phpcs --report-json src | vendor/bin/sarb create --input-format=phpcodesniffer-json phpcs.sarb
 </code></pre>
 
 <p>This will create a file <code>phpcs.sarb</code> that you'll want to check in to your repo.
 Then code away. Before you're ready to commit your code run SARB again to make sure you've not added any issues since the baseline.
 This command will show any new issues you've raised.</p>
 
-<pre><code>phpcs --report-json src | vendor/bin/sarb remove phpcs.sarb
+<pre><code class="language-shell">phpcs --report-json src | vendor/bin/sarb remove phpcs.sarb
 </code></pre>
 
 <p>SARB supports the <a href="https://github.com/DaveLiddament/sarb#supported-tools">following tools</a> out of the box:</p>

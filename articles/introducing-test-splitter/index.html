@@ -109,7 +109,7 @@ If your test suite takes 20 minutes to run, splitting it over 4 parallel jobs ge
 
 <p>Install it with composer:</p>
 
-<pre><code class="bash">composer require --dev dave-liddament/test-splitter
+<pre><code class="language-bash">composer require --dev dave-liddament/test-splitter
 </code></pre>
 
 <p>The package provides a single executable, <code>vendor/bin/tsplit</code>, which takes two arguments: the batch number and the total number of batches.
@@ -118,7 +118,7 @@ It reads a list of tests from <code>stdin</code> and writes the tests belonging 
 <p>Combine it with PHPUnit's <code>--list-tests</code> and <code>--filter</code> options to run just one batch of tests.
 For example, to split the suite into 4 batches and run the first one:</p>
 
-<pre><code class="bash">vendor/bin/phpunit --filter `vendor/bin/phpunit --list-tests | vendor/bin/tsplit 1 4`
+<pre><code class="language-bash">vendor/bin/phpunit --filter `vendor/bin/phpunit --list-tests | vendor/bin/tsplit 1 4`
 </code></pre>
 
 <p>Because the split is deterministic, every job that asks for batch 1 of 4 gets the same tests, and the batches never overlap or miss a test.</p>
@@ -127,7 +127,7 @@ For example, to split the suite into 4 batches and run the first one:</p>
 
 <p>The tool really pays off in CI pipelines. With GitHub Actions, use a matrix to run each batch as its own job:</p>
 
-<pre><code class="yaml">jobs:
+<pre><code class="language-yaml">jobs:
   tests:
 
     strategy:
@@ -144,7 +144,7 @@ For example, to split the suite into 4 batches and run the first one:</p>
 
 <p>GitLab CI/CD makes it even simpler. Its <a href="https://docs.gitlab.com/ci/variables/predefined_variables/">predefined variables</a> <code>CI_NODE_INDEX</code> and <code>CI_NODE_TOTAL</code> supply the batch numbers automatically:</p>
 
-<pre><code class="yaml">test:
+<pre><code class="language-yaml">test:
   stage: test
   parallel: 4
   script:

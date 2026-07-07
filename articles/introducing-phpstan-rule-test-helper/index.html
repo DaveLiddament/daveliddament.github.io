@@ -112,7 +112,7 @@ Like all code, custom rules need tests, and PHPStan ships with a <a href="https:
 
 <p>Install it with composer:</p>
 
-<pre><code class="bash">composer require --dev dave-liddament/phpstan-rule-test-helper
+<pre><code class="language-bash">composer require --dev dave-liddament/phpstan-rule-test-helper
 </code></pre>
 
 <p>The library provides <code>AbstractRuleTestCase</code>, which extends PHPStan's <code>RuleTestCase</code>.</p>
@@ -125,7 +125,7 @@ Add a line near the top of the fixture and every line number below it changes, s
 <p>With the helper, the expected errors live <em>in the fixture itself</em>.
 A test extends <code>AbstractRuleTestCase</code>, specifies the rule being tested, and points at one or more fixture files:</p>
 
-<pre><code class="php">use DaveLiddament\PhpstanRuleTestHelper\AbstractRuleTestCase;
+<pre><code class="language-php">use DaveLiddament\PhpstanRuleTestHelper\AbstractRuleTestCase;
 
 class CallableFromRuleTest extends AbstractRuleTestCase
 {
@@ -143,7 +143,7 @@ class CallableFromRuleTest extends AbstractRuleTestCase
 
 <p>In the fixture, every line containing an <code>// ERROR</code> comment is a line the rule should flag, and the text after <code>// ERROR</code> is the expected message:</p>
 
-<pre><code class="php">class SomeCode
+<pre><code class="language-php">class SomeCode
 {
     public function go(): void
     {
@@ -160,7 +160,7 @@ class CallableFromRuleTest extends AbstractRuleTestCase
 <p>Most rules report the same message for every violation, so repeating it after each <code>// ERROR</code> comment is duplication.
 Instead, define the message once in the test case:</p>
 
-<pre><code class="php">use DaveLiddament\PhpstanRuleTestHelper\AbstractRuleTestCase;
+<pre><code class="language-php">use DaveLiddament\PhpstanRuleTestHelper\AbstractRuleTestCase;
 
 class CallableFromRuleTest extends AbstractRuleTestCase
 {
@@ -175,7 +175,7 @@ class CallableFromRuleTest extends AbstractRuleTestCase
 
 <p>Now the fixture only needs a bare <code>// ERROR</code> marker on each offending line:</p>
 
-<pre><code class="php">class SomeCode
+<pre><code class="language-php">class SomeCode
 {
     public function go(): void
     {

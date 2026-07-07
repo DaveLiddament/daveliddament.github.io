@@ -115,7 +115,7 @@ It's rarely realistic to fix them all before continuing feature development, so 
 
 <p>Install SARB with composer:</p>
 
-<pre><code class="shell">composer require --dev dave-liddament/sarb
+<pre><code class="language-shell">composer require --dev dave-liddament/sarb
 </code></pre>
 
 <p>SARB requires PHP >= 8.0 to run. The project being analysed does not need to run PHP 8.0, or even be a PHP project at all.</p>
@@ -128,7 +128,7 @@ It's rarely realistic to fix them all before continuing feature development, so 
 
 <p>Assuming you're using Psalm, pipe its JSON output into SARB's <code>create</code> command:</p>
 
-<pre><code class="shell">vendor/bin/psalm --output-format=json | vendor/bin/sarb create --input-format="psalm-json" psalm.baseline
+<pre><code class="language-shell">vendor/bin/psalm --output-format=json | vendor/bin/sarb create --input-format="psalm-json" psalm.baseline
 </code></pre>
 
 <p>This writes the baseline to <code>psalm.baseline</code>. Check this file in to your repository.</p>
@@ -137,14 +137,14 @@ It's rarely realistic to fix them all before continuing feature development, so 
 
 <p>As you work on the code, run the static analyser again and use SARB's <code>remove</code> command to strip out the baselined issues:</p>
 
-<pre><code class="shell">vendor/bin/psalm --output-format=json | vendor/bin/sarb remove psalm.baseline
+<pre><code class="language-shell">vendor/bin/psalm --output-format=json | vendor/bin/sarb remove psalm.baseline
 </code></pre>
 
 <p>Only the issues introduced since the baseline are reported. Add this to your CI pipeline so the build fails on new issues only.</p>
 
 <p>The same pattern works for PHPStan:</p>
 
-<pre><code class="shell">vendor/bin/phpstan analyse --error-format=json | vendor/bin/sarb create --input-format="phpstan-json" phpstan.baseline
+<pre><code class="language-shell">vendor/bin/phpstan analyse --error-format=json | vendor/bin/sarb create --input-format="phpstan-json" phpstan.baseline
 vendor/bin/phpstan analyse --error-format=json | vendor/bin/sarb remove phpstan.baseline
 </code></pre>
 

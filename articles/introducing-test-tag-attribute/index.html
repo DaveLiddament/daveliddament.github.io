@@ -163,7 +163,7 @@ $person-&gt;setId(10);
 
 <p>Adding the following to your <code>phpstan.neon</code> file will mean that all classes that end with <code>Test</code> will be deemed test code.</p>
 
-<pre><code class="yaml">parameters:
+<pre><code class="language-yaml">parameters:
   phpLanguageExtensions:
     mode: className
 </code></pre>
@@ -173,7 +173,7 @@ $person-&gt;setId(10);
 <p>Adding the following to your <code>phpstan.neon</code> file allows you to specify the base namespace that all test code lives in. 
 In the example below any code in a namespace starting <code>App\Test</code> is deemed test code.</p>
 
-<pre><code class="yaml">parameters:
+<pre><code class="language-yaml">parameters:
   phpLanguageExtensions:
     mode: namespace
     testNamespace: 'App\Test'
