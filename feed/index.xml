@@ -7,6 +7,14 @@
         <description>Articles, talks and videos by Dave Liddament</description>
         <language>en-gb</language>
         <item>
+            <title>Introducing the PHPStan Effect System</title>
+            <link>https://www.daveliddament.co.uk/articles/introducing-phpstan-effect-system/</link>
+            <description>The PHPStan Effect System is an experimental PHPStan extension that lets you name behaviours, such as calling external services, track them through the call graph, and report when they reach code where they aren&#039;t allowed.</description>
+            <pubDate>Fri, 09 Oct 2026 00:00:00 GMT</pubDate>
+            <guid>https://www.daveliddament.co.uk/articles/introducing-phpstan-effect-system/</guid>
+            <category>Article</category>
+        </item>
+        <item>
             <title>Introducing Test Splitter</title>
             <link>https://www.daveliddament.co.uk/articles/introducing-test-splitter/</link>
             <description>Test Splitter is a small open source tool that splits a PHPUnit test suite into deterministic batches, so the batches can be run in parallel CI jobs to cut build times.</description>

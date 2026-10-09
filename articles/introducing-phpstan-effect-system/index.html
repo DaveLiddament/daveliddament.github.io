@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="The PHPStan Effect System is an experimental PHPStan extension that lets you name behaviours, such as calling external services, track them through the call graph, and report when they reach code where they aren&#039;t allowed.">
+    <meta name="author" content="Dave Liddament">
+
+            <meta property="og:title" content="Introducing the PHPStan Effect System">
+        <meta property="og:description" content="The PHPStan Effect System is an experimental PHPStan extension that lets you name behaviours, such as calling external services, track them through the call graph, and report when they reach code where they aren&#039;t allowed.">
+        <meta property="og:image" content="https://www.daveliddament.co.uk/img/speaking_banner.png">
+        <meta property="og:image:alt" content="Dave Liddament speaking at a conference">
+        <meta property="og:url" content="https://www.daveliddament.co.uk/articles/introducing-phpstan-effect-system/">
+        <meta property="og:site_name" content="Dave Liddament's website">
+        <meta property="og:locale" content="en_GB">
+        <meta property="og:type" content="article">
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:site" content="@daveliddament">
+        <meta property="twitter:creator" content="@daveliddament">
+        <meta property="twitter:title" content="Introducing the PHPStan Effect System">
+        <meta property="twitter:description" content="The PHPStan Effect System is an experimental PHPStan extension that lets you name behaviours, such as calling external services, track them through the call graph, and report when they reach code where they aren&#039;t allowed.">
+        <meta property="twitter:image" content="https://www.daveliddament.co.uk/img/speaking_banner.png">
+    
+
+    <title>Introducing the PHPStan Effect System — Dave Liddament</title>
+
+    <link rel="canonical" href="https://www.daveliddament.co.uk/articles/introducing-phpstan-effect-system/">
+    <script type="application/ld+json">{"@context":"https:\/\/schema.org","@type":"BlogPosting","headline":"Introducing the PHPStan Effect System","description":"The PHPStan Effect System is an experimental PHPStan extension that lets you name behaviours, such as calling external services, track them through the call graph, and report when they reach code where they aren't allowed.","datePublished":"2026-10-09","url":"https:\/\/www.daveliddament.co.uk\/articles\/introducing-phpstan-effect-system\/","author":{"@type":"Person","name":"Dave Liddament","url":"https:\/\/www.daveliddament.co.uk"}}</script>
+    <!-- Bootstrap core CSS -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../../css/custom.css" rel="stylesheet">
+    <link href="../../css/prism.css" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/4dad72476f.js" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="../../">Dave Liddament</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../">Home
+                                                    </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../talks">Talks
+                                                    </a>
+                    </li>
+                                    <li class="nav-item active">
+                        <a class="nav-link" href="../../articles">Articles
+                            <span class="sr-only">(current)</span>                        </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../videos">Videos
+                                                    </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../open-source">Open Source
+                                                    </a>
+                    </li>
+                            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    
+    <div class="row">
+
+        <!-- Post Content Column -->
+        <div class="col-lg-12">
+
+            <!-- Title -->
+            <h1 class="mt-4">Introducing the PHPStan Effect System</h1>
+
+
+            <p class="date">October 9th 2026
+                                                            <a href="../../search/open-source" class="tag-pill">open source</a>
+                                            <a href="../../search/phpstan-effect-system" class="tag-pill">phpstan effect system</a>
+                                            <a href="../../search/phpstan" class="tag-pill">phpstan</a>
+                                            <a href="../../search/static-analysis" class="tag-pill">static analysis</a>
+                                                </p>
+
+            <hr>
+
+            
+            <p>During a code review, I spotted a controller that, a few calls down, ended up making a request to an external service.</p>
+
+<p>I caught it that time.
+But I knew I couldn't rely on myself to spot it the next time.</p>
+
+<p>So I wanted to automate the check: none of my controllers should call code that makes requests to external services.</p>
+
+<p>The catch is that the external call might be several methods away from the controller.
+A controller calls a service, that service calls another service, and eventually something makes an HTTP request.
+Looking at the controller alone won't tell you that, which is exactly why it's so easy to miss in code review.</p>
+
+<p>What I wanted was to mark the methods making those requests as <code>slow</code>, then have PHPStan tell me if any controller could reach them.</p>
+
+<p>So I built the <a href="https://github.com/DaveLiddament/phpstan-effect-system">PHPStan Effect System</a>.</p>
+
+<h2>An example</h2>
+
+<p>Consider an application with an API client, an order service and a controller.
+The controller calls the order service, which calls the API client.</p>
+
+<p>There are two attributes:</p>
+
+<ul>
+<li><code>#[Effect('slow')]</code> marks a method as having the <code>slow</code> effect.</li>
+<li><code>#[EffectFree('slow')]</code> says a method must not reach anything with that effect.</li>
+</ul>
+
+<p>Here's what that looks like:</p>
+
+<pre><code class="language-php">use DaveLiddament\PhpstanEffectSystem\Attributes\Effect;
+use DaveLiddament\PhpstanEffectSystem\Attributes\EffectFree;
+
+class ApiClient
+{
+    #[Effect('slow')]
+    public function fetch(): void
+    {
+        // Makes an HTTP request to an external service.
+    }
+}
+
+class OrderService
+{
+    public function __construct(
+        private ApiClient $apiClient,
+    ) {}
+
+    public function load(): void
+    {
+        $this-&gt;apiClient-&gt;fetch();
+    }
+}
+
+class HomeController
+{
+    public function __construct(
+        private OrderService $orderService,
+    ) {}
+
+    #[EffectFree('slow')]
+    public function indexAction(): void
+    {
+        $this-&gt;orderService-&gt;load();
+    }
+}
+</code></pre>
+
+<p>PHPStan reports an error on <code>HomeController::indexAction()</code>.
+It doesn't call the API client directly, but it calls something that does.</p>
+
+<p>The error includes the call path:</p>
+
+<pre><code>Method HomeController::indexAction() is #[EffectFree('slow')] but reaches effect 'slow':
+HomeController::indexAction() -&gt; OrderService::load() -&gt; ApiClient::fetch() (declares #[Effect('slow')]).
+</code></pre>
+
+<p>Notice that <code>OrderService::load()</code> doesn't need an attribute.
+The extension works out that it has the <code>slow</code> effect because it calls <code>ApiClient::fetch()</code>.</p>
+
+<p>Adding more methods between the controller and the API client doesn't change this.
+The effect propagates back through the calls, and the error shows a shortest path to the method that declares it.</p>
+
+<p>This is where it really earns its keep: changing existing code.
+Add an external call to a service today, and you might have just slowed down a controller several calls away.
+That's exactly the kind of change I spotted in code review.
+I might not spot the next one. PHPStan will.</p>
+
+<h2>Applying the rule to all controllers</h2>
+
+<p>Adding <code>#[EffectFree('slow')]</code> to individual methods works, but my original requirement was to apply the rule across all my controllers.</p>
+
+<p>You can do that in PHPStan's configuration:</p>
+
+<pre><code class="language-yaml">parameters:
+    effects:
+        allowedEffects: ['slow']
+        rules:
+            -
+                classPattern: 'App\Controller\*'
+                methodPattern: '*Action'
+                effectFree: ['slow']
+</code></pre>
+
+<p>This applies the rule to methods ending in <code>Action</code> on classes matching <code>App\Controller\*</code>.
+Those methods don't need an <code>#[EffectFree('slow')]</code> attribute as well.</p>
+
+<p>Adjust the patterns to match your application's conventions.
+For example, <code>methodPattern: '*'</code> applies it to every method in the matching classes.</p>
+
+<p>The <code>allowedEffects</code> list is required.
+It catches typos in effect names, so writing <code>slwo</code> won't quietly create a brand-new effect that nothing ever checks.</p>
+
+<h2>Why an effect system?</h2>
+
+<p>A method's parameter and return types tell us what values it accepts and returns.
+Effects describe what it might <em>do</em> while running, such as accessing a database or making a network request.</p>
+
+<p>The extension lets you name those behaviours, track them through calls, and declare where they aren't allowed.</p>
+
+<p>The names are up to you.
+I started with <code>slow</code>, but you could use <code>http</code> for external requests or <code>database-write</code> for methods that change data.</p>
+
+<p>It's worth being clear about what <code>slow</code> means here.
+It's just the methods I've chosen to mark as slow.
+The extension doesn't measure execution time or magically discover slow code.
+It checks whether the effects you've declared can reach the boundaries you've set.</p>
+
+<h2>Trying it out</h2>
+
+<p>Install the extension with Composer:</p>
+
+<pre><code class="language-shell">composer require --dev dave-liddament/phpstan-effect-system
+</code></pre>
+
+<p>If you're using <code>phpstan/extension-installer</code>, it registers automatically.
+Otherwise, add this to your PHPStan configuration alongside the effect settings above:</p>
+
+<pre><code class="language-yaml">includes:
+    - vendor/dave-liddament/phpstan-effect-system/extension.neon
+</code></pre>
+
+<p>Run PHPStan over your full configured project paths.
+The extension needs the project's call graph, so analysing a single file or just the controllers directory isn't enough.</p>
+
+<p>The package is experimental, and there are limits to the calls it can track.
+For example, variable callables and reflection-based invocation aren't tracked.
+The README covers these limitations and the other configuration options.</p>
+
+<p>The code and documentation are <a href="https://github.com/DaveLiddament/phpstan-effect-system">on GitHub</a>.</p>
+
+            
+        </div>
+
+
+    </div>
+    <!-- /.row -->
+
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">
+            Copyright &copy; Dave Liddament 2018-2026
+            <a class="social-circle" href="https://twitter.com/DaveLiddament"><i class="fa-brands fa-twitter"></i></a>
+            <a class="social-circle" href="https://github.com/DaveLiddament"><i class="fa-brands fa-github"></i></a>
+            <a class="social-circle" href="https://www.linkedin.com/in/daveliddament/"><i
+                        class="fa-brands fa-linkedin"></i></a>
+            <a class="social-circle" rel="me" href="https://phpc.social/@DaveLiddament"><i class="fa-brands fa-mastodon"></i></a>
+            <a class="social-circle" href="../../feed"><i class="fa-solid fa-rss"></i></a>
+        </p>
+    </div>
+    <!-- /.container -->
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/bootstrap.bundle.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</body>
+
+</html>
