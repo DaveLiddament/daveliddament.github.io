@@ -8,21 +8,21 @@
     <meta name="description" content="Tips on how to use static analysis tools with legacy projects">
     <meta name="author" content="Dave Liddament">
 
-            <meta property="og:title" content="Introducing static analysis tools to legacy projects">
-        <meta property="og:description" content="Tips on how to use static analysis tools with legacy projects">
-        <meta property="og:image" content="https://www.daveliddament.co.uk/img/speaking_banner.png">
-        <meta property="og:image:alt" content="Dave Liddament speaking at a conference">
-        <meta property="og:url" content="https://www.daveliddament.co.uk/talks/introducing-static-analysis-to-legacy-projects/">
-        <meta property="og:site_name" content="Dave Liddament's website">
-        <meta property="og:locale" content="en_GB">
-        <meta property="og:type" content="article">
-        <meta property="twitter:card" content="summary_large_image">
-        <meta property="twitter:site" content="@daveliddament">
-        <meta property="twitter:creator" content="@daveliddament">
-        <meta property="twitter:title" content="Introducing static analysis tools to legacy projects">
-        <meta property="twitter:description" content="Tips on how to use static analysis tools with legacy projects">
-        <meta property="twitter:image" content="https://www.daveliddament.co.uk/img/speaking_banner.png">
-    
+    <meta property="og:title" content="Introducing static analysis tools to legacy projects">
+    <meta property="og:description" content="Tips on how to use static analysis tools with legacy projects">
+    <meta property="og:image" content="https://www.daveliddament.co.uk/img/speaking_banner.png">
+    <meta property="og:image:alt" content="Dave Liddament speaking at a conference">
+    <meta property="og:url" content="https://www.daveliddament.co.uk/talks/introducing-static-analysis-to-legacy-projects/">
+    <meta property="og:site_name" content="Dave Liddament's website">
+    <meta property="og:locale" content="en_GB">
+    <meta property="og:type" content="article">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="@daveliddament">
+    <meta property="twitter:creator" content="@daveliddament">
+    <meta property="twitter:title" content="Introducing static analysis tools to legacy projects">
+    <meta property="twitter:description" content="Tips on how to use static analysis tools with legacy projects">
+    <meta property="twitter:image" content="https://www.daveliddament.co.uk/img/speaking_banner.png">
+
 
     <title>Introducing static analysis tools to legacy projects — Dave Liddament</title>
 
@@ -149,6 +149,22 @@ SARB is used for adding baselining functionality to tools that don&#039;t have t
     <!-- /.row -->
 
 
+                    <div class="row">
+            <div class="col-lg-12">
+                <div class="share-links">
+                    <span class="share-label">Share</span>
+                    <a class="share-link" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.daveliddament.co.uk%2Ftalks%2Fintroducing-static-analysis-to-legacy-projects%2F"
+                       target="_blank" rel="noopener" aria-label="Share on LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                    <a class="share-link" href="https://x.com/intent/tweet?url=https%3A%2F%2Fwww.daveliddament.co.uk%2Ftalks%2Fintroducing-static-analysis-to-legacy-projects%2F&amp;text=Introducing%20static%20analysis%20tools%20to%20legacy%20projects"
+                       target="_blank" rel="noopener" aria-label="Share on X"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a class="share-link" href="https://bsky.app/intent/compose?text=Introducing%20static%20analysis%20tools%20to%20legacy%20projects%20https%3A%2F%2Fwww.daveliddament.co.uk%2Ftalks%2Fintroducing-static-analysis-to-legacy-projects%2F"
+                       target="_blank" rel="noopener" aria-label="Share on Bluesky"><i class="fa-brands fa-bluesky"></i></a>
+                    <button type="button" class="share-link share-copy" data-url="https://www.daveliddament.co.uk/talks/introducing-static-analysis-to-legacy-projects/" aria-label="Copy link"><i class="fa-solid fa-link"></i></button>
+                    <span class="share-copied" role="status"></span>
+                </div>
+            </div>
+        </div>
+    
 </div>
 <!-- /.container -->
 
@@ -172,6 +188,17 @@ SARB is used for adding baselining functionality to tools that don&#039;t have t
 <script src="../../js/jquery.min.js"></script>
 <script src="../../js/bootstrap.bundle.min.js"></script>
 <script src="../../js/prism.js"></script>
+<script>
+    document.querySelectorAll('.share-copy').forEach(function (button) {
+        button.addEventListener('click', function () {
+            var status = button.parentNode.querySelector('.share-copied');
+            navigator.clipboard.writeText(button.dataset.url).then(function () {
+                status.textContent = 'Link copied';
+                setTimeout(function () { status.textContent = ''; }, 2000);
+            });
+        });
+    });
+</script>
 
 </body>
 

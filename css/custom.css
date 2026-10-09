@@ -70,3 +70,40 @@ h2 {
     color: #007bff;
     text-decoration: none;
 }
+.share-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 2rem 0;
+    padding-top: 1rem;
+    border-top: 1px solid #dee2e6;
+}
+
+.share-label {
+    color: #6c757d;
+    margin-right: 4px;
+}
+
+.share-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2em;
+    height: 2.2em;
+    border: 0;
+    border-radius: 50%;
+    background-color: grey;
+    color: white;
+    cursor: pointer;
+}
+
+.share-link:hover {
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+}
+
+.share-copied {
+    color: #6c757d;
+    font-size: 0.9em;
+}

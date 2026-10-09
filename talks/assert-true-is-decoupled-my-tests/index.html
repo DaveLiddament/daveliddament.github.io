@@ -8,21 +8,21 @@
     <meta name="description" content="It&#039;s good practice to write decoupled code. That good practice should include minimising the coupling between your test code and the code under test. This talk examines why this is important and how to achieve it.">
     <meta name="author" content="Dave Liddament">
 
-            <meta property="og:title" content="AssertTrue(isDecoupled(&quot;my tests&quot;))">
-        <meta property="og:description" content="It&#039;s good practice to write decoupled code. That good practice should include minimising the coupling between your test code and the code under test. This talk examines why this is important and how to achieve it.">
-        <meta property="og:image" content="https://www.daveliddament.co.uk/img/speaking_banner.png">
-        <meta property="og:image:alt" content="Dave Liddament speaking at a conference">
-        <meta property="og:url" content="https://www.daveliddament.co.uk/talks/assert-true-is-decoupled-my-tests/">
-        <meta property="og:site_name" content="Dave Liddament's website">
-        <meta property="og:locale" content="en_GB">
-        <meta property="og:type" content="article">
-        <meta property="twitter:card" content="summary_large_image">
-        <meta property="twitter:site" content="@daveliddament">
-        <meta property="twitter:creator" content="@daveliddament">
-        <meta property="twitter:title" content="AssertTrue(isDecoupled(&quot;my tests&quot;))">
-        <meta property="twitter:description" content="It&#039;s good practice to write decoupled code. That good practice should include minimising the coupling between your test code and the code under test. This talk examines why this is important and how to achieve it.">
-        <meta property="twitter:image" content="https://www.daveliddament.co.uk/img/speaking_banner.png">
-    
+    <meta property="og:title" content="AssertTrue(isDecoupled(&quot;my tests&quot;))">
+    <meta property="og:description" content="It&#039;s good practice to write decoupled code. That good practice should include minimising the coupling between your test code and the code under test. This talk examines why this is important and how to achieve it.">
+    <meta property="og:image" content="https://www.daveliddament.co.uk/img/speaking_banner.png">
+    <meta property="og:image:alt" content="Dave Liddament speaking at a conference">
+    <meta property="og:url" content="https://www.daveliddament.co.uk/talks/assert-true-is-decoupled-my-tests/">
+    <meta property="og:site_name" content="Dave Liddament's website">
+    <meta property="og:locale" content="en_GB">
+    <meta property="og:type" content="article">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="@daveliddament">
+    <meta property="twitter:creator" content="@daveliddament">
+    <meta property="twitter:title" content="AssertTrue(isDecoupled(&quot;my tests&quot;))">
+    <meta property="twitter:description" content="It&#039;s good practice to write decoupled code. That good practice should include minimising the coupling between your test code and the code under test. This talk examines why this is important and how to achieve it.">
+    <meta property="twitter:image" content="https://www.daveliddament.co.uk/img/speaking_banner.png">
+
 
     <title>AssertTrue(isDecoupled(&quot;my tests&quot;)) — Dave Liddament</title>
 
@@ -192,6 +192,22 @@
     <!-- /.row -->
 
 
+                    <div class="row">
+            <div class="col-lg-12">
+                <div class="share-links">
+                    <span class="share-label">Share</span>
+                    <a class="share-link" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.daveliddament.co.uk%2Ftalks%2Fassert-true-is-decoupled-my-tests%2F"
+                       target="_blank" rel="noopener" aria-label="Share on LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                    <a class="share-link" href="https://x.com/intent/tweet?url=https%3A%2F%2Fwww.daveliddament.co.uk%2Ftalks%2Fassert-true-is-decoupled-my-tests%2F&amp;text=AssertTrue%28isDecoupled%28%22my%20tests%22%29%29"
+                       target="_blank" rel="noopener" aria-label="Share on X"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a class="share-link" href="https://bsky.app/intent/compose?text=AssertTrue%28isDecoupled%28%22my%20tests%22%29%29%20https%3A%2F%2Fwww.daveliddament.co.uk%2Ftalks%2Fassert-true-is-decoupled-my-tests%2F"
+                       target="_blank" rel="noopener" aria-label="Share on Bluesky"><i class="fa-brands fa-bluesky"></i></a>
+                    <button type="button" class="share-link share-copy" data-url="https://www.daveliddament.co.uk/talks/assert-true-is-decoupled-my-tests/" aria-label="Copy link"><i class="fa-solid fa-link"></i></button>
+                    <span class="share-copied" role="status"></span>
+                </div>
+            </div>
+        </div>
+    
 </div>
 <!-- /.container -->
 
@@ -215,6 +231,17 @@
 <script src="../../js/jquery.min.js"></script>
 <script src="../../js/bootstrap.bundle.min.js"></script>
 <script src="../../js/prism.js"></script>
+<script>
+    document.querySelectorAll('.share-copy').forEach(function (button) {
+        button.addEventListener('click', function () {
+            var status = button.parentNode.querySelector('.share-copied');
+            navigator.clipboard.writeText(button.dataset.url).then(function () {
+                status.textContent = 'Link copied';
+                setTimeout(function () { status.textContent = ''; }, 2000);
+            });
+        });
+    });
+</script>
 
 </body>
 

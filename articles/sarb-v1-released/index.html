@@ -8,21 +8,21 @@
     <meta name="description" content="Static Analysis Results Baseliner (SARB)  is used to create a baseline of these results. As work on the project progresses SARB can takes the latest static analysis results, removes those issues in the baseline and report the issues raised since the baseline. Learn all about version 1.">
     <meta name="author" content="Dave Liddament">
 
-            <meta property="og:title" content="SARB version 1 released">
-        <meta property="og:description" content="Static Analysis Results Baseliner (SARB)  is used to create a baseline of these results. As work on the project progresses SARB can takes the latest static analysis results, removes those issues in the baseline and report the issues raised since the baseline. Learn all about version 1.">
-        <meta property="og:image" content="https://www.daveliddament.co.uk/img/speaking_banner.png">
-        <meta property="og:image:alt" content="Dave Liddament speaking at a conference">
-        <meta property="og:url" content="https://www.daveliddament.co.uk/articles/sarb-v1-released/">
-        <meta property="og:site_name" content="Dave Liddament's website">
-        <meta property="og:locale" content="en_GB">
-        <meta property="og:type" content="article">
-        <meta property="twitter:card" content="summary_large_image">
-        <meta property="twitter:site" content="@daveliddament">
-        <meta property="twitter:creator" content="@daveliddament">
-        <meta property="twitter:title" content="SARB version 1 released">
-        <meta property="twitter:description" content="Static Analysis Results Baseliner (SARB)  is used to create a baseline of these results. As work on the project progresses SARB can takes the latest static analysis results, removes those issues in the baseline and report the issues raised since the baseline. Learn all about version 1.">
-        <meta property="twitter:image" content="https://www.daveliddament.co.uk/img/speaking_banner.png">
-    
+    <meta property="og:title" content="SARB version 1 released">
+    <meta property="og:description" content="Static Analysis Results Baseliner (SARB)  is used to create a baseline of these results. As work on the project progresses SARB can takes the latest static analysis results, removes those issues in the baseline and report the issues raised since the baseline. Learn all about version 1.">
+    <meta property="og:image" content="https://www.daveliddament.co.uk/img/speaking_banner.png">
+    <meta property="og:image:alt" content="Dave Liddament speaking at a conference">
+    <meta property="og:url" content="https://www.daveliddament.co.uk/articles/sarb-v1-released/">
+    <meta property="og:site_name" content="Dave Liddament's website">
+    <meta property="og:locale" content="en_GB">
+    <meta property="og:type" content="article">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="@daveliddament">
+    <meta property="twitter:creator" content="@daveliddament">
+    <meta property="twitter:title" content="SARB version 1 released">
+    <meta property="twitter:description" content="Static Analysis Results Baseliner (SARB)  is used to create a baseline of these results. As work on the project progresses SARB can takes the latest static analysis results, removes those issues in the baseline and report the issues raised since the baseline. Learn all about version 1.">
+    <meta property="twitter:image" content="https://www.daveliddament.co.uk/img/speaking_banner.png">
+
 
     <title>SARB version 1 released — Dave Liddament</title>
 
@@ -165,6 +165,22 @@ SARB's functionality is slightly different; it can track baseline issues even if
     <!-- /.row -->
 
 
+                    <div class="row">
+            <div class="col-lg-12">
+                <div class="share-links">
+                    <span class="share-label">Share</span>
+                    <a class="share-link" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.daveliddament.co.uk%2Farticles%2Fsarb-v1-released%2F"
+                       target="_blank" rel="noopener" aria-label="Share on LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                    <a class="share-link" href="https://x.com/intent/tweet?url=https%3A%2F%2Fwww.daveliddament.co.uk%2Farticles%2Fsarb-v1-released%2F&amp;text=SARB%20version%201%20released"
+                       target="_blank" rel="noopener" aria-label="Share on X"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a class="share-link" href="https://bsky.app/intent/compose?text=SARB%20version%201%20released%20https%3A%2F%2Fwww.daveliddament.co.uk%2Farticles%2Fsarb-v1-released%2F"
+                       target="_blank" rel="noopener" aria-label="Share on Bluesky"><i class="fa-brands fa-bluesky"></i></a>
+                    <button type="button" class="share-link share-copy" data-url="https://www.daveliddament.co.uk/articles/sarb-v1-released/" aria-label="Copy link"><i class="fa-solid fa-link"></i></button>
+                    <span class="share-copied" role="status"></span>
+                </div>
+            </div>
+        </div>
+    
 </div>
 <!-- /.container -->
 
@@ -188,6 +204,17 @@ SARB's functionality is slightly different; it can track baseline issues even if
 <script src="../../js/jquery.min.js"></script>
 <script src="../../js/bootstrap.bundle.min.js"></script>
 <script src="../../js/prism.js"></script>
+<script>
+    document.querySelectorAll('.share-copy').forEach(function (button) {
+        button.addEventListener('click', function () {
+            var status = button.parentNode.querySelector('.share-copied');
+            navigator.clipboard.writeText(button.dataset.url).then(function () {
+                status.textContent = 'Link copied';
+                setTimeout(function () { status.textContent = ''; }, 2000);
+            });
+        });
+    });
+</script>
 
 </body>
 

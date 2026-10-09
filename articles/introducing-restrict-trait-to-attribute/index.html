@@ -8,21 +8,21 @@
     <meta name="description" content="Learn how the RestrictTraitTo attribute ensures that traits are used correctly.">
     <meta name="author" content="Dave Liddament">
 
-            <meta property="og:title" content="Introducing the RestrictTraitTo attribute">
-        <meta property="og:description" content="Learn how the RestrictTraitTo attribute ensures that traits are used correctly.">
-        <meta property="og:image" content="https://www.daveliddament.co.uk/img/restrict-trait-to.png">
-        <meta property="og:image:alt" content="Code showing the RestrictTraitTo attribute usage">
-        <meta property="og:url" content="https://www.daveliddament.co.uk/articles/introducing-restrict-trait-to-attribute/">
-        <meta property="og:site_name" content="Dave Liddament's website">
-        <meta property="og:locale" content="en_GB">
-        <meta property="og:type" content="article">
-        <meta property="twitter:card" content="summary_large_image">
-        <meta property="twitter:site" content="@daveliddament">
-        <meta property="twitter:creator" content="@daveliddament">
-        <meta property="twitter:title" content="Introducing the RestrictTraitTo attribute">
-        <meta property="twitter:description" content="Learn how the RestrictTraitTo attribute ensures that traits are used correctly.">
-        <meta property="twitter:image" content="https://www.daveliddament.co.uk/img/restrict-trait-to.png">
-    
+    <meta property="og:title" content="Introducing the RestrictTraitTo attribute">
+    <meta property="og:description" content="Learn how the RestrictTraitTo attribute ensures that traits are used correctly.">
+    <meta property="og:image" content="https://www.daveliddament.co.uk/img/restrict-trait-to.png">
+    <meta property="og:image:alt" content="Code showing the RestrictTraitTo attribute usage">
+    <meta property="og:url" content="https://www.daveliddament.co.uk/articles/introducing-restrict-trait-to-attribute/">
+    <meta property="og:site_name" content="Dave Liddament's website">
+    <meta property="og:locale" content="en_GB">
+    <meta property="og:type" content="article">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="@daveliddament">
+    <meta property="twitter:creator" content="@daveliddament">
+    <meta property="twitter:title" content="Introducing the RestrictTraitTo attribute">
+    <meta property="twitter:description" content="Learn how the RestrictTraitTo attribute ensures that traits are used correctly.">
+    <meta property="twitter:image" content="https://www.daveliddament.co.uk/img/restrict-trait-to.png">
+
 
     <title>Introducing the RestrictTraitTo attribute — Dave Liddament</title>
 
@@ -188,6 +188,22 @@ However, if you do use them, and their usage should be limited to a specific cla
     <!-- /.row -->
 
 
+                    <div class="row">
+            <div class="col-lg-12">
+                <div class="share-links">
+                    <span class="share-label">Share</span>
+                    <a class="share-link" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.daveliddament.co.uk%2Farticles%2Fintroducing-restrict-trait-to-attribute%2F"
+                       target="_blank" rel="noopener" aria-label="Share on LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                    <a class="share-link" href="https://x.com/intent/tweet?url=https%3A%2F%2Fwww.daveliddament.co.uk%2Farticles%2Fintroducing-restrict-trait-to-attribute%2F&amp;text=Introducing%20the%20RestrictTraitTo%20attribute"
+                       target="_blank" rel="noopener" aria-label="Share on X"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a class="share-link" href="https://bsky.app/intent/compose?text=Introducing%20the%20RestrictTraitTo%20attribute%20https%3A%2F%2Fwww.daveliddament.co.uk%2Farticles%2Fintroducing-restrict-trait-to-attribute%2F"
+                       target="_blank" rel="noopener" aria-label="Share on Bluesky"><i class="fa-brands fa-bluesky"></i></a>
+                    <button type="button" class="share-link share-copy" data-url="https://www.daveliddament.co.uk/articles/introducing-restrict-trait-to-attribute/" aria-label="Copy link"><i class="fa-solid fa-link"></i></button>
+                    <span class="share-copied" role="status"></span>
+                </div>
+            </div>
+        </div>
+    
 </div>
 <!-- /.container -->
 
@@ -211,6 +227,17 @@ However, if you do use them, and their usage should be limited to a specific cla
 <script src="../../js/jquery.min.js"></script>
 <script src="../../js/bootstrap.bundle.min.js"></script>
 <script src="../../js/prism.js"></script>
+<script>
+    document.querySelectorAll('.share-copy').forEach(function (button) {
+        button.addEventListener('click', function () {
+            var status = button.parentNode.querySelector('.share-copied');
+            navigator.clipboard.writeText(button.dataset.url).then(function () {
+                status.textContent = 'Link copied';
+                setTimeout(function () { status.textContent = ''; }, 2000);
+            });
+        });
+    });
+</script>
 
 </body>
 
