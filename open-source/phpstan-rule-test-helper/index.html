@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="The PHPStan Rule Test Helper makes tests for custom PHPStan rules easier to write and maintain, by removing line numbers and duplicated error messages from tests.">
+    <meta name="author" content="Dave Liddament">
+
+    <meta property="og:title" content="PHPStan Rule Test Helper">
+    <meta property="og:description" content="The PHPStan Rule Test Helper makes tests for custom PHPStan rules easier to write and maintain, by removing line numbers and duplicated error messages from tests.">
+    <meta property="og:image" content="https://www.daveliddament.co.uk/img/speaking_banner.png">
+    <meta property="og:image:alt" content="Dave Liddament speaking at a conference">
+    <meta property="og:url" content="https://www.daveliddament.co.uk/open-source/phpstan-rule-test-helper/">
+    <meta property="og:site_name" content="Dave Liddament's website">
+    <meta property="og:locale" content="en_GB">
+    <meta property="og:type" content="website">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="@daveliddament">
+    <meta property="twitter:creator" content="@daveliddament">
+    <meta property="twitter:title" content="PHPStan Rule Test Helper">
+    <meta property="twitter:description" content="The PHPStan Rule Test Helper makes tests for custom PHPStan rules easier to write and maintain, by removing line numbers and duplicated error messages from tests.">
+    <meta property="twitter:image" content="https://www.daveliddament.co.uk/img/speaking_banner.png">
+
+
+    <title>PHPStan Rule Test Helper — Dave Liddament</title>
+
+    <link rel="canonical" href="https://www.daveliddament.co.uk/open-source/phpstan-rule-test-helper/">
+    <script type="application/ld+json">{"@context":"https:\/\/schema.org","@type":"SoftwareApplication","name":"PHPStan Rule Test Helper","applicationCategory":"DeveloperApplication","operatingSystem":"PHP","description":"The PHPStan Rule Test Helper makes tests for custom PHPStan rules easier to write and maintain, by removing line numbers and duplicated error messages from tests.","url":"https:\/\/www.daveliddament.co.uk\/open-source\/phpstan-rule-test-helper\/","codeRepository":"https:\/\/github.com\/DaveLiddament\/phpstan-rule-test-helper","author":{"@type":"Person","name":"Dave Liddament","url":"https:\/\/www.daveliddament.co.uk"}}</script>
+    <!-- Bootstrap core CSS -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../../css/custom.css" rel="stylesheet">
+    <link href="../../css/prism.css" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/4dad72476f.js" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="../../">Dave Liddament</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../">Home
+                                                    </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../talks">Talks
+                                                    </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../articles">Articles
+                                                    </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../videos">Videos
+                                                    </a>
+                    </li>
+                                    <li class="nav-item active">
+                        <a class="nav-link" href="../../open-source">Open Source
+                            <span class="sr-only">(current)</span>                        </a>
+                    </li>
+                            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    
+    <div class="row">
+
+        <!-- Post Content Column -->
+        <div class="col-lg-12">
+
+            <!-- Title -->
+            <h1 class="mt-4">PHPStan Rule Test Helper</h1>
+
+            <hr>
+
+            <p>The PHPStan Rule Test Helper builds on PHPStan's own test harness for custom rules. Expected errors are marked with <code>// ERROR</code> comments in the fixture files themselves, so there are no line numbers to update when a fixture changes. The expected error message can also be defined once in the test case, rather than repeated for every violation.</p>
+
+            <p><a class="btn btn-primary" href="https://github.com/DaveLiddament/phpstan-rule-test-helper">View on GitHub</a></p>
+
+                            <hr>
+                <h3>Related articles</h3>
+                <ul>
+                                            <li><a href="../../articles/introducing-phpstan-rule-test-helper">Introducing the PHPStan Rule Test Helper</a></li>
+                                    </ul>
+            
+            
+        </div>
+
+    </div>
+    <!-- /.row -->
+
+
+        
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">
+            Copyright &copy; Dave Liddament 2018-2026
+            <a class="social-circle" href="https://twitter.com/DaveLiddament"><i class="fa-brands fa-twitter"></i></a>
+            <a class="social-circle" href="https://github.com/DaveLiddament"><i class="fa-brands fa-github"></i></a>
+            <a class="social-circle" href="https://www.linkedin.com/in/daveliddament/"><i
+                        class="fa-brands fa-linkedin"></i></a>
+            <a class="social-circle" rel="me" href="https://phpc.social/@DaveLiddament"><i class="fa-brands fa-mastodon"></i></a>
+            <a class="social-circle" href="../../feed"><i class="fa-solid fa-rss"></i></a>
+        </p>
+    </div>
+    <!-- /.container -->
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/bootstrap.bundle.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</body>
+
+</html>

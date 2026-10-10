@@ -180,22 +180,33 @@ The future could well be developers writing expectations and AI doing the rest.<
     <!-- /.row -->
 
 
-                    <div class="row">
-            <div class="col-lg-12">
-                <div class="share-links">
-                    <span class="share-label">Share</span>
-                    <a class="share-link" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.daveliddament.co.uk%2Farticles%2Fconverting-php-engine-to-rust%2F"
-                       target="_blank" rel="noopener" aria-label="Share on LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-                    <a class="share-link" href="https://x.com/intent/tweet?url=https%3A%2F%2Fwww.daveliddament.co.uk%2Farticles%2Fconverting-php-engine-to-rust%2F&amp;text=Using%20AI%20to%20convert%20PHP%20engine%20from%20C%20to%20Rust"
-                       target="_blank" rel="noopener" aria-label="Share on X"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a class="share-link" href="https://bsky.app/intent/compose?text=Using%20AI%20to%20convert%20PHP%20engine%20from%20C%20to%20Rust%20https%3A%2F%2Fwww.daveliddament.co.uk%2Farticles%2Fconverting-php-engine-to-rust%2F"
-                       target="_blank" rel="noopener" aria-label="Share on Bluesky"><i class="fa-brands fa-bluesky"></i></a>
-                    <button type="button" class="share-link share-copy" data-url="https://www.daveliddament.co.uk/articles/converting-php-engine-to-rust/" aria-label="Copy link"><i class="fa-solid fa-link"></i></button>
-                    <span class="share-copied" role="status"></span>
-                </div>
-            </div>
+        <div class="row">
+    <div class="col-lg-12">
+        <div class="share-links">
+            <span class="share-label">Share</span>
+            <a class="share-link" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.daveliddament.co.uk%2Farticles%2Fconverting-php-engine-to-rust%2F"
+               target="_blank" rel="noopener" aria-label="Share on LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+            <a class="share-link" href="https://x.com/intent/tweet?url=https%3A%2F%2Fwww.daveliddament.co.uk%2Farticles%2Fconverting-php-engine-to-rust%2F&amp;text=Using%20AI%20to%20convert%20PHP%20engine%20from%20C%20to%20Rust"
+               target="_blank" rel="noopener" aria-label="Share on X"><i class="fa-brands fa-x-twitter"></i></a>
+            <a class="share-link" href="https://bsky.app/intent/compose?text=Using%20AI%20to%20convert%20PHP%20engine%20from%20C%20to%20Rust%20https%3A%2F%2Fwww.daveliddament.co.uk%2Farticles%2Fconverting-php-engine-to-rust%2F"
+               target="_blank" rel="noopener" aria-label="Share on Bluesky"><i class="fa-brands fa-bluesky"></i></a>
+            <button type="button" class="share-link share-copy" data-url="https://www.daveliddament.co.uk/articles/converting-php-engine-to-rust/" aria-label="Copy link"><i class="fa-solid fa-link"></i></button>
+            <span class="share-copied" role="status"></span>
         </div>
-    
+    </div>
+</div>
+<script>
+    document.querySelectorAll('.share-copy').forEach(function (button) {
+        button.addEventListener('click', function () {
+            var status = button.parentNode.querySelector('.share-copied');
+            navigator.clipboard.writeText(button.dataset.url).then(function () {
+                status.textContent = 'Link copied';
+                setTimeout(function () { status.textContent = ''; }, 2000);
+            });
+        });
+    });
+</script>
+
 </div>
 <!-- /.container -->
 
@@ -219,17 +230,6 @@ The future could well be developers writing expectations and AI doing the rest.<
 <script src="../../js/jquery.min.js"></script>
 <script src="../../js/bootstrap.bundle.min.js"></script>
 <script src="../../js/prism.js"></script>
-<script>
-    document.querySelectorAll('.share-copy').forEach(function (button) {
-        button.addEventListener('click', function () {
-            var status = button.parentNode.querySelector('.share-copied');
-            navigator.clipboard.writeText(button.dataset.url).then(function () {
-                status.textContent = 'Link copied';
-                setTimeout(function () { status.textContent = ''; }, 2000);
-            });
-        });
-    });
-</script>
 
 </body>
 

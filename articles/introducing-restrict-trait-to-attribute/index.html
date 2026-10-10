@@ -188,22 +188,33 @@ However, if you do use them, and their usage should be limited to a specific cla
     <!-- /.row -->
 
 
-                    <div class="row">
-            <div class="col-lg-12">
-                <div class="share-links">
-                    <span class="share-label">Share</span>
-                    <a class="share-link" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.daveliddament.co.uk%2Farticles%2Fintroducing-restrict-trait-to-attribute%2F"
-                       target="_blank" rel="noopener" aria-label="Share on LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-                    <a class="share-link" href="https://x.com/intent/tweet?url=https%3A%2F%2Fwww.daveliddament.co.uk%2Farticles%2Fintroducing-restrict-trait-to-attribute%2F&amp;text=Introducing%20the%20RestrictTraitTo%20attribute"
-                       target="_blank" rel="noopener" aria-label="Share on X"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a class="share-link" href="https://bsky.app/intent/compose?text=Introducing%20the%20RestrictTraitTo%20attribute%20https%3A%2F%2Fwww.daveliddament.co.uk%2Farticles%2Fintroducing-restrict-trait-to-attribute%2F"
-                       target="_blank" rel="noopener" aria-label="Share on Bluesky"><i class="fa-brands fa-bluesky"></i></a>
-                    <button type="button" class="share-link share-copy" data-url="https://www.daveliddament.co.uk/articles/introducing-restrict-trait-to-attribute/" aria-label="Copy link"><i class="fa-solid fa-link"></i></button>
-                    <span class="share-copied" role="status"></span>
-                </div>
-            </div>
+        <div class="row">
+    <div class="col-lg-12">
+        <div class="share-links">
+            <span class="share-label">Share</span>
+            <a class="share-link" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.daveliddament.co.uk%2Farticles%2Fintroducing-restrict-trait-to-attribute%2F"
+               target="_blank" rel="noopener" aria-label="Share on LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+            <a class="share-link" href="https://x.com/intent/tweet?url=https%3A%2F%2Fwww.daveliddament.co.uk%2Farticles%2Fintroducing-restrict-trait-to-attribute%2F&amp;text=Introducing%20the%20RestrictTraitTo%20attribute"
+               target="_blank" rel="noopener" aria-label="Share on X"><i class="fa-brands fa-x-twitter"></i></a>
+            <a class="share-link" href="https://bsky.app/intent/compose?text=Introducing%20the%20RestrictTraitTo%20attribute%20https%3A%2F%2Fwww.daveliddament.co.uk%2Farticles%2Fintroducing-restrict-trait-to-attribute%2F"
+               target="_blank" rel="noopener" aria-label="Share on Bluesky"><i class="fa-brands fa-bluesky"></i></a>
+            <button type="button" class="share-link share-copy" data-url="https://www.daveliddament.co.uk/articles/introducing-restrict-trait-to-attribute/" aria-label="Copy link"><i class="fa-solid fa-link"></i></button>
+            <span class="share-copied" role="status"></span>
         </div>
-    
+    </div>
+</div>
+<script>
+    document.querySelectorAll('.share-copy').forEach(function (button) {
+        button.addEventListener('click', function () {
+            var status = button.parentNode.querySelector('.share-copied');
+            navigator.clipboard.writeText(button.dataset.url).then(function () {
+                status.textContent = 'Link copied';
+                setTimeout(function () { status.textContent = ''; }, 2000);
+            });
+        });
+    });
+</script>
+
 </div>
 <!-- /.container -->
 
@@ -227,17 +238,6 @@ However, if you do use them, and their usage should be limited to a specific cla
 <script src="../../js/jquery.min.js"></script>
 <script src="../../js/bootstrap.bundle.min.js"></script>
 <script src="../../js/prism.js"></script>
-<script>
-    document.querySelectorAll('.share-copy').forEach(function (button) {
-        button.addEventListener('click', function () {
-            var status = button.parentNode.querySelector('.share-copied');
-            navigator.clipboard.writeText(button.dataset.url).then(function () {
-                status.textContent = 'Link copied';
-                setTimeout(function () { status.textContent = ''; }, 2000);
-            });
-        });
-    });
-</script>
 
 </body>
 

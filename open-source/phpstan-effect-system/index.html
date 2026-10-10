@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="An experimental PHPStan extension that lets you name behaviours, such as calling external services, track them through the call graph, and report when they reach code where they aren&#039;t allowed.">
+    <meta name="author" content="Dave Liddament">
+
+    <meta property="og:title" content="PHPStan Effect System">
+    <meta property="og:description" content="An experimental PHPStan extension that lets you name behaviours, such as calling external services, track them through the call graph, and report when they reach code where they aren&#039;t allowed.">
+    <meta property="og:image" content="https://www.daveliddament.co.uk/img/speaking_banner.png">
+    <meta property="og:image:alt" content="Dave Liddament speaking at a conference">
+    <meta property="og:url" content="https://www.daveliddament.co.uk/open-source/phpstan-effect-system/">
+    <meta property="og:site_name" content="Dave Liddament's website">
+    <meta property="og:locale" content="en_GB">
+    <meta property="og:type" content="website">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:site" content="@daveliddament">
+    <meta property="twitter:creator" content="@daveliddament">
+    <meta property="twitter:title" content="PHPStan Effect System">
+    <meta property="twitter:description" content="An experimental PHPStan extension that lets you name behaviours, such as calling external services, track them through the call graph, and report when they reach code where they aren&#039;t allowed.">
+    <meta property="twitter:image" content="https://www.daveliddament.co.uk/img/speaking_banner.png">
+
+
+    <title>PHPStan Effect System — Dave Liddament</title>
+
+    <link rel="canonical" href="https://www.daveliddament.co.uk/open-source/phpstan-effect-system/">
+    <script type="application/ld+json">{"@context":"https:\/\/schema.org","@type":"SoftwareApplication","name":"PHPStan Effect System","applicationCategory":"DeveloperApplication","operatingSystem":"PHP","description":"An experimental PHPStan extension that lets you name behaviours, such as calling external services, track them through the call graph, and report when they reach code where they aren't allowed.","url":"https:\/\/www.daveliddament.co.uk\/open-source\/phpstan-effect-system\/","codeRepository":"https:\/\/github.com\/DaveLiddament\/phpstan-effect-system","author":{"@type":"Person","name":"Dave Liddament","url":"https:\/\/www.daveliddament.co.uk"}}</script>
+    <!-- Bootstrap core CSS -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../../css/custom.css" rel="stylesheet">
+    <link href="../../css/prism.css" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/4dad72476f.js" crossorigin="anonymous"></script>
+
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="../../">Dave Liddament</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../">Home
+                                                    </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../talks">Talks
+                                                    </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../articles">Articles
+                                                    </a>
+                    </li>
+                                    <li class="nav-item ">
+                        <a class="nav-link" href="../../videos">Videos
+                                                    </a>
+                    </li>
+                                    <li class="nav-item active">
+                        <a class="nav-link" href="../../open-source">Open Source
+                            <span class="sr-only">(current)</span>                        </a>
+                    </li>
+                            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    
+    <div class="row">
+
+        <!-- Post Content Column -->
+        <div class="col-lg-12">
+
+            <!-- Title -->
+            <h1 class="mt-4">PHPStan Effect System</h1>
+
+            <hr>
+
+            <p>The PHPStan Effect System lets you mark methods with effects, such as <code>#[Effect('slow')]</code> on a method that calls an external service, and declare where those effects aren't allowed, such as <code>#[EffectFree('slow')]</code> on a controller. Effects propagate back through the call graph, so PHPStan reports a controller that reaches a slow method several calls away, along with the call path. Rules can also be applied across whole groups of classes and methods in PHPStan's configuration.</p>
+
+            <p><a class="btn btn-primary" href="https://github.com/DaveLiddament/phpstan-effect-system">View on GitHub</a></p>
+
+                            <hr>
+                <h3>Related articles</h3>
+                <ul>
+                                            <li><a href="../../articles/introducing-phpstan-effect-system">Introducing the PHPStan Effect System</a></li>
+                                    </ul>
+            
+            
+        </div>
+
+    </div>
+    <!-- /.row -->
+
+
+        
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">
+            Copyright &copy; Dave Liddament 2018-2026
+            <a class="social-circle" href="https://twitter.com/DaveLiddament"><i class="fa-brands fa-twitter"></i></a>
+            <a class="social-circle" href="https://github.com/DaveLiddament"><i class="fa-brands fa-github"></i></a>
+            <a class="social-circle" href="https://www.linkedin.com/in/daveliddament/"><i
+                        class="fa-brands fa-linkedin"></i></a>
+            <a class="social-circle" rel="me" href="https://phpc.social/@DaveLiddament"><i class="fa-brands fa-mastodon"></i></a>
+            <a class="social-circle" href="../../feed"><i class="fa-solid fa-rss"></i></a>
+        </p>
+    </div>
+    <!-- /.container -->
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/bootstrap.bundle.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</body>
+
+</html>

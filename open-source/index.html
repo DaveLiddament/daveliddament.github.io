@@ -90,16 +90,25 @@
             <h1 class="mt-4">Open Source Projects</h1>
 
             <p class="lead">My open source packages have been downloaded over
-                <strong>3.1 million</strong> times and their GitHub
-                repositories have earned <strong>419</strong> stars.</p>
+                <strong>3.6 million</strong> times and their GitHub
+                repositories have earned <strong>433</strong> stars.</p>
 
             <hr>
 
                             <h3><a href="../open-source/php-language-extensions">PHP Language Extensions Library</a></h3>
                 <p>A PHP library that adds compile-time-style guarantees — such as package-level visibility and must-use return values — enforced by static analysis.</p>
                 <hr>
+                            <h3><a href="../open-source/phpstan-effect-system">PHPStan Effect System</a></h3>
+                <p>An experimental PHPStan extension that lets you name behaviours, such as calling external services, track them through the call graph, and report when they reach code where they aren&#039;t allowed.</p>
+                <hr>
+                            <h3><a href="../open-source/phpstan-rule-test-helper">PHPStan Rule Test Helper</a></h3>
+                <p>The PHPStan Rule Test Helper makes tests for custom PHPStan rules easier to write and maintain, by removing line numbers and duplicated error messages from tests.</p>
+                <hr>
                             <h3><a href="../open-source/sarb">SARB</a></h3>
                 <p>Static Analysis Results Baseliner (SARB) lets you adopt static analysis on an existing PHP codebase by baselining existing issues so the build only fails on new ones.</p>
+                <hr>
+                            <h3><a href="../open-source/test-splitter">Test Splitter</a></h3>
+                <p>Test Splitter splits a PHPUnit test suite into deterministic batches, so the batches can be run in parallel CI jobs to cut build times.</p>
                 <hr>
             
         </div>
@@ -108,22 +117,7 @@
     <!-- /.row -->
 
 
-                    <div class="row">
-            <div class="col-lg-12">
-                <div class="share-links">
-                    <span class="share-label">Share</span>
-                    <a class="share-link" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.daveliddament.co.uk%2Fopen-source%2F"
-                       target="_blank" rel="noopener" aria-label="Share on LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
-                    <a class="share-link" href="https://x.com/intent/tweet?url=https%3A%2F%2Fwww.daveliddament.co.uk%2Fopen-source%2F&amp;text=Open%20Source%20Projects"
-                       target="_blank" rel="noopener" aria-label="Share on X"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a class="share-link" href="https://bsky.app/intent/compose?text=Open%20Source%20Projects%20https%3A%2F%2Fwww.daveliddament.co.uk%2Fopen-source%2F"
-                       target="_blank" rel="noopener" aria-label="Share on Bluesky"><i class="fa-brands fa-bluesky"></i></a>
-                    <button type="button" class="share-link share-copy" data-url="https://www.daveliddament.co.uk/open-source/" aria-label="Copy link"><i class="fa-solid fa-link"></i></button>
-                    <span class="share-copied" role="status"></span>
-                </div>
-            </div>
-        </div>
-    
+        
 </div>
 <!-- /.container -->
 
@@ -147,17 +141,6 @@
 <script src="../js/jquery.min.js"></script>
 <script src="../js/bootstrap.bundle.min.js"></script>
 <script src="../js/prism.js"></script>
-<script>
-    document.querySelectorAll('.share-copy').forEach(function (button) {
-        button.addEventListener('click', function () {
-            var status = button.parentNode.querySelector('.share-copied');
-            navigator.clipboard.writeText(button.dataset.url).then(function () {
-                status.textContent = 'Link copied';
-                setTimeout(function () { status.textContent = ''; }, 2000);
-            });
-        });
-    });
-</script>
 
 </body>
 
