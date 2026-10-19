@@ -116,3 +116,40 @@ h2 {
     margin: 1rem auto;
     border: 0;
 }
+
+.speaking-nav a {
+    margin: 0 0.25em;
+}
+
+/* Keep anchored headings clear of the fixed navbar. */
+.speaking-section {
+    scroll-margin-top: 70px;
+}
+
+.feedback-quote {
+    position: relative;
+    border-left: none;
+    padding-left: 3.5rem;
+    margin: 1.5rem 0;
+}
+
+.feedback-quote::before {
+    content: "\201C";
+    position: absolute;
+    left: 0;
+    top: -0.75rem;
+    font-family: Georgia, serif;
+    font-size: 5rem;
+    line-height: 1;
+    color: #007bff;
+}
+
+.feedback-quote p {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.feedback-source {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
