@@ -7,14 +7,6 @@
         <description>Articles, talks and videos by Dave Liddament</description>
         <language>en-gb</language>
         <item>
-            <title>AI Writes Code. Guardrails Keep It Honest.</title>
-            <link>https://www.daveliddament.co.uk/talks/ai-writes-code-guardrails-keep-it-honest/</link>
-            <description>AI assisted coding needs deterministic guardrails. Turn every issue you find in generated code into a check the agent has to fix.</description>
-            <pubDate>Mon, 19 Oct 2026 00:00:00 GMT</pubDate>
-            <guid>https://www.daveliddament.co.uk/talks/ai-writes-code-guardrails-keep-it-honest/</guid>
-            <category>Talk</category>
-        </item>
-        <item>
             <title>Your Database Is a Gold Mine. Let AI Dig Safely.</title>
             <link>https://www.daveliddament.co.uk/talks/your-database-is-a-gold-mine-let-ai-dig-safely/</link>
             <description>Let anyone in the business ask questions of your database in plain English, using an MCP server with read only access that hides PII.</description>
@@ -87,9 +79,9 @@
             <category>Article</category>
         </item>
         <item>
-            <title>AI Writes Code. PHPStan Keeps It Honest.</title>
+            <title>AI Writes Code. Guardrails Keep It Honest.</title>
             <link>https://www.daveliddament.co.uk/talks/ai-writes-code-phpstan-keeps-it-honest/</link>
-            <description>As AI generates more of our code, custom PHPStan rules keep quality and coding standards in check.</description>
+            <description>AI assisted coding needs deterministic guardrails. Turn every issue you find in generated code into a check the agent has to fix.</description>
             <pubDate>Fri, 13 Mar 2026 00:00:00 GMT</pubDate>
             <guid>https://www.daveliddament.co.uk/talks/ai-writes-code-phpstan-keeps-it-honest/</guid>
             <category>Talk</category>
