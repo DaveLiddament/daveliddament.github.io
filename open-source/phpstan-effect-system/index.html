@@ -89,17 +89,40 @@
             <!-- Title -->
             <h1 class="mt-4">PHPStan Effect System</h1>
 
+            <div class="page-intro">
+                <p class="lead">An experimental PHPStan extension that lets you name behaviours, such as calling external services, track them through the call graph, and report when they reach code where they aren&#039;t allowed.</p>
+            </div>
+
+            <p>
+                <a class="btn btn-github" href="https://github.com/DaveLiddament/phpstan-effect-system">
+                    <i class="fa-brands fa-github"></i>
+                    <span class="btn-github-repo">DaveLiddament/phpstan-effect-system</span>
+                    <span class="btn-github-cta">View on GitHub</span>
+                </a>
+            </p>
+
             <hr>
 
-            <p>The PHPStan Effect System lets you mark methods with effects, such as <code>#[Effect('slow')]</code> on a method that calls an external service, and declare where those effects aren't allowed, such as <code>#[EffectFree('slow')]</code> on a controller. Effects propagate back through the call graph, so PHPStan reports a controller that reaches a slow method several calls away, along with the call path. Rules can also be applied across whole groups of classes and methods in PHPStan's configuration.</p>
+            <div class="page-intro">
+                <p>The PHPStan Effect System lets you mark methods with effects, such as <code>#[Effect('slow')]</code> on a method that calls an external service, and declare where those effects aren't allowed, such as <code>#[EffectFree('slow')]</code> on a controller. Effects propagate back through the call graph, so PHPStan reports a controller that reaches a slow method several calls away, along with the call path. Rules can also be applied across whole groups of classes and methods in PHPStan's configuration.</p>
+            </div>
 
-            <p><a class="btn btn-primary" href="https://github.com/DaveLiddament/phpstan-effect-system">View on GitHub</a></p>
-
-                            <hr>
-                <h3>Related articles</h3>
-                <ul>
-                                            <li><a href="../../articles/introducing-phpstan-effect-system">Introducing the PHPStan Effect System</a></li>
-                                    </ul>
+                            <h2 class="content-section-title">Related articles</h2>
+                <div class="row mt-3">
+            <div class="col-md-6 mb-4">
+            <article class="content-card h-100">
+                <h3 class="content-card-title"><a href="../../articles/introducing-phpstan-effect-system">Introducing the PHPStan Effect System</a></h3>
+                <p class="content-card-summary">The PHPStan Effect System is an experimental PHPStan extension that lets you name behaviours, such as calling external services, track them through the call graph, and report when they reach code where they aren&#039;t allowed.</p>
+                <p class="content-card-meta">
+                    9 October 2026
+                    <br>                                            <a href="../../search/open-source" class="tag-pill">open source</a>
+                                            <a href="../../search/phpstan-effect-system" class="tag-pill">phpstan effect system</a>
+                                            <a href="../../search/phpstan" class="tag-pill">phpstan</a>
+                                            <a href="../../search/static-analysis" class="tag-pill">static analysis</a>
+                                    </p>
+            </article>
+        </div>
+    </div>
             
             
         </div>
