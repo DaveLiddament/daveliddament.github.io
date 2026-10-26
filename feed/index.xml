@@ -7,6 +7,14 @@
         <description>Articles, talks and videos by Dave Liddament</description>
         <language>en-gb</language>
         <item>
+            <title>Rector Beyond Upgrades: Still Essential in the Age of AI</title>
+            <link>https://www.daveliddament.co.uk/talks/rector-beyond-upgrades-still-essential-in-the-age-of-ai/</link>
+            <description>AI coding agents haven&#039;t made Rector redundant. Ask an agent to write a Rector rule and the change is made the same way everywhere, every time.</description>
+            <pubDate>Mon, 26 Oct 2026 00:00:00 GMT</pubDate>
+            <guid>https://www.daveliddament.co.uk/talks/rector-beyond-upgrades-still-essential-in-the-age-of-ai/</guid>
+            <category>Talk</category>
+        </item>
+        <item>
             <title>Your Database Is a Gold Mine. Let AI Dig Safely.</title>
             <link>https://www.daveliddament.co.uk/talks/your-database-is-a-gold-mine-let-ai-dig-safely/</link>
             <description>Let anyone in the business ask questions of your database in plain English, using an MCP server with read only access that hides PII.</description>
