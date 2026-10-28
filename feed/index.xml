@@ -623,6 +623,14 @@
             <category>Talk</category>
         </item>
         <item>
+            <title>Beyond Unit Testing</title>
+            <link>https://www.daveliddament.co.uk/talks/beyond-unit-testing/</link>
+            <description>Unit testing is only half the testing story. Learn why we need more than just unit tests and how to write these extra tests.</description>
+            <pubDate>Wed, 10 Feb 2016 00:00:00 GMT</pubDate>
+            <guid>https://www.daveliddament.co.uk/talks/beyond-unit-testing/</guid>
+            <category>Talk</category>
+        </item>
+        <item>
             <title>Code review with Gerrit</title>
             <link>https://www.daveliddament.co.uk/talks/code-review-with-gerrit/</link>
             <description>Quick introduction to integrating code review using Gerrit into your workflow.</description>
