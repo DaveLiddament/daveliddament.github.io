@@ -87,19 +87,19 @@
             <category>Article</category>
         </item>
         <item>
-            <title>Rector Beyond Upgrades: Transforming Your Workflow</title>
-            <link>https://www.daveliddament.co.uk/talks/rector-beyond-upgrades/</link>
-            <description>Rector is best known for code upgrades, but it can do much more. Learn how to automate repetitive tasks and enforce standards with custom rules.</description>
-            <pubDate>Fri, 13 Mar 2026 00:00:00 GMT</pubDate>
-            <guid>https://www.daveliddament.co.uk/talks/rector-beyond-upgrades/</guid>
-            <category>Talk</category>
-        </item>
-        <item>
             <title>AI Writes Code. Guardrails Keep It Honest.</title>
             <link>https://www.daveliddament.co.uk/talks/ai-writes-code-phpstan-keeps-it-honest/</link>
             <description>AI assisted coding needs deterministic guardrails. Turn every issue you find in generated code into a check the agent has to fix.</description>
             <pubDate>Fri, 13 Mar 2026 00:00:00 GMT</pubDate>
             <guid>https://www.daveliddament.co.uk/talks/ai-writes-code-phpstan-keeps-it-honest/</guid>
+            <category>Talk</category>
+        </item>
+        <item>
+            <title>Rector Beyond Upgrades: Transforming Your Workflow</title>
+            <link>https://www.daveliddament.co.uk/talks/rector-beyond-upgrades/</link>
+            <description>Rector is best known for code upgrades, but it can do much more. Learn how to automate repetitive tasks and enforce standards with custom rules.</description>
+            <pubDate>Fri, 13 Mar 2026 00:00:00 GMT</pubDate>
+            <guid>https://www.daveliddament.co.uk/talks/rector-beyond-upgrades/</guid>
             <category>Talk</category>
         </item>
         <item>
@@ -536,19 +536,19 @@
         </item>
         <item>
             <title>PHP Generics Today (almost)</title>
-            <link>https://www.daveliddament.co.uk/talks/php-generics-today-almost/</link>
-            <description>Many PHP developers would love generics. We might have to wait a while until they come along. This article shows how existing tools can give us the power of generics now (almost).</description>
-            <pubDate>Wed, 05 Jun 2019 00:00:00 GMT</pubDate>
-            <guid>https://www.daveliddament.co.uk/talks/php-generics-today-almost/</guid>
-            <category>Talk</category>
-        </item>
-        <item>
-            <title>PHP Generics Today (almost)</title>
             <link>https://www.daveliddament.co.uk/articles/php-generics-today-almost/</link>
             <description>Many PHP developers would love generics. We might have to wait a while until they come along. This article shows how existing tools can give us the power of generics now (almost).</description>
             <pubDate>Wed, 05 Jun 2019 00:00:00 GMT</pubDate>
             <guid>https://www.daveliddament.co.uk/articles/php-generics-today-almost/</guid>
             <category>Article</category>
+        </item>
+        <item>
+            <title>PHP Generics Today (almost)</title>
+            <link>https://www.daveliddament.co.uk/talks/php-generics-today-almost/</link>
+            <description>Many PHP developers would love generics. We might have to wait a while until they come along. This article shows how existing tools can give us the power of generics now (almost).</description>
+            <pubDate>Wed, 05 Jun 2019 00:00:00 GMT</pubDate>
+            <guid>https://www.daveliddament.co.uk/talks/php-generics-today-almost/</guid>
+            <category>Talk</category>
         </item>
         <item>
             <title>Practical Static Analysis</title>
