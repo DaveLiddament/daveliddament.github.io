@@ -601,17 +601,19 @@ hr {
 
 /* Article */
 /*
- * Text, headings and images sit in a centred column of readable width;
- * code blocks break out to the full page width so long lines don't scroll.
+ * Text, headings and images sit in a centred column of readable width.
+ * Code blocks step out a little on each side so typical lines fit without scrolling.
  */
 .article-body {
     display: grid;
     grid-template-columns:
         [full-start] minmax(0, 1fr)
+        [wide-start] minmax(0, 3.5rem)
         [content-start] min(46rem, 100%)
-        [content-end] minmax(0, 1fr)
+        [content-end] minmax(0, 3.5rem)
+        [wide-end] minmax(0, 1fr)
         [full-end];
-    margin-top: 2.25rem;
+    margin-top: 2rem;
     font-size: 1.1rem;
 }
 
@@ -621,7 +623,13 @@ hr {
 }
 
 .article-body > pre {
-    grid-column: full;
+    grid-column: wide;
+}
+
+.article-body pre,
+.article-body pre code {
+    font-size: 0.9rem;
+    line-height: 1.6;
 }
 
 .back-link {
@@ -637,11 +645,19 @@ hr {
     text-decoration: none;
 }
 
-/* Line the article title up with the centred text column below it. */
-.page-head.page-head-article > * {
+/* Article pages: a plain title on the same column as the text, no grey box. */
+.page-head.page-head-article {
+    padding: 0.5rem 0 1.75rem;
+    background: none;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
     max-width: 46rem;
     margin-left: auto;
     margin-right: auto;
+}
+
+.page-head-article .tag-pill {
+    background: var(--tint);
 }
 
 .article-body h2 {
@@ -687,17 +703,21 @@ pre {
 }
 
 /*
- * Inline code moves to the next line whole instead of splitting across lines.
- * Only a snippet wider than the column (e.g. a full error message on a phone) wraps, inside its own box.
+ * Inline code stays on one line on desktop; the longest snippet fits the text column.
+ * Narrow screens let long snippets wrap rather than push the page sideways.
  */
 :not(pre) > code {
-    display: inline-block;
-    max-width: 100%;
-    vertical-align: baseline;
+    white-space: nowrap;
     padding: 0.1em 0.35em;
     background: var(--paper);
     border-radius: 0.25rem;
     color: var(--ink);
+}
+
+@media (max-width: 767.98px) {
+    :not(pre) > code {
+        white-space: normal;
+    }
 }
 
 blockquote {
@@ -721,7 +741,8 @@ blockquote {
         font-size: 1.45rem;
     }
 
-    pre {
+    .article-body pre,
+    .article-body pre code {
         font-size: 0.8rem;
     }
 }
