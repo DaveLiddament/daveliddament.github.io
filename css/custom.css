@@ -624,6 +624,19 @@ hr {
     grid-column: full;
 }
 
+.back-link {
+    display: block;
+    margin-bottom: 0.75rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.back-link:hover {
+    color: var(--accent);
+    text-decoration: none;
+}
+
 /* Line the article title up with the centred text column below it. */
 .page-head.page-head-article > * {
     max-width: 46rem;
