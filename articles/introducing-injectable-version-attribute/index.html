@@ -28,6 +28,10 @@
 
     <link rel="canonical" href="https://www.daveliddament.co.uk/articles/introducing-injectable-version-attribute/">
     <script type="application/ld+json">{"@context":"https:\/\/schema.org","@type":"BlogPosting","headline":"Introducing the InjectableVersion attribute","description":"Learn how the InjectableVersion attribute ensures that correct interface of class is used in Dependency Injection.","datePublished":"2026-03-03","url":"https:\/\/www.daveliddament.co.uk\/articles\/introducing-injectable-version-attribute\/","author":{"@type":"Person","name":"Dave Liddament","url":"https:\/\/www.daveliddament.co.uk"},"image":"https:\/\/www.daveliddament.co.uk\/img\/injectable-version.png"}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
     <!-- Bootstrap core CSS -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
 
@@ -43,36 +47,32 @@
 <body>
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-lg site-nav">
     <div class="container">
-        <a class="navbar-brand" href="../../">Dave Liddament</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        <a class="site-brand" href="../../"><span class="site-mark" aria-hidden="true">DL</span>Dave Liddament</a>
+        <button class="navbar-toggler site-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <i class="fa-solid fa-bars" aria-hidden="true"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav mx-auto">
                                     <li class="nav-item ">
-                        <a class="nav-link" href="../../">Home
-                                                    </a>
+                        <a class="nav-link" href="../../">Home</a>
                     </li>
                                     <li class="nav-item ">
-                        <a class="nav-link" href="../../talks">Talks
-                                                    </a>
+                        <a class="nav-link" href="../../talks">Talks</a>
                     </li>
                                     <li class="nav-item active">
-                        <a class="nav-link" href="../../articles">Articles
-                            <span class="sr-only">(current)</span>                        </a>
+                        <a class="nav-link" href="../../articles" aria-current="page">Articles</a>
                     </li>
                                     <li class="nav-item ">
-                        <a class="nav-link" href="../../videos">Videos
-                                                    </a>
+                        <a class="nav-link" href="../../videos">Videos</a>
                     </li>
                                     <li class="nav-item ">
-                        <a class="nav-link" href="../../open-source">Open Source
-                                                    </a>
+                        <a class="nav-link" href="../../open-source">Open Source</a>
                     </li>
                             </ul>
+            <a class="btn btn-primary site-book" href="../../speaking">Book me to speak</a>
         </div>
     </div>
 </nav>
@@ -81,32 +81,23 @@
 <div class="container">
 
     
-    <div class="row">
+    <header class="page-head page-head-article">
+        <h1>Introducing the InjectableVersion attribute</h1>
+        <p class="page-head-meta">3 March 2026
+                            <br>
+                                    <a href="../../search/software-design" class="tag-pill">software design</a>
+                                    <a href="../../search/static-analysis" class="tag-pill">static analysis</a>
+                                    <a href="../../search/open-source" class="tag-pill">open source</a>
+                                    <a href="../../search/php-language-extensions" class="tag-pill">php language extensions</a>
+                                    </p>
+    </header>
 
-        <!-- Post Content Column -->
-        <div class="col-lg-12">
+    <article class="article-body">
 
-            <!-- Title -->
-            <h1 class="mt-4">Introducing the InjectableVersion attribute</h1>
+                    <img class="article-image" src="../../img/injectable-version.png" alt="Code showing the InjectableVersion attribute usage">
 
-
-            <p class="date">March 3rd 2026
-                                                            <a href="../../search/software-design" class="tag-pill">software design</a>
-                                            <a href="../../search/static-analysis" class="tag-pill">static analysis</a>
-                                            <a href="../../search/open-source" class="tag-pill">open source</a>
-                                            <a href="../../search/php-language-extensions" class="tag-pill">php language extensions</a>
-                                                </p>
-
-            <hr>
-
-            
-                <!-- Preview Image -->
-                <img class="img-fluid rounded article-image" src="../../img/injectable-version.png" alt="Code showing the InjectableVersion attribute usage">
-
-                                <hr>
-
-            
-            <p>Dependency Injection is an important design pattern that is widely used in the PHP community.
+                    
+        <p>Dependency Injection is an important design pattern that is widely used in the PHP community.
 It helps developers write loosely coupled that is easier to test.</p>
 
 <p>Suppose we have a <code>UserRegistration</code> service that depends on a <code>UserRepository</code>. 
@@ -230,8 +221,8 @@ class Bar extends Foo {}
 }
 </code></pre>
 
-                            <hr>
-                <h3>Other articles in this series</h3>
+                    <div class="article-extra">
+                <h2>Other articles in this series</h2>
                 <ol>
                                             <li>
                                                             <a href="../../articles/introducing-php-language-extensions-library">Introducing the PHP Language Extensions Library</a>
@@ -258,14 +249,11 @@ class Bar extends Foo {}
                                                             <a href="../../articles/static-analysis-first">A static analysis first approach to RFCs</a>
                                                     </li>
                                     </ol>
-            
-            
-        </div>
+            </div>
+        
+    </article>
 
-
-    </div>
-    <!-- /.row -->
-
+    
 
         <div class="row">
     <div class="col-lg-12">
@@ -298,17 +286,18 @@ class Bar extends Foo {}
 <!-- /.container -->
 
 <!-- Footer -->
-<footer class="py-5 bg-dark">
+<footer class="site-footer">
     <div class="container">
-        <p class="m-0 text-center text-white">
-            Copyright &copy; Dave Liddament 2018-2026
-            <a class="social-circle" href="https://twitter.com/DaveLiddament"><i class="fa-brands fa-twitter"></i></a>
-            <a class="social-circle" href="https://github.com/DaveLiddament"><i class="fa-brands fa-github"></i></a>
-            <a class="social-circle" href="https://www.linkedin.com/in/daveliddament/"><i
-                        class="fa-brands fa-linkedin"></i></a>
-            <a class="social-circle" rel="me" href="https://phpc.social/@DaveLiddament"><i class="fa-brands fa-mastodon"></i></a>
-            <a class="social-circle" href="../../feed"><i class="fa-solid fa-rss"></i></a>
-        </p>
+        <ul class="site-social" aria-label="Dave Liddament elsewhere">
+            <li><a href="https://www.linkedin.com/in/daveliddament/"><i class="fa-brands fa-linkedin" aria-hidden="true"></i>LinkedIn</a></li>
+            <li><a href="https://github.com/DaveLiddament"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a></li>
+            <li><a rel="me" href="https://phpc.social/@DaveLiddament"><i class="fa-brands fa-mastodon" aria-hidden="true"></i>Mastodon</a></li>
+            <li><a href="https://twitter.com/DaveLiddament"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i>X (Twitter)</a></li>
+            <li><a href="https://www.youtube.com/@daveliddament8219"><i class="fa-brands fa-youtube" aria-hidden="true"></i>YouTube</a></li>
+            <li><a href="https://packagist.org/users/DaveLiddament/"><i class="fa-solid fa-cube" aria-hidden="true"></i>Packagist</a></li>
+            <li><a href="../../feed"><i class="fa-solid fa-rss" aria-hidden="true"></i>RSS feed</a></li>
+        </ul>
+        <p class="site-copyright">Copyright &copy; Dave Liddament 2018-2026</p>
     </div>
     <!-- /.container -->
 </footer>

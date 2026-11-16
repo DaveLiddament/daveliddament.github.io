@@ -28,6 +28,10 @@
 
     <link rel="canonical" href="https://www.daveliddament.co.uk/talks/">
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
 
@@ -43,36 +47,32 @@
 <body>
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-lg site-nav">
     <div class="container">
-        <a class="navbar-brand" href="../">Dave Liddament</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        <a class="site-brand" href="../"><span class="site-mark" aria-hidden="true">DL</span>Dave Liddament</a>
+        <button class="navbar-toggler site-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <i class="fa-solid fa-bars" aria-hidden="true"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav mx-auto">
                                     <li class="nav-item ">
-                        <a class="nav-link" href="../">Home
-                                                    </a>
+                        <a class="nav-link" href="../">Home</a>
                     </li>
                                     <li class="nav-item active">
-                        <a class="nav-link" href="../talks">Talks
-                            <span class="sr-only">(current)</span>                        </a>
+                        <a class="nav-link" href="../talks" aria-current="page">Talks</a>
                     </li>
                                     <li class="nav-item ">
-                        <a class="nav-link" href="../articles">Articles
-                                                    </a>
+                        <a class="nav-link" href="../articles">Articles</a>
                     </li>
                                     <li class="nav-item ">
-                        <a class="nav-link" href="../videos">Videos
-                                                    </a>
+                        <a class="nav-link" href="../videos">Videos</a>
                     </li>
                                     <li class="nav-item ">
-                        <a class="nav-link" href="../open-source">Open Source
-                                                    </a>
+                        <a class="nav-link" href="../open-source">Open Source</a>
                     </li>
                             </ul>
+            <a class="btn btn-primary site-book" href="../speaking">Book me to speak</a>
         </div>
     </div>
 </nav>
@@ -81,36 +81,37 @@
 <div class="container">
 
     
-    <div class="row">
+    <section class="talks-hero">
 
-        <!-- Post Content Column -->
-        <div class="col-lg-12">
-
-            <h1 class="mt-4">Talks</h1>
-
-            <img class="img-fluid rounded my-3" src="../img/speaker_profile_banner.png" width="1400" height="350" alt="Dave Liddament speaks about AI-assisted coding, static analysis, testing, automated refactoring and legacy code">
+        <div class="talks-hero-text">
+            <h1>Talks</h1>
 
             <p class="lead">
                 As a seasoned conference speaker, I've shared my insights on AI-assisted coding, code quality, testing and static analysis at events around the world.
                 I aim for my talks to be informative and engaging, leaving audiences with practical takeaways they can apply immediately to their work.
             </p>
 
-            <p class="page-intro-actions d-flex flex-wrap align-items-center">
-                <a class="btn btn-primary my-1" href="../speaking">Organising an event? See my speaker profile</a>
-                <a class="my-1" href="../talks/diary">See my speaking diary</a>
+            <p class="page-intro-actions">
+                <a class="btn btn-primary" href="../speaking">Organising an event? See my speaker profile</a>
+                <a href="../talks/diary">See my speaking diary</a>
             </p>
+        </div>
 
-            <hr>
+        <figure class="talks-hero-photo">
+            <img src="../photos/speaking-1400.jpg" width="1400" height="2100" alt="Dave Liddament speaking at a conference">
+        </figure>
 
-            <h2 class="content-section-title">Current talks</h2>
-            <p class="content-section-intro">Talks I'm giving now.</p>
-            <div class="row">
+    </section>
+
+    <h2 class="content-section-title">Current talks</h2>
+    <p class="content-section-intro">Talks I'm giving now.</p>
+    <div class="row">
             <div class="col-md-6 mb-4">
             <article class="content-card h-100">
                 <h3 class="content-card-title"><a href="../talks/your-database-is-a-gold-mine-let-ai-dig-safely">Your Database Is a Gold Mine. Let AI Dig Safely.</a></h3>
                 <p class="content-card-summary">Let anyone in the business ask questions of your database in plain English, using an MCP server with read only access that hides PII.</p>
                 <p class="content-card-meta">
-                                        <span class="badge badge-primary">New</span>                    Will be given Feb 2027
+                                        <span class="badge-new">New</span>                    Will be given Feb 2027
                 </p>
             </article>
         </div>
@@ -119,7 +120,7 @@
                 <h3 class="content-card-title"><a href="../talks/rector-beyond-upgrades-still-essential-in-the-age-of-ai">Rector Beyond Upgrades: Still Essential in the Age of AI</a></h3>
                 <p class="content-card-summary">AI coding agents haven&#039;t made Rector redundant. Ask an agent to write a Rector rule and the change is made the same way everywhere, every time.</p>
                 <p class="content-card-meta">
-                                        <span class="badge badge-primary">New</span>                    Will be given Feb 2027
+                                        <span class="badge-new">New</span>                    Will be given Feb 2027
                 </p>
             </article>
         </div>
@@ -179,9 +180,9 @@
         </div>
     </div>
 
-            <h2 class="content-section-title">Older talks</h2>
-            <p class="content-section-intro">Talks I've given in the past, with the year I last gave them.</p>
-            <ul class="talk-archive">
+    <h2 class="content-section-title">Older talks</h2>
+    <p class="content-section-intro">Talks I've given in the past, with the year I last gave them.</p>
+    <ul class="talk-archive">
             <li>
             <a href="../talks/rector-beyond-upgrades">Rector Beyond Upgrades: Transforming Your Workflow</a>
             <span class="talk-archive-year">2026</span>        </li>
@@ -245,28 +246,23 @@
     </ul>
 
 
-        </div>
-
-    </div>
-    <!-- /.row -->
-
-
         
 </div>
 <!-- /.container -->
 
 <!-- Footer -->
-<footer class="py-5 bg-dark">
+<footer class="site-footer">
     <div class="container">
-        <p class="m-0 text-center text-white">
-            Copyright &copy; Dave Liddament 2018-2026
-            <a class="social-circle" href="https://twitter.com/DaveLiddament"><i class="fa-brands fa-twitter"></i></a>
-            <a class="social-circle" href="https://github.com/DaveLiddament"><i class="fa-brands fa-github"></i></a>
-            <a class="social-circle" href="https://www.linkedin.com/in/daveliddament/"><i
-                        class="fa-brands fa-linkedin"></i></a>
-            <a class="social-circle" rel="me" href="https://phpc.social/@DaveLiddament"><i class="fa-brands fa-mastodon"></i></a>
-            <a class="social-circle" href="../feed"><i class="fa-solid fa-rss"></i></a>
-        </p>
+        <ul class="site-social" aria-label="Dave Liddament elsewhere">
+            <li><a href="https://www.linkedin.com/in/daveliddament/"><i class="fa-brands fa-linkedin" aria-hidden="true"></i>LinkedIn</a></li>
+            <li><a href="https://github.com/DaveLiddament"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a></li>
+            <li><a rel="me" href="https://phpc.social/@DaveLiddament"><i class="fa-brands fa-mastodon" aria-hidden="true"></i>Mastodon</a></li>
+            <li><a href="https://twitter.com/DaveLiddament"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i>X (Twitter)</a></li>
+            <li><a href="https://www.youtube.com/@daveliddament8219"><i class="fa-brands fa-youtube" aria-hidden="true"></i>YouTube</a></li>
+            <li><a href="https://packagist.org/users/DaveLiddament/"><i class="fa-solid fa-cube" aria-hidden="true"></i>Packagist</a></li>
+            <li><a href="../feed"><i class="fa-solid fa-rss" aria-hidden="true"></i>RSS feed</a></li>
+        </ul>
+        <p class="site-copyright">Copyright &copy; Dave Liddament 2018-2026</p>
     </div>
     <!-- /.container -->
 </footer>

@@ -28,6 +28,10 @@
 
     <link rel="canonical" href="https://www.daveliddament.co.uk/articles/systems-to-cisterns/">
     <script type="application/ld+json">{"@context":"https:\/\/schema.org","@type":"BlogPosting","headline":"Systems Engineer to Cisterns Engineer","description":"The bootcamp for software engineers who want to switch to plumbing.","datePublished":"2026-04-01","url":"https:\/\/www.daveliddament.co.uk\/articles\/systems-to-cisterns\/","author":{"@type":"Person","name":"Dave Liddament","url":"https:\/\/www.daveliddament.co.uk"},"image":"https:\/\/www.daveliddament.co.uk\/img\/systems-to-cisterns.png"}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
     <!-- Bootstrap core CSS -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
 
@@ -43,36 +47,32 @@
 <body>
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-lg site-nav">
     <div class="container">
-        <a class="navbar-brand" href="../../">Dave Liddament</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        <a class="site-brand" href="../../"><span class="site-mark" aria-hidden="true">DL</span>Dave Liddament</a>
+        <button class="navbar-toggler site-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <i class="fa-solid fa-bars" aria-hidden="true"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav mx-auto">
                                     <li class="nav-item ">
-                        <a class="nav-link" href="../../">Home
-                                                    </a>
+                        <a class="nav-link" href="../../">Home</a>
                     </li>
                                     <li class="nav-item ">
-                        <a class="nav-link" href="../../talks">Talks
-                                                    </a>
+                        <a class="nav-link" href="../../talks">Talks</a>
                     </li>
                                     <li class="nav-item active">
-                        <a class="nav-link" href="../../articles">Articles
-                            <span class="sr-only">(current)</span>                        </a>
+                        <a class="nav-link" href="../../articles" aria-current="page">Articles</a>
                     </li>
                                     <li class="nav-item ">
-                        <a class="nav-link" href="../../videos">Videos
-                                                    </a>
+                        <a class="nav-link" href="../../videos">Videos</a>
                     </li>
                                     <li class="nav-item ">
-                        <a class="nav-link" href="../../open-source">Open Source
-                                                    </a>
+                        <a class="nav-link" href="../../open-source">Open Source</a>
                     </li>
                             </ul>
+            <a class="btn btn-primary site-book" href="../../speaking">Book me to speak</a>
         </div>
     </div>
 </nav>
@@ -81,30 +81,21 @@
 <div class="container">
 
     
-    <div class="row">
+    <header class="page-head page-head-article">
+        <h1>Systems Engineer to Cisterns Engineer</h1>
+        <p class="page-head-meta">1 April 2026
+                            <br>
+                                    <a href="../../search/april-fool" class="tag-pill">april fool</a>
+                                    <a href="../../search/fun" class="tag-pill">fun</a>
+                                    </p>
+    </header>
 
-        <!-- Post Content Column -->
-        <div class="col-lg-12">
+    <article class="article-body">
 
-            <!-- Title -->
-            <h1 class="mt-4">Systems Engineer to Cisterns Engineer</h1>
+                    <img class="article-image" src="../../img/systems-to-cisterns.png" alt="Systems to Cisterns bootcamp logo">
 
-
-            <p class="date">April 1st 2026
-                                                            <a href="../../search/april-fool" class="tag-pill">april fool</a>
-                                            <a href="../../search/fun" class="tag-pill">fun</a>
-                                                </p>
-
-            <hr>
-
-            
-                <!-- Preview Image -->
-                <img class="img-fluid rounded article-image" src="../../img/systems-to-cisterns.png" alt="Systems to Cisterns bootcamp logo">
-
-                                <hr>
-
-            
-            <blockquote>
+                    
+        <blockquote>
   <p>UPDATE: This is another April Fool. Although the plumbing stats are true. The last laugh might be on me; my <a href="../converting-php-engine-to-rust/">2023 April Fools</a> looks remarkably believable today.</p>
 </blockquote>
 
@@ -174,10 +165,11 @@ Louise and I spent three weeks putting together a curriculum. We mapped software
 
 <p><em>Systems Engineer to Cisterns Engineer™ is a joint venture between myself and Louise Blockidge, trading as Blockidge &amp; Associates Ltd. Registered in England and Wales. All graduate outcomes referenced in this article are from our trial cohort and individual results may vary. No AI was used in the plumbing. Quite a lot was used in the writing, which is sort of the whole point.</em></p>
 
-            
-                            <hr>
-                <h2 class="content-section-title">Related articles</h2>
-                <div class="row mt-3">
+        
+    </article>
+
+            <h2 class="content-section-title">Related articles</h2>
+        <div class="row mt-3">
             <div class="col-md-6 mb-4">
             <article class="content-card h-100">
                 <h3 class="content-card-title"><a href="../../articles/converting-php-engine-to-rust">Using AI to convert PHP engine from C to Rust</a></h3>
@@ -201,13 +193,7 @@ Louise and I spent three weeks putting together a curriculum. We mapped software
             </article>
         </div>
     </div>
-            
-        </div>
-
-
-    </div>
-    <!-- /.row -->
-
+    
 
         <div class="row">
     <div class="col-lg-12">
@@ -240,17 +226,18 @@ Louise and I spent three weeks putting together a curriculum. We mapped software
 <!-- /.container -->
 
 <!-- Footer -->
-<footer class="py-5 bg-dark">
+<footer class="site-footer">
     <div class="container">
-        <p class="m-0 text-center text-white">
-            Copyright &copy; Dave Liddament 2018-2026
-            <a class="social-circle" href="https://twitter.com/DaveLiddament"><i class="fa-brands fa-twitter"></i></a>
-            <a class="social-circle" href="https://github.com/DaveLiddament"><i class="fa-brands fa-github"></i></a>
-            <a class="social-circle" href="https://www.linkedin.com/in/daveliddament/"><i
-                        class="fa-brands fa-linkedin"></i></a>
-            <a class="social-circle" rel="me" href="https://phpc.social/@DaveLiddament"><i class="fa-brands fa-mastodon"></i></a>
-            <a class="social-circle" href="../../feed"><i class="fa-solid fa-rss"></i></a>
-        </p>
+        <ul class="site-social" aria-label="Dave Liddament elsewhere">
+            <li><a href="https://www.linkedin.com/in/daveliddament/"><i class="fa-brands fa-linkedin" aria-hidden="true"></i>LinkedIn</a></li>
+            <li><a href="https://github.com/DaveLiddament"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a></li>
+            <li><a rel="me" href="https://phpc.social/@DaveLiddament"><i class="fa-brands fa-mastodon" aria-hidden="true"></i>Mastodon</a></li>
+            <li><a href="https://twitter.com/DaveLiddament"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i>X (Twitter)</a></li>
+            <li><a href="https://www.youtube.com/@daveliddament8219"><i class="fa-brands fa-youtube" aria-hidden="true"></i>YouTube</a></li>
+            <li><a href="https://packagist.org/users/DaveLiddament/"><i class="fa-solid fa-cube" aria-hidden="true"></i>Packagist</a></li>
+            <li><a href="../../feed"><i class="fa-solid fa-rss" aria-hidden="true"></i>RSS feed</a></li>
+        </ul>
+        <p class="site-copyright">Copyright &copy; Dave Liddament 2018-2026</p>
     </div>
     <!-- /.container -->
 </footer>
